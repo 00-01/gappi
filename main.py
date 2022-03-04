@@ -126,7 +126,7 @@ while LOOP:
     # im = Image.frombuffer('I;16', (w,h), rx_img, 'raw', 'L', 0, 1)
 
     end = time()-start
-    print(f"[FINISH] ---------------- runtime: {round(end, 2)} sec", "\n"*2)
+    print(f"[FINISH] ---------------- [runtime: {round(end, 2)} sec]", "\n"*2)
 
     LOOP = args.loop
     sleep(int(args.sleep))
