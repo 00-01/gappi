@@ -28,8 +28,6 @@ tr = 17  # trigger ir
 GPIO.setup(tr, GPIO.OUT)
 GPIO.output(tr, GPIO.LOW)
 
-camera = PiCamera()
-
 ser = serial.Serial(port='/dev/ttyS0', baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=10, )
 
 w, h = 80, 80
@@ -43,6 +41,7 @@ with open('device_id.txt') as f:
 
 LOOP = 1
 while LOOP:
+    camera = PiCamera()
     start = time()
     now = datetime.now()
     dt = now.strftime("%Y-%m-%d  %H:%M:%S")
