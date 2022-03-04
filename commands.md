@@ -61,6 +61,5 @@
     ### */1 * * * * sudo chmod 666 /dev/ttyS0 && cd /home/pi/scripts/ && /usr/bin/python$
 
     ### LOAD TEST
-    @reboot python3 gappi/main.py -l 1 -s 1> log/main.log
-
-    @reboot python3 gappi/poster.py -l 1 -s1 10 -s2 1> log/poster.log
+    @reboot python3 gappi/main.py -l 1 -s 5 > log/main.log
+    @reboot python3 gappi/poster.py -l 1 -s1 10 -s2 5 > log/poster.log

@@ -10,7 +10,7 @@ GPIO.setup(sd, GPIO.OUT)
 print("HIGH")
 GPIO.output(sd, GPIO.HIGH)
 
-time.sleep(2)
+time.sleep(1)
 
 print("LOW")
 GPIO.output(sd, GPIO.LOW)
