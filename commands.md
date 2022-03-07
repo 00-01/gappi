@@ -54,7 +54,7 @@
 
 # crontab -e
 
-    @reboot cd gappi && git pull && cd
+    @reboot python3 gappi/restart.py && cd gappi && git pull && cd
 
     ### SCHEDULING
     # */1 9-17 * * * python3 gappi/main.py >> log/main.log && python3 gappi/poster.py >> log/poster.log 2>&1
