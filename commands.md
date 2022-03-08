@@ -9,8 +9,10 @@
 
     ### SCHEDULING
     # */1 9-17 * * 1-5 python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
-    */10 9-17 * * 1-5 python3 gappi/gap/low.py && python3 gappi/main.py > log/main.log && \
+    
+    */10 9-17 * * 1-5  python3 gappi/gap/low.py && python3 gappi/main.py > log/main.log && \
     python3 gappi/poster.py > log/poster.log && python3 gappi/gap/high.py
+
     ### */1 * * * 1-5 sudo chmod 666 /dev/ttyS0 && cd /home/pi/scripts/ && /usr$
 
     ### LOAD TEST

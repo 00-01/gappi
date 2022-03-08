@@ -20,10 +20,6 @@ args = parser.parse_args()
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-po = 27  # power
-GPIO.setup(po, GPIO.OUT)
-GPIO.output(po, GPIO.LOW)
-
 tr = 17  # trigger ir
 GPIO.setup(tr, GPIO.OUT)
 GPIO.output(tr, GPIO.LOW)
