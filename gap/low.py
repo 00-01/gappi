@@ -8,6 +8,7 @@ import RPi.GPIO as GPIO
 parser = ArgumentParser()
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 args = parser.parse_args()
+print(f"[I] sleep is {args.sleep} sec")
 
 sd = 27
 GPIO.setwarnings(False)

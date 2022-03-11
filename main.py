@@ -6,8 +6,8 @@ from time import sleep, time
 
 import RPi.GPIO as GPIO
 import serial
-from PIL import Image
 from picamera import PiCamera
+from PIL import Image
 
 
 parser = ArgumentParser()
@@ -85,7 +85,7 @@ while LOOP:
     ser.write(threshold.to_bytes(4, byteorder='little'))
 
     print("[S] saving detection to txt")
-    det = []
+    det = ""
     det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
     with open(det_file, "w") as file:
         det_str = det_str.split(";")
@@ -93,7 +93,7 @@ while LOOP:
         for i in det_str:
             if "\00" not in i:
                 if i is not None:
-                    det.append(i)
+                    det += i
                     if st != 0:
                         file.write(f",")
                     file.write(f"{i}")
@@ -107,4 +107,4 @@ while LOOP:
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
 
     LOOP = args.loop
-    sleep(int(args.sleep))
+    sleep(args.sleep)
