@@ -9,10 +9,10 @@ from requests import post
 
 
 parser = ArgumentParser()
-parser.add_argument("-l", "--loop", default=0, help="run loop")
-parser.add_argument("-s1", "--sleep1", default=0, help="loop sleep")
-parser.add_argument("-s2", "--sleep2", default=0, help="loop sleep")
-parser.add_argument("-d", "--delete", default=1, help="delete sent file")
+parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
+parser.add_argument("-s1", "--sleep1", default=0, type=int, help="loop sleep")
+parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
+parser.add_argument("-d", "--delete", default=1, type=int, help="delete sent file")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
 

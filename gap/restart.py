@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 
 
 parser = ArgumentParser()
-parser.add_argument("-s", "--sleep", default=1, help="loop sleep")
+parser.add_argument("-s", "--sleep", default=1, type=int, help="loop sleep")
 args = parser.parse_args()
 
 sd = 27

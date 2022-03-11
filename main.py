@@ -11,8 +11,8 @@ from picamera import PiCamera
 
 
 parser = ArgumentParser()
-parser.add_argument("-l", "--loop", default=0, help="run loop")
-parser.add_argument("-s", "--sleep", default=0, help="loop sleep")
+parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
+parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 args = parser.parse_args()
 
 GPIO.setwarnings(False)
