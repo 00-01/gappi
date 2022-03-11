@@ -56,7 +56,7 @@
     ## custom command
     sudo chmod 666 /dev/ttyS0
     cd gappi && git pull && cd
-    ./gappi/command.sh
+    sudo chmod u+r+x gappi/command.sh && ./gappi/command.sh
 
 ## etc
 ### scp
