@@ -12,11 +12,22 @@ from PIL import Image
 
 parser = ArgumentParser()
 parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
+parser.add_argument("-gs1", "--gap_sleep1", default=1, type=int, help="gap sleep1")
+parser.add_argument("-gs2", "--gap_sleep2", default=3, type=int, help="gap sleep2")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 args = parser.parse_args()
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
+
+sd = 27
+GPIO.setup(sd, GPIO.OUT)
+
+print("[I] GAP HIGH")
+GPIO.output(sd, GPIO.LOW)
+sleep(args.gap_sleep1)
+GPIO.output(sd, GPIO.HIGH)
+sleep(args.gap_sleep2)
 
 tr = 17  # trigger ir
 GPIO.setup(tr, GPIO.OUT)
@@ -105,6 +116,9 @@ while LOOP:
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
+
+    print("[I] GAP LOW")
+    GPIO.output(sd, GPIO.LOW)
 
     LOOP = args.loop
     sleep(args.sleep)
