@@ -19,7 +19,7 @@
     * * * * * sleep 40: python3 gappi/main.py > log/main.py && python3 gappi/poster.py > log/poster.log
     * * * * * sleep 60: python3 gappi/main.py > log/main.py && python3 gappi/poster.py > log/poster.log
 
-## zhsrc
+# [zhsrc]
     ## custom alias
     alias sz="source ~/.zshrc"
     alias z="sudo nano ~/.zshrc"
@@ -37,7 +37,8 @@
 
     ## custom command
     sudo chmod 666 /dev/ttyS0
-    cd gappi && git pull && sudo chmod u+r+x command.sh && ./command.sh && cd
+    cd gappi && git reset --hard && git pull
+    sudo chmod u+r+x command.sh && ./command.sh && cd
 
 ## etc
 ### scp
