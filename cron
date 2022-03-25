@@ -1,0 +1,3 @@
+*/30 9-17 * * 1-5 cd gappi && git pull && sudo chmod u+r+x command.sh && ./command.sh && cd
+
+*/2 9-17 * * 1-5 python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log

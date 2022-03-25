@@ -114,11 +114,12 @@ while LOOP:
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
     img.save(ir_img_file)
 
+    print("[I] GAP LOW")
+    GPIO.output(sd, GPIO.LOW)
+
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
 
-    print("[I] GAP LOW")
-    GPIO.output(sd, GPIO.LOW)
 
     LOOP = args.loop
     sleep(args.sleep)

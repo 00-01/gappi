@@ -4,8 +4,13 @@
 # [GIT]
     git clone https://github.com/00-01/gappi.git
 
+### hook
+    cd /usr/share/git-core/templates/hooks
+    sudo touch post-receive
+    sudo chmod u+r+x post-receive
+
 # [CRON]
-    */1 9-17 * * 1-5 python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
+    */2 9-17 * * 1-5 python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
 
     ### LOAD TEST
     #@reboot python3 gappi/main.py -l 1 -s 5 > log/main.log
