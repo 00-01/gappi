@@ -52,7 +52,7 @@ def post_data(dir_name, det_data, ir_file, rgb_file):
 LOOP = 1
 while LOOP:
     now = datetime.now()
-    dtime = now.strftime("%Y%m%d-%H%M%S")
+    dtime = now.strftime("%Y/%m/%d-%H:%M:%S")
     print(f"posting_time: {dtime}")
 
     targets = glob(f'data/*')
