@@ -27,7 +27,6 @@ with open('device_id.txt') as f:
 
 url = 'http://115.68.37.86:8180/api/data'
 
-
 # host = "192.168.0.5"
 # username = "z"
 # password = ""
@@ -54,7 +53,7 @@ LOOP = 1
 while LOOP:
     now = datetime.now()
     dtime = now.strftime("%Y%m%d-%H%M%S")
-    print([dtime])
+    print(f"posting_time: {dtime}")
 
     targets = glob(f'data/*')
     if len(targets) < 1:
@@ -72,28 +71,27 @@ while LOOP:
             print("[I] posting")
             with open(det, "r") as file:
                 det_data = file.readline().rstrip()
-        # # bbox
-        #     if args.box==1:
-        #         if len(det_data)>2:
-        #             img = image.imread(ir)
-        #             box = det_data.split(",")
-        #             box = box[1:]
-        #             fig, ax = pyplot.subplots()
-        #             ax.imshow(img)
-        #             for i in box:
-        #                 i = i.split('x')
-        #                 rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
-        #                 ax.add_patch(rect)
-        #                 # print(rect)
-        #             fig.savefig(ir)
-            # post
+    ## bbox
+            if args.box==1:
+                if len(det_data)>2:
+                    img = image.imread(ir)
+                    box = det_data.split(",")
+                    box = box[1:]
+                    fig, ax = pyplot.subplots()
+                    ax.imshow(img)
+                    for i in box:
+                        i = i.split('x')
+                        rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
+                        ax.add_patch(rect)
+                    fig.savefig(ir)
+    ## post
             result = post_data(target, det_data, ir, rgb)
             print(result)
         except IndexError as e:
             print(f"[!] {e.args}")
             pass
 
-        # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
+    # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
 
     LOOP = args.loop
     sleep(args.sleep2)
