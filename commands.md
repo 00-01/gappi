@@ -63,5 +63,3 @@
 
 ### switch to local time
     sudo timedatectl set-local-rtc 1
-
-    
