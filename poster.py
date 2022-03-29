@@ -65,13 +65,13 @@ while LOOP:
         det = glob(f"{target}/*_DET.txt")
         ir = glob(f"{target}/*_IR.png")
         rgb = glob(f"{target}/*_RGB.jpg")
-        det, ir, rgb = det[0], ir[0], rgb[0]
 
         try:
+            det, ir, rgb = det[0], ir[0], rgb[0]
             print("[I] posting")
             with open(det, "r") as file:
                 det_data = file.readline().rstrip()
-    ## bbox
+            ## bbox
             if args.box==1:
                 if len(det_data)>2:
                     img = image.imread(ir)
@@ -84,7 +84,7 @@ while LOOP:
                         rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
                         ax.add_patch(rect)
                     fig.savefig(ir)
-    ## post
+            ## post
             result = post_data(target, det_data, ir, rgb)
             print(result)
         except IndexError as e:
