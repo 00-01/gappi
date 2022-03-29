@@ -26,8 +26,7 @@ GPIO.setup(sd, GPIO.OUT)
 GPIO.output(sd, GPIO.LOW)
 
 tr = 17  # ir trigger
-GPIO.setup(tr, GPIO.OUT)
-GPIO.output(tr, GPIO.LOW)
+GPIO.setup(tr, GPIO.IN)
 
 cal = 18  # ir calibration
 GPIO.setup(cal, GPIO.OUT)
@@ -76,9 +75,9 @@ while LOOP:
 
     if args.calibration==0:
         print("[TX] TRIGGER")
-        GPIO.output(tr, GPIO.HIGH)
+        GPIO.setup(tr, GPIO.OUT)
         sleep(0.1)
-        GPIO.output(tr, GPIO.LOW)
+        GPIO.setup(tr, GPIO.IN)
     else:
         print("[TX] CALIBRATION TRIGGER")
         GPIO.output(cal, GPIO.HIGH)
