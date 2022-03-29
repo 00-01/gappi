@@ -42,7 +42,7 @@
 
     ## custom command
     sudo chmod 666 /dev/ttyS0
-    cd gappi && git reset --hard && git pull
+    cd gappi && git reset --hard && git pull > ../log/git.log
     sudo chmod u+r+x command.sh && ./command.sh && cd
 
 ## etc

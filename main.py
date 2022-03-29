@@ -74,13 +74,13 @@ while LOOP:
     ser.reset_input_buffer()
     ser.reset_output_buffer()
 
-    print("[TX] TRIGGER")
-    GPIO.output(tr, GPIO.HIGH)
-    sleep(0.1)
-    GPIO.output(tr, GPIO.LOW)
-
-    if args.calibration==1:
-        print("[I] RE-CALIBRATING IR SENSOR")
+    if args.calibration==0:
+        print("[TX] TRIGGER")
+        GPIO.output(tr, GPIO.HIGH)
+        sleep(0.1)
+        GPIO.output(tr, GPIO.LOW)
+    else:
+        print("[TX] CALIBRATION TRIGGER")
         GPIO.output(cal, GPIO.HIGH)
         sleep(0.1)
         GPIO.output(cal, GPIO.LOW)
