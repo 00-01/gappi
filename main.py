@@ -12,26 +12,26 @@ from PIL import Image
 
 parser = ArgumentParser()
 parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
-parser.add_argument("-gs1", "--gap_sleep1", default=1, type=int, help="gap sleep1")
-parser.add_argument("-gs2", "--gap_sleep2", default=3, type=int, help="gap sleep2")
+# parser.add_argument("-gs1", "--gap_sleep1", default=1, type=int, help="gap sleep1")
+# parser.add_argument("-gs2", "--gap_sleep2", default=3, type=int, help="gap sleep2")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
+parser.add_argument("-c", "--calibration", default=0, type=int, help="calibration")
 args = parser.parse_args()
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-sd = 27
+sd = 27 # gap ON/OFF
 GPIO.setup(sd, GPIO.OUT)
-
-print("[I] GAP HIGH")
 GPIO.output(sd, GPIO.LOW)
-sleep(args.gap_sleep1)
-GPIO.output(sd, GPIO.HIGH)
-sleep(args.gap_sleep2)
 
-tr = 17  # trigger ir
+tr = 17  # ir trigger
 GPIO.setup(tr, GPIO.OUT)
 GPIO.output(tr, GPIO.LOW)
+
+cal = 18  # ir calibration
+GPIO.setup(cal, GPIO.OUT)
+GPIO.output(cal, GPIO.LOW)
 
 ser = serial.Serial(port='/dev/ttyS0', baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=10, )
 
@@ -41,6 +41,11 @@ img_size = w*h*size
 det_size = 3+(30*12)
 threshold = 40
 
+print("[I] GAP HIGH")
+sleep(1)
+GPIO.output(sd, GPIO.HIGH)
+sleep(3)
+
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
@@ -49,7 +54,7 @@ while LOOP:
     camera = PiCamera()
     start = time()
     now = datetime.now()
-    dt = now.strftime("%Y-%m-%d  %H:%M:%S")
+    dt = now.strftime("%Y/%m/%d__%H:%M:%S")
     dtime = now.strftime("%Y%m%d-%H%M%S")
 
     print(f"[START] {'-'*20} [{dt}]")
@@ -73,6 +78,12 @@ while LOOP:
     GPIO.output(tr, GPIO.HIGH)
     sleep(0.1)
     GPIO.output(tr, GPIO.LOW)
+
+    if args.calibration==1:
+        print("[I] RE-CALIBRATING IR SENSOR")
+        GPIO.output(cal, GPIO.HIGH)
+        sleep(0.1)
+        GPIO.output(cal, GPIO.LOW)
 
     print("[S] capturing rgb image")
     camera.capture(rgb_file)
