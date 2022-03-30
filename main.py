@@ -81,7 +81,7 @@ while LOOP:
     else:
         print("[TX] CALIBRATION TRIGGER")
         GPIO.output(cal, GPIO.HIGH)
-        sleep(0.1)
+        sleep(0.01)
         GPIO.output(cal, GPIO.LOW)
 
     print("[S] capturing rgb image")
