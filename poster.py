@@ -37,7 +37,8 @@ def post_data(dir_name, det_data, ir_file, rgb_file):
             "predicted": det_data,
             }
     files = {"ir_image": (ir_file, open(ir_file, 'rb'), 'image/png'),
-             "rgb_image": (rgb_file, open(rgb_file, 'rb'), 'image/jpeg')# "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
+             "rgb_image": (rgb_file, open(rgb_file, 'rb'), 'image/jpeg')
+             # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
              }
     r = post(url, data=data, files=files)
 
