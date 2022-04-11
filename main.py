@@ -40,6 +40,7 @@ size = 1
 img_size = w*h*size
 det_size = 3+(30*12)
 threshold = 40
+rotate_device_list = ["02"]
 rotation = 270
 
 print("[I] GAP HIGH")
@@ -126,7 +127,7 @@ while LOOP:
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
     img.save(ir_file)
 
-    if device_id=="02":
+    if device_id in rotate_device_list:
         print(f"[I] rotating device: {device_id}")
         rgb_img = Image.open(rgb_file)
         rgb_img = rgb_img.rotate(rotation)
@@ -135,7 +136,6 @@ while LOOP:
         ir_img = Image.open(ir_file)
         ir_img = ir_img.rotate(rotation)
         ir_img.save(ir_file)
-
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
