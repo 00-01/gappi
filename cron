@@ -1,5 +1,5 @@
 */31 6-23 * * * cd gappi && git pull >> ../log/git.log && date >> ../log/git.log && sudo chmod u+r+x command.sh && ./command.sh && cd
-#*/1 6-23 * * * python3 gappi/main.py >> log/main.log && python3 gappi/poster.py >> log/poster.log
+*/1 6-23 * * * python3 gappi/main.py >> log/main.log && python3 gappi/poster.py >> log/poster.log
 0 0 * * * python3 gappi/main.py -o 39612 >> log/main.log && python3 gappi/poster.py >> log/poster.log
 #python3 gappi/main.py -o 21845 > log/main.log && python3 gappi/poster.py > log/poster.log
 
