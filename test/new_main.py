@@ -32,7 +32,9 @@ GPIO.setup(sd, GPIO.OUT)
 GPIO.output(sd, GPIO.LOW)
 
 tr = 17  # ir trigger
-GPIO.setup(tr, GPIO.IN)
+# GPIO.setup(tr, GPIO.IN)
+GPIO.setup(tr, GPIO.OUT)
+GPIO.output(tr, GPIO.HIGH)
 
 ser = serial.Serial(port='/dev/ttyS0',
                     baudrate=115200,
@@ -58,9 +60,12 @@ with open('device_id.txt') as f:
 LOOP = 1
 while LOOP:
     print("[TX] TRIGGER")
-    GPIO.setup(tr, GPIO.OUT)
+    # GPIO.setup(tr, GPIO.OUT)
+    GPIO.output(tr, GPIO.LOW)
     sleep(0.1)
-    GPIO.setup(tr, GPIO.IN)
+    # GPIO.setup(tr, GPIO.IN)
+    GPIO.output(tr, GPIO.HIGH)
+
 
     start = time()
     now = datetime.now()
@@ -103,7 +108,7 @@ while LOOP:
     while len(rx_det) < (det_size):
         new_det = ser.read()
         rx_det += new_det
-        # print(len(rx_det))
+        print(len(rx_det))
 
     print("[RX] IMAGE")
     # sleep(0.1)
@@ -111,9 +116,12 @@ while LOOP:
     while len(rx_img) < (img_size):
         new_img = ser.read()
         rx_img += new_img
-        # print(len(rx_img))
+        print(len(rx_img))
 
-    print("[S] saving detection to txt")
+    print("[I] GAP LOW")
+    GPIO.output(sd, GPIO.LOW)
+
+    print("[I] saving detection to txt")
     det = ""
     det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
     with open(det_file, "w") as file:
@@ -130,12 +138,12 @@ while LOOP:
                         st = 1
             else: break
 
-    print("[S] saving binary to image")
+    print("[I] saving binary to image")
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
+    if device_id=="02":
+        img = img.rotate(90)
+        # img = img.transpose(Image.ROTATE_90)
     img.save(ir_img_file)
-
-    print("[I] GAP LOW")
-    GPIO.output(sd, GPIO.LOW)
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)

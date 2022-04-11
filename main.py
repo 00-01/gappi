@@ -15,6 +15,7 @@ parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 # parser.add_argument("-gs1", "--gap_sleep1", default=1, type=int, help="gap sleep1")
 # parser.add_argument("-gs2", "--gap_sleep2", default=3, type=int, help="gap sleep2")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
+parser.add_argument("-r", "--rotation", default=0, type=int, help="ratate image")
 parser.add_argument("-c", "--calibration", default=0, type=int, help="calibration")
 args = parser.parse_args()
 
@@ -39,6 +40,7 @@ size = 1
 img_size = w*h*size
 det_size = 3+(30*12)
 threshold = 40
+rotation = 270
 
 print("[I] GAP HIGH")
 sleep(1)
@@ -63,7 +65,7 @@ while LOOP:
 
     base_dir = f"data/{dtime}/"
     det_file = f"{base_dir}{dtime}_{device_id}_DET.txt"
-    ir_img_file = f"{base_dir}{dtime}_{device_id}_IR.png"
+    ir_file = f"{base_dir}{dtime}_{device_id}_IR.png"
     rgb_file = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
 
     if not os.path.exists(base_dir):
@@ -102,6 +104,9 @@ while LOOP:
     print("[TX] THRESHOLD")
     ser.write(threshold.to_bytes(4, byteorder='little'))
 
+    print("[I] GAP LOW")
+    GPIO.output(sd, GPIO.LOW)
+
     print("[S] saving detection to txt")
     det = ""
     det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
@@ -119,10 +124,18 @@ while LOOP:
 
     print("[S] saving binary to image")
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
-    img.save(ir_img_file)
+    img.save(ir_file)
 
-    print("[I] GAP LOW")
-    GPIO.output(sd, GPIO.LOW)
+    if device_id=="02":
+        print(f"[I] rotating device: {device_id}")
+        rgb_img = Image.open(rgb_file)
+        rgb_img = rgb_img.rotate(rotation)
+        rgb_img.save(rgb_file)
+
+        ir_img = Image.open(ir_file)
+        ir_img = ir_img.rotate(rotation)
+        ir_img.save(ir_file)
+
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
