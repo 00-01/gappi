@@ -6,7 +6,6 @@ from time import sleep, time
 
 import RPi.GPIO as GPIO
 import serial
-from matplotlib import cm, image, patches, pyplot
 from picamera import PiCamera
 from PIL import Image
 
@@ -70,7 +69,6 @@ while LOOP:
     sleep(0.1)
     GPIO.setup(tr, GPIO.IN)
     # GPIO.output(tr, GPIO.HIGH)
-
 
     start = time()
     now = datetime.now()
@@ -155,19 +153,26 @@ while LOOP:
 
     if args.box == 1:
         print("[I] draw bbox")
+        from matplotlib import cm, image, patches, pyplot as plt
+        import io
         with open(det_file, "r") as file:
             det_data = file.readline().rstrip()
         if len(det_data) > 2:
-            img = image.imread(ir_file)
+            # img = image.imread(ir_file)
+            img = Image.open(ir_file)
             box = det_data.split(",")
             box = box[1:]
-            fig, ax = pyplot.subplots()
+            fig, ax = plt.subplots()
             ax.imshow(img, cmap=cm.inferno, vmin=args.min, vmax=args.max,)
             for i in box:
                 i = i.split('x')
                 rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
                 ax.add_patch(rect)
-            pyplot.savefig(ir_file)
+                ax.axis('off')
+            img_buf = io.BytesIO()
+            fig.savefig(img_buf, format='png')
+            im = Image.open(img_buf)
+            im.save(ir_file)
 
     if device_id in rotate_device_list:
         print(f"[I] rotating device: {device_id}")
