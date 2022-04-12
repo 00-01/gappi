@@ -167,7 +167,7 @@ while LOOP:
                 i = i.split('x')
                 rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
                 ax.add_patch(rect)
-            fig.savefig(ir_file)
+            pyplot.savefig(ir_file)
 
     if device_id in rotate_device_list:
         print(f"[I] rotating device: {device_id}")
