@@ -6,7 +6,7 @@ from time import sleep, time
 
 import RPi.GPIO as GPIO
 import serial
-from matplotlib import image, patches, pyplot
+from matplotlib import cm, image, patches, pyplot
 from picamera import PiCamera
 from PIL import Image
 
@@ -17,6 +17,8 @@ parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-r", "--rotation", default=0, type=int, help="ratate image")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
+parser.add_argument("-min", "--min", default=0, type=int, help="min")
+parser.add_argument("-max", "--max", default=255, type=int, help="max")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
 
@@ -160,7 +162,7 @@ while LOOP:
             box = det_data.split(",")
             box = box[1:]
             fig, ax = pyplot.subplots()
-            ax.imshow(img)
+            ax.imshow(img, cmap=cm.inferno, vmin=args.min, vmax=args.max,)
             for i in box:
                 i = i.split('x')
                 rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
