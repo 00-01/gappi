@@ -75,7 +75,7 @@ while LOOP:
     dt = now.strftime("%Y/%m/%d__%H:%M:%S")
     dtime = now.strftime("%Y%m%d-%H%M%S")
     print(f"[START] {'-'*20} [{dt}]")
-    print(f"[I] loop is {args.loop}, sleep is {args.sleep} sec")
+    print(f"[I] loop: {args.loop}, sleep: {args.sleep} sec")
 
     camera = PiCamera()
     camera.start_preview()
@@ -155,6 +155,7 @@ while LOOP:
         print("[I] draw bbox")
         from matplotlib import cm, image, patches, pyplot as plt
         import io
+        import numpy as np
         with open(det_file, "r") as file:
             det_data = file.readline().rstrip()
         if len(det_data) > 2:
@@ -172,6 +173,11 @@ while LOOP:
             img_buf = io.BytesIO()
             fig.savefig(img_buf, format='png')
             im = Image.open(img_buf)
+            arr = np.asarray(im, dtype='uint8')
+            w, h, c = arr.shape
+            w1, h1 = 60, 140
+            arr = arr[w1:w-w1, h1:h-h1, :]
+            im = Image.fromarray(arr)
             im.save(ir_file)
 
     if device_id in rotate_device_list:
