@@ -5,7 +5,6 @@ from glob import glob
 from os import system
 from time import sleep
 
-from matplotlib import image, patches, pyplot
 from requests import post
 
 
@@ -14,7 +13,6 @@ parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 parser.add_argument("-s1", "--sleep1", default=0, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-d", "--delete", default=1, type=int, help="delete sent file")
-parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
 
@@ -72,19 +70,6 @@ while LOOP:
             print("[I] posting")
             with open(det, "r") as file:
                 det_data = file.readline().rstrip()
-            ## bbox
-            if args.box==1:
-                if len(det_data)>2:
-                    img = image.imread(ir)
-                    box = det_data.split(",")
-                    box = box[1:]
-                    fig, ax = pyplot.subplots()
-                    ax.imshow(img)
-                    for i in box:
-                        i = i.split('x')
-                        rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
-                        ax.add_patch(rect)
-                    fig.savefig(ir)
             ## post
             result = post_data(target, det_data, ir, rgb)
             print(result)

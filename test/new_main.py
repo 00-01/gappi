@@ -6,18 +6,17 @@ from time import sleep, time
 
 import RPi.GPIO as GPIO
 import serial
+from matplotlib import image, patches, pyplot
 from picamera import PiCamera
 from PIL import Image
 
-# bin(39612) = 1001101010111100
-# bin(43690) = 1010101010101010
-# bin(21845) = 0101010101010101
 
 parser = ArgumentParser()
 parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-r", "--rotation", default=0, type=int, help="ratate image")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
+parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
 
@@ -110,13 +109,20 @@ while LOOP:
         rx_det += new_det
         # print(len(rx_det))
 
-    print("[RX] IMAGE")
+    print("[RX] IMAGE_1")
     # sleep(0.1)
     rx_img = ser.readline()
     while len(rx_img) < (img_size):
         new_img = ser.read()
         rx_img += new_img
         # print(len(rx_img))
+
+    # print("[RX] IMAGE_2")
+    # # sleep(0.1)
+    # rx_img = ser.readline()
+    # while len(rx_img) < (img_size):
+    #     new_img = ser.read()
+    #     rx_img += new_img
 
     # print("[TX] THRESHOLD")
     # ser.write(threshold.to_bytes(2, byteorder='little'))
@@ -144,6 +150,22 @@ while LOOP:
     print("[I] saving binary to image")
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
     img.save(ir_file)
+
+    if args.box == 1:
+        print("[I] draw bbox")
+        with open(det_file, "r") as file:
+            det_data = file.readline().rstrip()
+        if len(det_data) > 2:
+            img = image.imread(ir_file)
+            box = det_data.split(",")
+            box = box[1:]
+            fig, ax = pyplot.subplots()
+            ax.imshow(img)
+            for i in box:
+                i = i.split('x')
+                rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
+                ax.add_patch(rect)
+            fig.savefig(ir_file)
 
     if device_id in rotate_device_list:
         print(f"[I] rotating device: {device_id}")
