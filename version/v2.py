@@ -15,7 +15,7 @@ parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-r", "--rotation", default=0, type=int, help="ratate image")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
-parser.add_argument("-b", "--box", default=1, type=int, help="draw box")
+parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 parser.add_argument("-min", "--min", default=0, type=int, help="min")
 parser.add_argument("-max", "--max", default=255, type=int, help="max")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
@@ -153,9 +153,11 @@ while LOOP:
 
     if args.box == 1:
         print("[I] draw bbox")
-        from matplotlib import cm, image, patches, pyplot as plt
-        import io
-        import numpy as np
+        from matplotlib.cm import magma
+        from matplotlib.patches import Rectangle
+        from matplotlib.pyplot import subplots
+        from io import BytesIO
+        from numpy import asarray
         with open(det_file, "r") as file:
             det_data = file.readline().rstrip()
         if len(det_data) > 2:
@@ -163,17 +165,17 @@ while LOOP:
             img = Image.open(ir_file)
             box = det_data.split(",")
             box = box[1:]
-            fig, ax = plt.subplots()
-            ax.imshow(img, cmap=cm.inferno, vmin=args.min, vmax=args.max,)
+            fig, ax = subplots()
+            ax.imshow(img, cmap=magma, vmin=args.min, vmax=args.max,)
             for i in box:
                 i = i.split('x')
-                rect = patches.Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
+                rect = Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
                 ax.add_patch(rect)
                 ax.axis('off')
-            img_buf = io.BytesIO()
+            img_buf = BytesIO()
             fig.savefig(img_buf, format='png')
             im = Image.open(img_buf)
-            arr = np.asarray(im, dtype='uint8')
+            arr = asarray(im, dtype='uint8')
             w, h, c = arr.shape
             w1, h1 = 60, 140
             arr = arr[w1:w-w1, h1:h-h1, :]
