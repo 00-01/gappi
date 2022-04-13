@@ -50,7 +50,7 @@ size = 1
 img_size = w*h*size
 det_size = 3+(30*12)
 threshold = 40
-rotate_device_list = ["02"]
+rotated_device_list = ["02"]
 rotation = 270
 
 print("[I] GAP HIGH")
@@ -138,10 +138,11 @@ while LOOP:
         st = 0
         for i in det_str:
             if 0 < len(i) < 12 and "\00" not in i:
-                det += i
                 if st != 0:
                     file.write(f",")
+                    det += ","
                 file.write(f"{i}")
+                det += i
                 st = 1
             else: break
 
@@ -174,13 +175,13 @@ while LOOP:
             fig.savefig(img_buf, format='png')
             im = Image.open(img_buf)
             arr = asarray(im, dtype='uint8')
-            w, h, c = arr.shape
-            w1, h1 = 60, 140
-            arr = arr[w1:w-w1, h1:h-h1, :]
+            w1, h1, c1 = arr.shape
+            w2, h2 = 60, 140
+            arr = arr[w2:w1-w2, h2:h1-h2, :]
             im = Image.fromarray(arr)
             im.save(ir_file)
 
-    if device_id in rotate_device_list:
+    if device_id in rotated_device_list:
         print(f"[I] rotating device: {device_id}")
         rgb_img = Image.open(rgb_file)
         rgb_img = rgb_img.rotate(rotation)
@@ -189,6 +190,17 @@ while LOOP:
         ir_img = Image.open(ir_file)
         ir_img = ir_img.rotate(rotation)
         ir_img.save(ir_file)
+
+        rotated_det = ""
+        det = det.split(",")
+        rotated_det += f"{det[0]},"
+        for i in det[1:]:
+            i = i.split("x")
+            i[0], i[1] = int(i[0]), int(i[1])
+            # x, y = w-1-int(i[0]), h-1-int(i[1])
+            rotated_det += f"{w-1-i[1]}x{i[0]}x{i[2]}x{i[3]},"
+        with open(det_file, "w") as file:
+            file.write(rotated_det[:-1])
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
