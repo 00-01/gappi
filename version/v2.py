@@ -137,14 +137,12 @@ while LOOP:
         det_str = det_str.split(";")
         st = 0
         for i in det_str:
-            if len(i) < 12:
-                if "\00" not in i:
-                    if i is not None:
-                        det += i
-                        if st != 0:
-                            file.write(f",")
-                        file.write(f"{i}")
-                        st = 1
+            if 0 < len(i) < 12 and "\00" not in i:
+                det += i
+                if st != 0:
+                    file.write(f",")
+                file.write(f"{i}")
+                st = 1
             else: break
 
     print("[I] saving binary to image")
