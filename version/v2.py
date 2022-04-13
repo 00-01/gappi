@@ -153,7 +153,7 @@ while LOOP:
 
     if args.box == 1:
         print("[I] draw bbox")
-        from matplotlib.cm import magma
+        from matplotlib import cm
         from matplotlib.patches import Rectangle
         from matplotlib.pyplot import subplots
         from io import BytesIO
@@ -166,7 +166,7 @@ while LOOP:
             box = det_data.split(",")
             box = box[1:]
             fig, ax = subplots()
-            ax.imshow(img, cmap=magma, vmin=args.min, vmax=args.max,)
+            ax.imshow(img, cmap=cm.magma, vmin=args.min, vmax=args.max,)
             for i in box:
                 i = i.split('x')
                 rect = Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
