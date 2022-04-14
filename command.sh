@@ -1,12 +1,12 @@
 crontab cron
 
-#pip3 install -U pip
-#sudo apt install gfortran libopenblas-dev liblapack-dev libhdf5-dev
-#sudo pip3 install setuptools wheel h5py
+pip3 install -U pip
+sudo apt install gfortran libopenblas-dev liblapack-dev libhdf5-dev
+sudo pip3 install setuptools wheel h5py
 
 
 
-pip3 install tensorflow
+#pip3 install tensorflow
 #pip3 install matplotlib
 
 
