@@ -160,7 +160,6 @@ while LOOP:
         with open(det_file, "r") as file:
             det_data = file.readline().rstrip()
         if len(det_data) > 2:
-            # img = image.imread(ir_file)
             img = Image.open(ir_file)
             box = det_data.split(",")
             box = box[1:]

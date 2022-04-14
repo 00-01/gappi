@@ -23,7 +23,7 @@ print(f"sleep2 is {args.sleep2} seconds")
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
-# with open('server_address.txt') as f:
+# with open('web_server_address.txt') as f:
 #     url = f.readline().rstrip()
 url = 'http://115.68.37.86:8180/api/data'
 # url = 'https://sbrt.mills.co.kr/api/data'
