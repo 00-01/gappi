@@ -15,7 +15,7 @@ parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-r", "--rotation", default=0, type=int, help="ratate image")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
-parser.add_argument("-b", "--box", default=1, type=int, help="draw box")
+parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 parser.add_argument("-min", "--min", default=0, type=int, help="min")
 parser.add_argument("-max", "--max", default=255, type=int, help="max")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
@@ -50,7 +50,7 @@ size = 1
 img_size = w*h*size
 det_size = 3+(30*12)
 threshold = 40
-rotated_device_list = ["02"]
+rotated_device_list = ["01", "02", "03"]
 rotation = 270
 
 print("[I] GAP HIGH")
