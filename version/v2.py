@@ -87,19 +87,19 @@ while LOOP:
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
 
-    ser.flush()
-    ser.reset_input_buffer()
-    ser.reset_output_buffer()
-
-    print(f"[TX] CALIBRATION: {args.offset}")
-    sleep(0.3)
-    ser.write(args.offset.to_bytes(2, byteorder='little'))
-
     print("[S] capturing rgb image")
     camera.capture(rgb_file)
     camera.stop_preview()
     camera.close()
     # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
+
+    ser.flush()
+    ser.reset_input_buffer()
+    ser.reset_output_buffer()
+
+    print(f"[TX] CALIBRATION: {args.offset}")
+    # sleep(0.2)
+    ser.write(args.offset.to_bytes(2, byteorder='little'))
 
     print("[RX] DETECTION")
     # sleep(0.1)
