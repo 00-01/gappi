@@ -9,15 +9,19 @@ args = parser.parse_args()
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
-v1 = ["04", "05", "06"]
-v2 = ["01", "02", "03", "07"]
+op = ["01", "02", "03", "05"]
+dev = ["04", "06", "07"]
 
 # if device_id in operation:
 #     os.system(f"/etc/wpa_supplicant/wpa_supplicant.conf gappi/network/SBRT000{args.num}")
 # else:
 #     os.system(f"/etc/wpa_supplicant/wpa_supplicant.conf gappi/network/test")
 
-if device_id in v1:
-    from version import v1
+if device_id in op:
+    from version import op
 else:
-    from version import v2
+    from version import dev
+
+'''
+TODO: change 04 and 05
+'''

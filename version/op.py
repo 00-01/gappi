@@ -13,7 +13,6 @@ from PIL import Image
 parser = ArgumentParser()
 parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
-parser.add_argument("-r", "--rotation", default=0, type=int, help="ratate image")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 parser.add_argument("-min", "--min", default=0, type=int, help="min")
@@ -35,8 +34,6 @@ GPIO.output(sd, GPIO.LOW)
 
 tr = 17  # ir trigger
 GPIO.setup(tr, GPIO.IN)
-# GPIO.setup(tr, GPIO.OUT)
-# GPIO.output(tr, GPIO.HIGH)
 
 ser = serial.Serial(port='/dev/ttyS0',
                     baudrate=115200,
@@ -50,7 +47,6 @@ size = 1
 img_size = w*h*size
 det_size = 3+(30*12)
 threshold = 40
-rotated_device_list = ["01", "02", "03"]
 rotation = 270
 
 print("[I] GAP HIGH")
@@ -65,10 +61,8 @@ LOOP = 1
 while LOOP:
     print("[TX] TRIGGER")
     GPIO.setup(tr, GPIO.OUT)
-    # GPIO.output(tr, GPIO.LOW)
     sleep(0.1)
     GPIO.setup(tr, GPIO.IN)
-    # GPIO.output(tr, GPIO.HIGH)
 
     start = time()
     now = datetime.now()
@@ -180,26 +174,25 @@ while LOOP:
             im = Image.fromarray(arr)
             im.save(ir_file)
 
-    if device_id in rotated_device_list:
-        print(f"[I] rotating device: {device_id}")
-        rgb_img = Image.open(rgb_file)
-        rgb_img = rgb_img.rotate(rotation)
-        rgb_img.save(rgb_file)
+    print(f"[I] rotating device: {device_id}")
+    rgb_img = Image.open(rgb_file)
+    rgb_img = rgb_img.rotate(rotation)
+    rgb_img.save(rgb_file)
 
-        ir_img = Image.open(ir_file)
-        ir_img = ir_img.rotate(rotation)
-        ir_img.save(ir_file)
+    ir_img = Image.open(ir_file)
+    ir_img = ir_img.rotate(rotation)
+    ir_img.save(ir_file)
 
-        rotated_det = ""
-        det = det.split(",")
-        rotated_det += f"{det[0]},"
-        for i in det[1:]:
-            i = i.split("x")
-            i[0], i[1] = int(i[0]), int(i[1])
-            # x, y = w-1-int(i[0]), h-1-int(i[1])
-            rotated_det += f"{w-1-i[1]}x{i[0]}x{i[2]}x{i[3]},"
-        with open(det_file, "w") as file:
-            file.write(rotated_det[:-1])
+    rotated_det = ""
+    det = det.split(",")
+    rotated_det += f"{det[0]},"
+    for i in det[1:]:
+        i = i.split("x")
+        i[0], i[1] = int(i[0]), int(i[1])
+        # x, y = w-1-int(i[0]), h-1-int(i[1])
+        rotated_det += f"{w-1-i[1]}x{i[0]}x{i[2]}x{i[3]},"
+    with open(det_file, "w") as file:
+        file.write(rotated_det[:-1])
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
