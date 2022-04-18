@@ -8,6 +8,7 @@ import RPi.GPIO as GPIO
 import serial
 from picamera import PiCamera
 from PIL import Image
+from numpy import asarray
 
 
 parser = ArgumentParser()
@@ -139,7 +140,13 @@ while LOOP:
     print(f"[I] rotating device: {device_id}")
     rgb_img = Image.open(rgb_file)
     rgb_img = rgb_img.rotate(rotation)
-    rgb_img.save(rgb_file)
+    print(f"[I] crop rgb")
+    rgb_arr = asarray(rgb_img, dtype='uint8')
+    h_rgb, w_rgb, c = rgb_arr.shape
+    w_cut, h_cut = 160, 40
+    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    im = Image.fromarray(rgb_arr)
+    im.save(rgb_file)
 
     ir_img = Image.open(ir_file)
     ir_img = ir_img.rotate(rotation)

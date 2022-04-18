@@ -144,6 +144,14 @@ while LOOP:
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
     img.save(ir_file)
 
+    print(f"[I] cut rgb file")
+    rgb_img = Image.open(rgb_file)
+    rgb_arr = asarray(rgb_img, dtype='uint8')
+    r_w, r_h = rgb_arr.shape
+    w_c, h_c = 140, 20
+    rgb_arr = rgb_arr[w_c:r_w-w_c, h_c:r_h-h_c, :]
+    rgb_arr.save(rgb_file)
+
     if args.box == 1:
         print("[I] draw bbox")
         from matplotlib import cm
