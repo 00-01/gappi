@@ -17,7 +17,13 @@ parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 parser.add_argument("-min", "--min", default=0, type=int, help="min")
 parser.add_argument("-max", "--max", default=255, type=int, help="max")
+# parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
+
+# host = "192.168.0.5"
+# username = "z"
+# password = ""
+# save_dir = "/home/z/MVPC10/DATA/"
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -95,6 +101,7 @@ while LOOP:
     while len(rx_det) < (det_size):
         new_det = ser.read()
         rx_det += new_det
+        # print(len(rx_det))
 
     print("[RX] IMAGE_1")
     # sleep(0.1)
@@ -102,6 +109,7 @@ while LOOP:
     while len(rx_img) < (img_size):
         new_img = ser.read()
         rx_img += new_img
+        # print(len(rx_img))
 
     # print("[RX] IMAGE_2")
     # # sleep(0.1)
@@ -136,6 +144,36 @@ while LOOP:
     img = Image.frombuffer("L", (w, h), rx_img, 'raw', "L", 0, 1)
     img.save(ir_file)
 
+    if args.box == 1:
+        print("[I] draw bbox")
+        from matplotlib import cm
+        from matplotlib.patches import Rectangle
+        from matplotlib.pyplot import subplots
+        from io import BytesIO
+        from numpy import asarray
+        with open(det_file, "r") as file:
+            det_data = file.readline().rstrip()
+        if len(det_data) > 2:
+            img = Image.open(ir_file)
+            box = det_data.split(",")
+            box = box[1:]
+            fig, ax = subplots()
+            ax.imshow(img, cmap=cm.magma, vmin=args.min, vmax=args.max,)
+            for i in box:
+                i = i.split('x')
+                rect = Rectangle((int(i[0]), int(i[1])), int(i[2]), int(i[3]), edgecolor='w', facecolor="none")
+                ax.add_patch(rect)
+                ax.axis('off')
+            img_buf = BytesIO()
+            fig.savefig(img_buf, format='png')
+            im = Image.open(img_buf)
+            arr = asarray(im, dtype='uint8')
+            w1, h1, c1 = arr.shape
+            w2, h2 = 60, 140
+            arr = arr[w2:w1-w2, h2:h1-h2, :]
+            im = Image.fromarray(arr)
+            im.save(ir_file)
+
     print(f"[I] rotating device: {device_id}")
     rgb_img = Image.open(rgb_file)
     rgb_img = rgb_img.rotate(rotation)
@@ -158,6 +196,10 @@ while LOOP:
 
     end = time()-start
     print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec]", "\n"*2)
+
+    # if args["scp"]:
+    #     print("uploading to server")
+    #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
 
     LOOP = args.loop
     sleep(args.sleep)
