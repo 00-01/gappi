@@ -143,8 +143,10 @@ while LOOP:
     print(f"[I] crop rgb")
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
-    h_cut, w_cut = 60, 180
-    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    h_cut, w_cut = 40, 160
+    # h_adjust, w_adjust = 24, 46
+    h_adjust, w_adjust = 0, 0
+    rgb_arr = rgb_arr[h_cut+h_adjust:h_rgb-h_cut+h_adjust, w_cut+w_adjust:w_rgb-w_cut+w_adjust, :]
     im = Image.fromarray(rgb_arr)
     im.save(rgb_file)
 
