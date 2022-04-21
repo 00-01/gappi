@@ -8,7 +8,8 @@ import RPi.GPIO as GPIO
 import serial
 from picamera import PiCamera
 from PIL import Image
-from numpy import asarray
+from numpy import asarray, float32
+from cv2 import Canny, cvtColor, imread, imwrite, resize, warpPerspective, COLOR_BGR2RGB
 
 
 parser = ArgumentParser()
@@ -16,6 +17,7 @@ parser.add_argument("-l", "--loop", default=0, type=int, help="run loop")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
+parser.add_argument("-t", "--transform", default=1, type=int, help="transform")
 parser.add_argument("-min", "--min", default=0, type=int, help="min")
 parser.add_argument("-max", "--max", default=255, type=int, help="max")
 args = parser.parse_args()
@@ -140,15 +142,29 @@ while LOOP:
     print(f"[I] rotating device: {device_id}")
     rgb_img = Image.open(rgb_file)
     rgb_img = rgb_img.rotate(rotation)
+
     print(f"[I] crop rgb")
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
     h_cut, w_cut = 40, 160
-    # h_adjust, w_adjust = 24, 46
-    h_adjust, w_adjust = 0, 0
-    rgb_arr = rgb_arr[h_cut+h_adjust:h_rgb-h_cut+h_adjust, w_cut+w_adjust:w_rgb-w_cut+w_adjust, :]
-    im = Image.fromarray(rgb_arr)
-    im.save(rgb_file)
+    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    rgb_img = Image.fromarray(rgb_arr)
+    rgb_img.save(rgb_file)
+
+    if args.transform == 1:
+        print(f"[I] transform rgb")
+        rgb_img = imread(rgb_file)
+        h_rgb, w_rgb, c = rgb_img.shape
+        im_rgb = rgb_img[:, :, ::-1]
+        if device_id == "01": x, y, xw, yh = -14, -24, 1.16, 1.16
+        elif device_id == "02": x, y, xw, yh = -31, -32, 1.12, 1.12
+        elif device_id == "03": x, y, xw, yh = -15, -40, 1.16, 1.16
+        elif device_id == "05": x, y, xw, yh = 0, 0, 1.16, 1.16
+        elif device_id == "07": x, y, xw, yh = -44, -36, 1.14, 1.14
+        else: x, y, xw, yh = 0, 0, 1, 1
+        matrix = float32([[xw, 0, y], [0, yh, x], [0, 0, 1]])
+        warped = warpPerspective(rgb_img, matrix, (w_rgb, h_rgb))
+        imwrite(rgb_file, warped)
 
     ir_img = Image.open(ir_file)
     ir_img = ir_img.rotate(rotation)
