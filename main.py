@@ -9,14 +9,10 @@
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
-op = ["01", "02", "03", "04", "05"]
-dev = ["06", "07"]
+op = ["01", "02", "03", "04", "05", "06", "07"]
+dev = []
 
 if device_id in op:
     from version import op
 else:
     from version import dev
-
-'''
-TODO: change 04 and 05
-'''
