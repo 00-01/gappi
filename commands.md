@@ -63,3 +63,28 @@
 
 ### switch to local time
     sudo timedatectl set-local-rtc 1
+
+## tensorflow
+## dependencies
+    sudo apt install python3-dev libpq-dev gfortran libopenblas-dev liblapack-dev libhdf5-dev
+    pip3 install -U setuptools
+    python3 -m pip install -U pip3
+
+### swap mem
+#### swap size check
+    free -h
+#### stop swap service and open confi file
+    sudo /etc/init.d/dphys-swapfile stop
+    sudo nano /etc/dphys-swapfile
+    
+    ## change size
+    # CONF_SWAPSIZE=2048
+
+#### start swap service
+    sudo /etc/init.d/dphys-swapfile start
+
+#### check swap
+    free -h
+
+
+
