@@ -80,7 +80,7 @@ def poster():
             except IndexError as e:
                 print(f"[!] {e.args}")
                 pass
-            # system(f"rm -rf {target}")
+            system(f"rm -rf {target}")
 
         # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
 
