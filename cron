@@ -15,5 +15,6 @@
 
 # ---------------------------------------------------------------- RM DATA
 
+@reboot source .zshrc
 @reboot sudo rm -rf data/*
 @daily sudo rm -rf data/*

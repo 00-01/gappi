@@ -158,7 +158,7 @@ def taker():
 
         if args.inference == 1:
             print(f"[I] PI INFERENCING")
-            model_path = "model/v1.1.tflite"
+            model_path = "gappi/model/v1.1.tflite"
 
             MIN, MAX = 0, 255
             NORM_MIN, NORM_MAX = 0, 1
