@@ -23,7 +23,7 @@ args = parser.parse_args()
 # host = "192.168.0.5"
 # username = "z"
 # password = ""
-# save_dir = "/home/z/MVPC10/DATA/"
+# save_dir = "/home/z/MVPC10/data/"
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)

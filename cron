@@ -1,5 +1,19 @@
+# ---------------------------------------------------------------- v1
+
 0 6-22 * * * cd gappi && git pull > ../log/git.log && date >> ../log/git.log && sudo chmod u+r+x command.sh && ./command.sh && cd
 */1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
 #0 0 * * * python3 gappi/main.py -o 39612 >> log/main.log && python3 gappi/poster.py >> log/poster.log
 
-@weekly sudo rm -rf data/*
+# ---------------------------------------------------------------- v2
+
+##0 9 * * 1-5 python3 main_v2.py
+#@reboot python3 main_v2.py >> log/main.log
+
+#30 18 * * 1-5 sudo shutdown now -r
+
+#0 19 * * 1-5 sudo rm -rf data/*
+
+# ---------------------------------------------------------------- RM DATA
+
+@reboot sudo rm -rf data/*
+@daily sudo rm -rf data/*
