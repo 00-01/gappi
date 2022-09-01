@@ -82,6 +82,7 @@ def taker():
         det_file = f"{base_dir}{dtime}_{device_id}_DET.txt"
         ir_file = f"{base_dir}{dtime}_{device_id}_IR.png"
         rgb_file = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
+        ir_path = f"gappi/BG/{date}.png"
         # boxed_file = f"{base_dir}{dtime}_{device_id}_BOX.png"
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
@@ -149,10 +150,26 @@ def taker():
 
         ## ---------------------------------------------------------------- BG REMOVE
 
-        print(f"[I] BACKGROUND REMOVE")
-        irs = glob(f'data/**/*.png', recursive=False)
-        irs.sort()
-        irs = irs[:32]
+        # print(f"[I] BACKGROUND REMOVE")
+        # img.save(ir_path)
+        # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
+        # os.system(f"rm -rf BG/{irs[0]}")
+        #
+        # error1 = len(img[img > 237])
+        # error2 = len(img[img < 1])
+        # if error1 > 512 or error2 > 256:
+        #     log(f"{i}: white-{error1}, black-{error2}")
+        #     return 0
+        # else:
+        #     # log(f"{i}: white-{error1}, black-{error2}")
+        #     bgq.insert(0, img)
+        #     if len(bgq) > bgq_length:  bgq.pop(-1)
+        #     else:  pass
+        #     bg = bg_filter(img)
+        #     return 1, bg
+        #
+        #
+        # irs = irs[:32]
 
         ## ---------------------------------------------------------------- INFERENCE
 
@@ -228,10 +245,11 @@ def taker():
                         st = 1
                     else: break
 
+        ## ----------------------------------------------------------------
+
         end = time()-start
         print(f"[FINISH] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
 
         LOOP = args.loop
         sleep(args.sleep)
 
-## ---------------------------------------------------------------- BG

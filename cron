@@ -6,8 +6,8 @@
 
 # ---------------------------------------------------------------- v2
 
-##0 9 * * 1-5 python3 main_v2.py
-#@reboot python3 main_v2.py >> log/main.log
+##0 9 * * 1-5 python3 main_v3.py
+#@reboot python3 main_v3.py > log/main.log
 
 #30 18 * * 1-5 sudo shutdown now -r
 

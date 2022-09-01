@@ -4,7 +4,7 @@ sudo chmod 666 /dev/ttyS0
 #cd gappi && git reset --hard && git pull > ../log/git.log
 #sudo chmod u+r+x command.sh && ./command.sh && cd
 
-alias run="python3 main.py"
+alias run="python3 main_v3.py"
 
 ## -------------------------------------------------------------------------------- ZSH
 
