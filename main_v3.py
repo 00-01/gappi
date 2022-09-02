@@ -165,7 +165,7 @@ def taker():
 
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"{chr(10)}[INFERENCE] {'-'*20} [{dt}]")
+    print(f"{chr(10)}[START INFERENCE] {'-'*20} [{dt}]")
 
     print(f"[I] inference: {args.inference}, sleep: {args.sleep} sec")
 
@@ -282,7 +282,7 @@ def taker():
 
     ## ----------------------------------------------------------------
     end = time.time()-start
-    print(f"[INFERENCE END] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
+    print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
 
     time.sleep(args.sleep)
 
@@ -290,7 +290,7 @@ def taker():
 def poster():
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"{chr(10)}[POST] {'-'*20} [{dt}]")
+    print(f"{chr(10)}[START POST] {'-'*20} [{dt}]")
 
     dtime = DT.strftime("%Y/%m/%d-%H:%M:%S")
     print(f"[I] posting_time: {dtime}")
@@ -324,19 +324,19 @@ def poster():
     # else:
     #     print("[!] NO data TO SEND")
     end = time.time()-start
-    print(f"[POST END] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
+    print(f"[END POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
 
 
-def main():
+def main(start, stop, interval):
     global DT, base_dir, inf_path, ir_path, rgb_path, movement_path
 
     hS = 3600
     mS = 60
 
-    INTERVAL = 20
+    INTERVAL = interval
 
-    START_SEC = 9*hS  ## 9:00:00
-    END_SEC = 18*hS  ## 18:00:00
+    START_SEC = start*hS  ## 9:00:00
+    END_SEC = stop*hS  ## 18:00:00
     TOTAL_SEC = 24*hS  ## 24:00:00
 
     while 1:
@@ -379,8 +379,9 @@ def main():
         elif D_SEC < START_SEC or END_SEC < D_SEC:
             sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
             print(f'sleep_time: {sleep_time}{chr(10)}')
+            os.system(f"sudo rm -rf data/*")
             time.sleep(sleep_time)
 
 
-main()
+main(start=9, stop=18, interval=20)
 
