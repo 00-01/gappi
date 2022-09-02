@@ -10,11 +10,15 @@
     sudo chmod u+r+x post-receive
 
 ## [CRON]
-    */2 9-17 * * 1-5 python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
-
-    ### LOAD TEST
-    #@reboot python3 gappi/main.py -l 1 -s 5 > log/main.log
-    #@reboot python3 gappi/poster.py -l 1 -s1 10 -s2 5 > log/poster.log
+    @reboot sudo chmod 666 /dev/ttyS0
+    @reboot cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && cd
+    
+    @reboot python3 gappi/main_v3.py > log/main.log
+    
+    30 18 * * 1-5 sudo shutdown now -r
+    
+    0 19 * * 1-5 sudo rm -rf data/*
+    @daily sudo rm -rf data/*
 
 ### start cron
     sudo service cron start
@@ -66,10 +70,10 @@
 ## [ETC]
 
 ### scp
-    scp -r ~/data/* z@192.168.0.16:/media/z/e9503728-f419-4a14-9fc0-21e2947af50c/DATA/gappi
+    scp -r data/*/*_BG.png z@192.168.0.5:~/data
 
 ### scp with pw
-    sudo sshpass -p 1234qwer scp ~/data/* z@192.168.0.16:/media/z/e9503728-f419-4a14-9fc0-21e2947af50c/DATA/gappi
+    sudo sshpass -p 1234qwer scp ~/data/* z@192.168.0.16:/media/z/0/DATA/gappi
 
 ### change_wifi
     sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
@@ -84,5 +88,4 @@
 
 ### switch to local time
     sudo timedatectl set-local-rtc 1
-
 

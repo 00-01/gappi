@@ -14,7 +14,6 @@ from requests import post
 import RPi.GPIO as GPIO
 import serial
 import tensorflow as tf
-# from cv2 import Canny, cvtColor, imread, imwrite, resize, warpPerspective, COLOR_BGR2RGB
 
 
 parser = ArgumentParser()
@@ -91,9 +90,9 @@ def bg_remover(img):
     # clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(2, 2))
     # bg_img = clahe.apply(bg_img)
 
-    movement_img = img.astype(np.uint8)
+    fg_img = img.astype(np.uint8)
 
-    return movement_img
+    return fg_img
 
 
 def inferencer(input, ):
@@ -248,7 +247,6 @@ def taker():
     # ir.save(ir_path)
     # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
     # os.system(f"rm -rf BG/{irs[0]}")
-    # irs = irs[:32]
 
     ir_arr = asarray(ir)
     error1 = len(ir_arr[ir_arr > 237])
@@ -256,12 +254,12 @@ def taker():
     if error1 > 512 or error2 > 256:
         print(f"white-{error1}, black-{error2}")
     else:
-        movement_img = bg_remover(ir_arr)
-        cv2.imwrite(movement_path, movement_img)
+        fg_img = bg_remover(ir_arr)
+        cv2.imwrite(fg_path, fg_img)
 
     ## ---------------------------------------------------------------- INFERENCE
     if args.inference == 1:
-        inferencer(movement_img)
+        inferencer(fg_img)
 
     elif args.inference == 0:
         print("[I] gap inference to txt")
@@ -306,8 +304,9 @@ def poster():
         data = {"device_id": device_id,
                 "predicted": det_data,
                 }
-        files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
+        files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
                  "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
+                 # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
                  # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
                  }
 
@@ -328,12 +327,10 @@ def poster():
 
 
 def main(start, stop, interval):
-    global DT, base_dir, inf_path, ir_path, rgb_path, movement_path
+    global DT, base_dir, inf_path, ir_path, rgb_path, fg_path
 
     hS = 3600
     mS = 60
-
-    INTERVAL = interval
 
     START_SEC = start*hS  ## 9:00:00
     END_SEC = stop*hS  ## 18:00:00
@@ -352,7 +349,7 @@ def main(start, stop, interval):
         inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
-        movement_path = f"{base_dir}{dtime}_{device_id}_BG.png"
+        fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
 
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
@@ -374,7 +371,7 @@ def main(start, stop, interval):
             taker()
             poster()
 
-            time.sleep(INTERVAL)
+            time.sleep(interval)
 
         elif D_SEC < START_SEC or END_SEC < D_SEC:
             sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
