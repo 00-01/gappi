@@ -71,7 +71,7 @@ def bg_remover(img):
         bg += i
     bg //= len(BG_LIST)
 
-    img -= bg
+    img = img - bg
 
     # LOW-CUT FILTER
     low = 8
