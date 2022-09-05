@@ -71,7 +71,7 @@ def bg_remover(img):
         bg += i
     bg //= len(BG_LIST)
 
-    img = img - bg
+    img -= bg
 
     # LOW-CUT FILTER
     low = 8
@@ -144,6 +144,12 @@ def inferencer(input, ):
         w.write(str(len(output)))
         for i in output:
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+
+
+def finder():
+
+
+
 
 
 def taker():
@@ -305,6 +311,7 @@ def poster():
                 "predicted": det_data,
                 }
         files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
+        # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
                  "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
                  # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
                  # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
@@ -359,7 +366,7 @@ def main(start, stop, interval):
         elif W == 6:  D = TOTAL_SEC*2
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f'NOW_SEC: {NOW_SEC}')
+        print(f'NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}')
 
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
