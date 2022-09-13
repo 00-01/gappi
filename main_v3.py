@@ -23,6 +23,11 @@ parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
+
+parser.add_argument("-st", "--start", default=9, type=int, help="start time")
+parser.add_argument("-stp", "--stop", default=18, type=int, help="stop time")
+parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
+
 # parser.add_argument("-t", "--transform", default=0, type=int, help="transform")
 # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
@@ -333,14 +338,14 @@ def poster():
     print(f"[END POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
 
 
-def main(start, stop, interval):
+def main():
     global DT, base_dir, inf_path, ir_path, rgb_path, fg_path
 
     hS = 3600
     mS = 60
 
-    START_SEC = start*hS  ## 9:00:00
-    END_SEC = stop*hS  ## 18:00:00
+    START_SEC = args.start * hS  ## 9:00:00
+    END_SEC = args.stop * hS  ## 18:00:00
     TOTAL_SEC = 24*hS  ## 24:00:00
 
     while 1:
@@ -371,21 +376,18 @@ def main(start, stop, interval):
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
 
-        # taker()
-        # poster()
-        if args.sleep1 == 1:
-            if START_SEC < D_SEC and D_SEC < END_SEC:
-                taker()
-                poster()
+        if START_SEC < D_SEC and D_SEC < END_SEC:
+            taker()
+            poster()
 
-                time.sleep(interval)
+            time.sleep(args.interval)
 
-            elif D_SEC < START_SEC or END_SEC < D_SEC:
-                sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
-                print(f'sleep_time: {sleep_time}{chr(10)}')
-                os.system(f"sudo rm -rf data/*")
-                time.sleep(sleep_time)
+        elif D_SEC < START_SEC or END_SEC < D_SEC:
+            sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
+            print(f'sleep_time: {sleep_time}{chr(10)}')
+            os.system(f"sudo rm -rf data/*")
+            time.sleep(sleep_time)
 
 
-main(start=9, stop=18, interval=20)
+main()
 
