@@ -19,7 +19,7 @@ import tensorflow as tf
 parser = ArgumentParser()
 parser.add_argument("-i", "--inference", default=1, type=int, help="inference location")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
-parser.add_argument("-s1", "--sleep1", default=0, type=int, help="loop sleep")
+parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
@@ -373,18 +373,18 @@ def main(start, stop, interval):
 
         # taker()
         # poster()
+        if args.sleep1 == 1:
+            if START_SEC < D_SEC and D_SEC < END_SEC:
+                taker()
+                poster()
 
-        if START_SEC < D_SEC and D_SEC < END_SEC:
-            taker()
-            poster()
+                time.sleep(interval)
 
-            time.sleep(interval)
-
-        elif D_SEC < START_SEC or END_SEC < D_SEC:
-            sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
-            print(f'sleep_time: {sleep_time}{chr(10)}')
-            os.system(f"sudo rm -rf data/*")
-            time.sleep(sleep_time)
+            elif D_SEC < START_SEC or END_SEC < D_SEC:
+                sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
+                print(f'sleep_time: {sleep_time}{chr(10)}')
+                os.system(f"sudo rm -rf data/*")
+                time.sleep(sleep_time)
 
 
 main(start=9, stop=18, interval=20)
