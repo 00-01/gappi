@@ -61,8 +61,8 @@ with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
 
-def bg_remover(img):
-    BG_LIST.insert(0, img)
+def bg_remover(target):
+    BG_LIST.insert(0, target)
     if len(BG_LIST) > BG_LENGTH:  BG_LIST.pop(-1)
     else:  pass
 
@@ -71,7 +71,7 @@ def bg_remover(img):
         bg += i
     bg //= len(BG_LIST)
 
-    img = img - bg
+    img = target - bg
 
     # LOW-CUT FILTER
     low = 8

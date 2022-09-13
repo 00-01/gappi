@@ -9,12 +9,12 @@
 @reboot sudo chmod 666 /dev/ttyS0
 @reboot cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && cd
 
-@reboot python3 gappi/main_v3.py > log/main.log
+#@reboot python3 gappi/main_v3.py > log/main.log
 
-30 18 * * 1-5 sudo shutdown now -r
+#30 18 * * 1-5 sudo shutdown now -r
 
-0 19 * * 1-5 sudo rm -rf data/*
-@daily sudo rm -rf data/*
+#0 19 * * 1-5 sudo rm -rf data/*
+#@daily sudo rm -rf data/*
 
 ## ---------------------------------------------------------------- RM DATA
 
