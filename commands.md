@@ -89,3 +89,27 @@
 ### switch to local time
     sudo timedatectl set-local-rtc 1
 
+
+
+## [MAC ADDRESS]
+
+## temporary
+### show ip & mac address
+    ip address show
+### change mac address
+    sudo ip link set dev <wlan0> down
+    sudo ip link set dev <wlan0> address <00:00:00:00:00:01>
+    sudo ip link set dev <wlan0> up
+
+## permanent
+    sudo apt install macchanger
+    
+### random
+    sudo macchanger -r <wlan0>
+### specific
+    sudo macchanger -m <00:00:00:00:00:01> <wlan0>
+
+
+    
+    
+    

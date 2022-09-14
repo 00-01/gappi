@@ -264,6 +264,7 @@ def taker():
     error2 = len(ir_arr[ir_arr < 1])
     if error1 > 512 or error2 > 256:
         print(f"white-{error1}, black-{error2}")
+        fg_img = np.zeros([H, W], dtype=np.uint8)
     else:
         fg_img = bg_remover(ir_arr)
         cv2.imwrite(fg_path, fg_img)
