@@ -1,4 +1,5 @@
 crontab cron
+.zshrc zsh
 
 #pip3 install opencv-contrib-python
 #pip3 install -U pip
