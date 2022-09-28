@@ -22,10 +22,10 @@ parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
-parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
+parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
 
-parser.add_argument("-sr", "--start", default=7, type=int, help="start time")
-parser.add_argument("-sp", "--stop", default=24, type=int, help="stop time")
+parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
+parser.add_argument("-e", "--end", default=24, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 
 # parser.add_argument("-t", "--transform", default=0, type=int, help="transform")
