@@ -1,23 +1,19 @@
-## ---------------------------------------------------------------- v1
-
-0 6-22 * * * cd gappi && git pull > ../log/git.log && date >> ../log/git.log && sudo chmod u+r+x command.sh && ./command.sh && cd
-*/1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
-#0 0 * * * python3 gappi/main.py -o 39612 >> log/main.log && python3 gappi/poster.py >> log/poster.log
-
-## ---------------------------------------------------------------- v2
-
-@reboot sudo chmod 666 /dev/ttyS0
-@reboot cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && cd
-
-#@reboot python3 gappi/main_v3.py > log/main.log
-
-#30 18 * * 1-5 sudo shutdown now -r
-
-#0 19 * * 1-5 sudo rm -rf data/*
-#@daily sudo rm -rf data/*
-
-## ---------------------------------------------------------------- RM DATA
-
+## ---------------------------------------------------------------- REBOOT
 @reboot source .zshrc
 @reboot sudo rm -rf data/*
-@daily sudo rm -rf data/*
+@reboot sudo chmod 666 /dev/ttyS0
+@reboot cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && ./command.sh && cd
+
+## ---------------------------------------------------------------- v1
+#*/1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
+#0 6-22 * * * cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && ./command.sh && cd
+
+## ---------------------------------------------------------------- v2
+@reboot python3 gappi/main_v3.py > log/main.log
+
+## ---------------------------------------------------------------- DAILY
+0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
+
+## ---------------------------------------------------------------- NOT USED
+#0 0 * * * python3 gappi/main.py -o 39612 >> log/main.log && python3 gappi/poster.py >> log/poster.log
+

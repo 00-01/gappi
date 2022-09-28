@@ -24,8 +24,8 @@ parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-b", "--box", default=0, type=int, help="draw box")
 
-parser.add_argument("-st", "--start", default=9, type=int, help="start time")
-parser.add_argument("-stp", "--stop", default=18, type=int, help="stop time")
+parser.add_argument("-st", "--start", default=7, type=int, help="start time")
+parser.add_argument("-stp", "--stop", default=24, type=int, help="stop time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 
 # parser.add_argument("-t", "--transform", default=0, type=int, help="transform")

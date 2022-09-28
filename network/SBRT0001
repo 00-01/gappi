@@ -4,7 +4,9 @@ country=US
 
 network={
         key_mgmt=NONE
-        ssid="SBRT0003"
+        ssid="SBRT0001"
         wep_key0="milliot123456"
         wep_tx_keyidx=0
+        #ssid="mill_R&D"
+        #psk="mill1234"
 }

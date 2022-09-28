@@ -31,7 +31,7 @@ ENABLE_CORRECTION="true"
 
 ## -------------------------------------------------------------------------------- ALIAS
 
-## custom alias
+## ALIAS
 alias sz="source ~/.zshrc"
 alias z="nano ~/.zshrc"
 
@@ -57,7 +57,7 @@ alias a="sudo apt autoclean && sudo apt autoremove"
 alias r="sudo dpkg -r"
 alias re="sudo dpkg --configure -a"
 
-## sys
+## SYS
 alias sz="source ~/.zshrc"
 alias zz="sudo gedit ~/.oh-my-zsh/themes/max.zsh-theme "
 
@@ -69,7 +69,7 @@ alias sg="sudo gedit"
 alias rb="sudo reboot now"
 alias sd="sudo shutdown now"
 
-## pip
+## PIP
 alias p="pip3 install"
 
 ## -------------------------------------------------------------------------------- DOWNLOAD ONCE
@@ -88,3 +88,7 @@ alias p="pip3 install"
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 ## --------------------------------------------------------------------------------
+
+
+## --------------------------------------------------------------------------------
+

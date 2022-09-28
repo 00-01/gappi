@@ -13,3 +13,4 @@ cp -f rc ~/.zshrc
 #if grep -q "$id" "$file"; then
 #  echo "write actions here removing echo"
 #fi
+
