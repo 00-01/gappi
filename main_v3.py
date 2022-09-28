@@ -345,8 +345,8 @@ def main():
     hS = 3600
     mS = 60
 
-    START_SEC = args.start * hS  ## 9:00:00
-    END_SEC = args.stop * hS  ## 18:00:00
+    START_SEC = args.begin * hS  ## 9:00:00
+    END_SEC = args.end * hS  ## 18:00:00
     TOTAL_SEC = 24*hS  ## 24:00:00
 
     while 1:
