@@ -11,7 +11,7 @@
 #*/1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
 
 ## ---------------------------------------------------------------- v2
-@reboot python3 gappi/main_v3.py > log/main.log
+@reboot python3 gappi/main_v3.py >> log/main.log
 
 ## ---------------------------------------------------------------- REBOOT
 0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
