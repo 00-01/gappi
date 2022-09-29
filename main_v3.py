@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import traceback
 from argparse import ArgumentParser
 from datetime import datetime
 from glob import glob
@@ -23,13 +24,9 @@ parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
-
 parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
 parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
-
-# parser.add_argument("-t", "--transform", default=0, type=int, help="transform")
-# parser.add_argument("-scp", "--scp", default=0, help="save to scp")
 args = parser.parse_args()
 
 ## ---------------------------------------------------------------- BG
@@ -151,12 +148,6 @@ def inferencer(input, ):
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
 
-# def finder():
-
-
-
-
-
 def taker():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
@@ -189,115 +180,108 @@ def taker():
     time.sleep(0.1)
     GPIO.setup(TR, GPIO.IN)
 
-    try:
-        camera = PiCamera()
-        camera.start_preview()
+    camera = PiCamera()
+    camera.start_preview()
 
-        print("[S] CAPTURING RGB")
-        camera.capture(rgb_path)
-        camera.stop_preview()
-        camera.close()
-        # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
+    print("[S] CAPTURING RGB")
+    camera.capture(rgb_path)
+    camera.stop_preview()
+    camera.close()
+    # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
 
-        ser.flush()
-        ser.reset_input_buffer()
-        ser.reset_output_buffer()
+    ser.flush()
+    ser.reset_input_buffer()
+    ser.reset_output_buffer()
 
-        print(f"[TX] CALIBRATION: {args.offset}")
-        # sleep(0.2)
-        ser.write(args.offset.to_bytes(2, byteorder='little'))
+    print(f"[TX] CALIBRATION: {args.offset}")
+    # sleep(0.2)
+    ser.write(args.offset.to_bytes(2, byteorder='little'))
 
-        print("[RX] INFERENCE")
-        # sleep(0.1)
-        rx_det = ser.read()
-        while len(rx_det) < (DET_SIZE):
-            new_det = ser.read()
-            rx_det += new_det
+    print("[RX] INFERENCE")
+    # sleep(0.1)
+    rx_det = ser.read()
+    while len(rx_det) < (DET_SIZE):
+        new_det = ser.read()
+        rx_det += new_det
 
-        print("[RX] IMAGE")
-        # sleep(0.1)
-        rx_img = ser.readline()
-        while len(rx_img) < (IMG_SIZE):
-            new_img = ser.read()
-            rx_img += new_img
+    print("[RX] IMAGE")
+    # sleep(0.1)
+    rx_img = ser.readline()
+    while len(rx_img) < (IMG_SIZE):
+        new_img = ser.read()
+        rx_img += new_img
 
-        # print("[RX] IMAGE_2")
-        # # sleep(0.1)
-        # rx_img = ser.readline()
-        # while len(rx_img) < (IMG_SIZE):
-        #     new_img = ser.read()
-        #     rx_img += new_img
+    # print("[RX] IMAGE_2")
+    # # sleep(0.1)
+    # rx_img = ser.readline()
+    # while len(rx_img) < (IMG_SIZE):
+    #     new_img = ser.read()
+    #     rx_img += new_img
 
-        # print("[TX] THRESHOLD")
-        # ser.write(THRESHOLD.to_bytes(2, byteorder='little'))
+    # print("[TX] THRESHOLD")
+    # ser.write(THRESHOLD.to_bytes(2, byteorder='little'))
 
-        print("[I] GAP LOW")
-        GPIO.output(SD, GPIO.LOW)
+    print("[I] GAP LOW")
+    GPIO.output(SD, GPIO.LOW)
 
-        print("[I] saving binary to image")
-        ir = Image.frombuffer("L", (W, H), rx_img, 'raw', "L", 0, 1)
-        ir.save(ir_path)
+    print("[I] saving binary to image")
+    ir = Image.frombuffer("L", (W, H), rx_img, 'raw', "L", 0, 1)
+    ir.save(ir_path)
 
-        # print(f"[I] rotating device: {device_id}")
-        rgb_img = Image.open(rgb_path)
-        rgb_img = rgb_img.rotate(ROTATION)
+    # print(f"[I] rotating device: {device_id}")
+    rgb_img = Image.open(rgb_path)
+    rgb_img = rgb_img.rotate(ROTATION)
 
-        print(f"[I] CROP RGB")
-        rgb_arr = asarray(rgb_img, dtype='uint8')
-        h_rgb, w_rgb, c = rgb_arr.shape
-        h_cut, w_cut = 40, 160
-        rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
-        rgb_img = Image.fromarray(rgb_arr)
-        rgb_img.save(rgb_path)
+    print(f"[I] CROP RGB")
+    rgb_arr = asarray(rgb_img, dtype='uint8')
+    h_rgb, w_rgb, c = rgb_arr.shape
+    h_cut, w_cut = 40, 160
+    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    rgb_img = Image.fromarray(rgb_arr)
+    rgb_img.save(rgb_path)
 
-        # ir_img = Image.open(ir_file)
-        # ir_img = ir_img.rotate(ROTATION)
-        # ir_img.save(ir_file)
+    ## ---------------------------------------------------------------- BG REMOVE
+    print(f"[I] BACKGROUND REMOVE")
+    # ir.save(ir_path)
+    # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
+    # os.system(f"rm -rf BG/{irs[0]}")
 
-        ## ---------------------------------------------------------------- BG REMOVE
-        print(f"[I] BACKGROUND REMOVE")
-        # ir.save(ir_path)
-        # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
-        # os.system(f"rm -rf BG/{irs[0]}")
+    ir_arr = asarray(ir)
+    error1 = len(ir_arr[ir_arr > 237])
+    error2 = len(ir_arr[ir_arr < 1])
+    if error1 > 512 or error2 > 256:
+        print(f"[!] white-{error1}, black-{error2}")
+        fg_img = np.zeros([H, W], dtype=np.uint8)
+    else:
+        fg_img = bg_remover(ir_arr)
+        cv2.imwrite(fg_path, fg_img)
 
-        ir_arr = asarray(ir)
-        error1 = len(ir_arr[ir_arr > 237])
-        error2 = len(ir_arr[ir_arr < 1])
-        if error1 > 512 or error2 > 256:
-            print(f"[!] white-{error1}, black-{error2}")
-            fg_img = np.zeros([H, W], dtype=np.uint8)
-        else:
-            fg_img = bg_remover(ir_arr)
-            cv2.imwrite(fg_path, fg_img)
+    ## ---------------------------------------------------------------- INFERENCE
+    if args.inference == 1:
+        inferencer(fg_img)
 
-        ## ---------------------------------------------------------------- INFERENCE
-        if args.inference == 1:
-            inferencer(fg_img)
+    elif args.inference == 0:
+        print("[I] gap inference to txt")
+        det = ""
+        det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
+        with open(inf_path, "w") as file:
+            det_str = det_str.split(";")
+            st = 0
+            for i in det_str:
+                if 0 < len(i) < 12 and "\00" not in i:
+                    if st != 0:
+                        file.write(f",")
+                        det += ","
+                    file.write(f"{i}")
+                    det += i
+                    st = 1
+                else: break
 
-        elif args.inference == 0:
-            print("[I] gap inference to txt")
-            det = ""
-            det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
-            with open(inf_path, "w") as file:
-                det_str = det_str.split(";")
-                st = 0
-                for i in det_str:
-                    if 0 < len(i) < 12 and "\00" not in i:
-                        if st != 0:
-                            file.write(f",")
-                            det += ","
-                        file.write(f"{i}")
-                        det += i
-                        st = 1
-                    else: break
+    ## ----------------------------------------------------------------
+    end = time.time()-start
+    print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
 
-        ## ----------------------------------------------------------------
-        end = time.time()-start
-        print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
-
-        time.sleep(args.sleep)
-    except:
-        pass
+    time.sleep(args.sleep)
 
 
 def poster():
@@ -387,9 +371,21 @@ def main():
         # print(f'D_SEC: {D_SEC}')
 
         if START_SEC < D_SEC and D_SEC < END_SEC:
-            taker()
-            poster()
+            try:
+                taker()
+            except Exception as e:
+                trace_back = traceback.format_exc()
+                message = str(e)+ "\n" + str(trace_back)
+                print(f'[!taker!] {message}')
+                pass
 
+            try:
+                poster()
+            except Exception as e:
+                trace_back = traceback.format_exc()
+                message = str(e) + "\n" + str(trace_back)
+                print(f'[!poster!] {message}')
+                pass
             time.sleep(args.interval)
 
         elif D_SEC < START_SEC or END_SEC < D_SEC:
@@ -400,4 +396,3 @@ def main():
 
 
 main()
-
