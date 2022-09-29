@@ -327,9 +327,15 @@ def poster():
         print(r.headers)
         print(r.text)
 
-    except IndexError as e:
-        print(f"[!] {e.args}")
+    except IndexError as I:
+        print(f"[!] {I.args}")
         pass
+    except FileNotFoundError as FNF:
+        print(f"[!] {FNF.args}")
+        pass
+    else:
+        pass
+
     # os.system(f"rm -rf {base_dir}/*")
             # os.system(f"rm -rf {target}")
         # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
