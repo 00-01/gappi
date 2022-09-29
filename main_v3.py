@@ -62,6 +62,37 @@ url = 'http://115.68.37.86:8180/api/data'
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
+class TimeoutError(Exception):
+
+    pass
+
+def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
+
+    def decorator(func):
+
+        def _handle_timeout(signum, frame):
+
+            raise TimeoutError(error_message)
+
+        def wrapper(*args, **kwargs):
+
+            signal.signal(signal.SIGALRM, _handle_timeout)
+
+            signal.setitimer(signal.ITIMER_REAL,seconds) #used timer instead of alarm
+
+            try:
+
+                result = func(*args, **kwargs)
+
+            finally:
+
+                signal.alarm(0)
+
+            return result
+
+        return wraps(func)(wrapper)
+
+    return decorator
 
 def bg_remover(target):
     BG_LIST.insert(0, target)
@@ -148,6 +179,7 @@ def inferencer(input, ):
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
 
+@timeout(20)
 def taker():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
