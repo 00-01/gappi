@@ -25,7 +25,7 @@ parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
 
 parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
-parser.add_argument("-e", "--end", default=24, type=int, help="end time")
+parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 
 # parser.add_argument("-t", "--transform", default=0, type=int, help="transform")
