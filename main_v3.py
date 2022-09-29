@@ -296,7 +296,6 @@ def poster():
     # if len(targets) > 0:
     #     for target in targets:
     try:
-        print("[I] posting")
         with open(inf_path, "r") as file:
             det_data = file.readline().rstrip()
 
@@ -329,7 +328,7 @@ def poster():
     # else:
     #     print("[!] NO data TO SEND")
     end = time.time()-start
-    print(f"[END POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
+    print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
 
 
 def main():
