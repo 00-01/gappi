@@ -7,6 +7,7 @@ import os
 import time
 import errno
 from functools import wraps
+import signal
 import cv2
 from numpy import asarray
 import numpy as np
