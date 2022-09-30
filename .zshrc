@@ -75,6 +75,13 @@ alias sd="sudo shutdown now"
 ## PIP
 alias p="pip3 install"
 
+## SYSTEMD
+alias svc="sudo systemctl"
+alias mvpc="sudo systemctl daemon-reload && sudo systemctl enable mvpc.service\
+ && sudo systemctl enable mvpc.service && sudo systemctl restart mvpc.service\
+ && sudo systemctl status mvpc.service"
+alias rd_log="sudo journalctl -u mvpc.service -b"
+alias del_log="sudo journalctl --rotate --vacuum-time=1s"
 ## -------------------------------------------------------------------------------- DOWNLOAD ONCE
 
 ## ARGCOMPLETE
@@ -89,4 +96,9 @@ alias p="pip3 install"
 
 ## zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}$
+
+## --------------------------------------------------------------------------------
+
+
+## --------------------------------------------------------------------------------
 

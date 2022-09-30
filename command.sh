@@ -1,5 +1,5 @@
 crontab cron
-cp -f rc ~/.zshrc
+cp -f .zshrc ~/.zshrc
 
 #pip3 install opencv-contrib-python
 #pip3 install -U pip
