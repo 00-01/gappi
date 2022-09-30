@@ -169,7 +169,7 @@ def inferencer(input, ):
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
 
-@timeout(20)
+@timeout(40)
 def taker():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
