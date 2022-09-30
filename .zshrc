@@ -76,11 +76,14 @@ alias sd="sudo shutdown now"
 alias p="pip3 install"
 
 ## SYSTEMD
-alias svc="sudo systemctl"
-alias mvpc="sudo systemctl daemon-reload && sudo systemctl enable mvpc.service\
- && sudo systemctl enable mvpc.service && sudo systemctl restart mvpc.service\
- && sudo systemctl status mvpc.service"
-alias rd_log="sudo journalctl -u mvpc.service -b"
+# svc=mvpc.service
+alias ss="sudo systemctl"
+alias sss="sudo systemctl status $svc"
+alias sst="sudo systemctl start $svc"
+alias ssp="sudo systemctl stop $svc"
+
+alias mvpc="ss daemon-reload && ss enable mvpc.service && ss enable mvpc.service && sst && sss"
+alias read_log="sudo journalctl -u $svc -b"
 alias del_log="sudo journalctl --rotate --vacuum-time=1s"
 ## -------------------------------------------------------------------------------- DOWNLOAD ONCE
 

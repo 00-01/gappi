@@ -1,6 +1,11 @@
+## ---------------------------------------------------------------- CRON
 crontab cron
-cp -f .zshrc ~/.zshrc
 
+## ---------------------------------------------------------------- ZSHRC
+cp -f .zshrc ~/.zshrc
+source .zshrc
+
+## ----------------------------------------------------------------
 #pip3 install opencv-contrib-python
 #pip3 install -U pip
 #sudo apt install gfortran libopenblas-dev liblapack-dev libhdf5-dev

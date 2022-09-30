@@ -1,5 +1,4 @@
 ## ---------------------------------------------------------------- SET
-@reboot source .zshrc
 @reboot sudo chmod 666 /dev/ttyS0
 #@reboot sudo rm -rf data/*
 
