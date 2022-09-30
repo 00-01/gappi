@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-import traceback
 from argparse import ArgumentParser
 from datetime import datetime
-from glob import glob
-import os
-import time
 import errno
 from functools import wraps
+import os
 import signal
+import time
+import traceback
+
 import cv2
 from numpy import asarray
 import numpy as np
@@ -64,37 +64,25 @@ url = 'http://115.68.37.86:8180/api/data'
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
-class TimeoutError(Exception):
 
+class TimeoutError(Exception):
     pass
 
 def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
-
     def decorator(func):
-
         def _handle_timeout(signum, frame):
-
             raise TimeoutError(error_message)
-
         def wrapper(*args, **kwargs):
-
             signal.signal(signal.SIGALRM, _handle_timeout)
-
-            signal.setitimer(signal.ITIMER_REAL,seconds) #used timer instead of alarm
-
+            signal.setitimer(signal.ITIMER_REAL, seconds)  # used timer instead of alarm
             try:
-
                 result = func(*args, **kwargs)
-
             finally:
-
                 signal.alarm(0)
-
             return result
-
         return wraps(func)(wrapper)
-
     return decorator
+
 
 def bg_remover(target):
     BG_LIST.insert(0, target)
@@ -106,7 +94,7 @@ def bg_remover(target):
         bg += i
     bg //= len(BG_LIST)
 
-    img = target - bg
+    img = target-bg
 
     # LOW-CUT FILTER
     low = 8
@@ -357,8 +345,8 @@ def poster():
         pass
 
     # os.system(f"rm -rf {base_dir}/*")
-            # os.system(f"rm -rf {target}")
-        # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
+    # os.system(f"rm -rf {target}")
+    # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
     # else:
     #     print("[!] NO data TO SEND")
     end = time.time()-start
@@ -371,8 +359,8 @@ def main():
     hS = 3600
     mS = 60
 
-    START_SEC = args.begin * hS  ## 9:00:00
-    END_SEC = args.end * hS  ## 18:00:00
+    START_SEC = args.begin*hS  ## 9:00:00
+    END_SEC = args.end*hS  ## 18:00:00
     TOTAL_SEC = 24*hS  ## 24:00:00
 
     while 1:
@@ -408,7 +396,7 @@ def main():
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
-                message = str(e)+ "\n" + str(trace_back)
+                message = str(e)+"\n"+str(trace_back)
                 print(f'[!taker!] {message}')
                 pass
 
@@ -416,7 +404,7 @@ def main():
                 poster()
             except Exception as e:
                 trace_back = traceback.format_exc()
-                message = str(e) + "\n" + str(trace_back)
+                message = str(e)+"\n"+str(trace_back)
                 print(f'[!poster!] {message}')
                 pass
             time.sleep(args.interval)
