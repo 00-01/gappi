@@ -11,8 +11,11 @@
 
 ## ---------------------------------------------------------------- v2
 @reboot python3 gappi/main_v3.py >> log/main.log
+
 #@* 7-23 * * * python3 post.py >> log/post.log
 #0 2 * * 6 rm log/main.log
+
+@reboot source .zshrc
 
 ## ---------------------------------------------------------------- REBOOT
 0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
