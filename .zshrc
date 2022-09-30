@@ -78,13 +78,16 @@ alias p="pip3 install"
 ## SYSTEMD
 # svc=mvpc.service
 alias ss="sudo systemctl"
+
 alias sss="ss status $srvc"
 alias sst="ss start $srvc"
 alias ssp="ss stop $srvc"
 
 alias mvpc="ss daemon-reload && ss enable mvpc.service && ss enable mvpc.service && sst && sss"
+
 alias read_log="sudo journalctl -u $srvc -b"
 alias del_log="sudo journalctl --rotate --vacuum-time=1s"
+
 ## -------------------------------------------------------------------------------- DOWNLOAD ONCE
 
 ## ARGCOMPLETE
