@@ -100,8 +100,3 @@ alias del_log="sudo journalctl --rotate --vacuum-time=1s"
 ## zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}$
 
-## --------------------------------------------------------------------------------
-
-
-## --------------------------------------------------------------------------------
-

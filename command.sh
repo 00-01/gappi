@@ -3,7 +3,7 @@ crontab cron
 
 ## ---------------------------------------------------------------- ZSHRC
 cp -f .zshrc ~/.zshrc
-source .zshrc
+source ~/.zshrc
 
 ## ----------------------------------------------------------------
 #pip3 install opencv-contrib-python
