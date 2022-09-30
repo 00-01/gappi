@@ -3,8 +3,10 @@ from argparse import ArgumentParser
 from datetime import datetime
 import errno
 from functools import wraps
+import logging
 import os
 import signal
+import threading
 import time
 import traceback
 
@@ -29,6 +31,7 @@ parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
 parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
 parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
+parser.add_argument("-l", "--log", default=1, type=int, help="log_destination")
 args = parser.parse_args()
 
 ## ---------------------------------------------------------------- BG
@@ -60,7 +63,7 @@ ROTATION = 180
 url = 'http://115.68.37.86:8180/api/data'
 
 ## ---------------------------------------------------------------- ETC
-
+LOG = 1
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
@@ -119,7 +122,7 @@ def bg_remover(target):
 
 
 def inferencer(input, ):
-    print(f"[I] PI INFERENCING")
+    print(f"[I] PI INFERENCING", file=log)
 
     interpreter = tf.lite.Interpreter(model_path=MODEL)
     interpreter.allocate_tensors()
@@ -188,16 +191,16 @@ def taker():
 
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"{chr(10)}[START INFERENCE] {'-'*20} [{dt}]")
+    print(f"{chr(10)}[START INFERENCE] {'-'*20} [{dt}]", file=log)
 
-    print(f"[I] inference: {args.inference}, sleep: {args.sleep} sec")
+    print(f"[I] inference: {args.inference}, sleep: {args.sleep} sec", file=log)
 
-    print(f"[I] GAP HIGH")
+    print(f"[I] GAP HIGH", file=log)
     time.sleep(1)
     GPIO.output(SD, GPIO.HIGH)
     time.sleep(1)
 
-    print("[TX] TRIGGER")
+    print("[TX] TRIGGER", file=log)
     GPIO.setup(TR, GPIO.OUT)
     time.sleep(0.1)
     GPIO.setup(TR, GPIO.IN)
@@ -205,7 +208,7 @@ def taker():
     camera = PiCamera()
     camera.start_preview()
 
-    print("[S] CAPTURING RGB")
+    print("[S] CAPTURING RGB", file=log)
     camera.capture(rgb_path)
     camera.stop_preview()
     camera.close()
@@ -215,18 +218,18 @@ def taker():
     ser.reset_input_buffer()
     ser.reset_output_buffer()
 
-    print(f"[TX] CALIBRATION: {args.offset}")
+    print(f"[TX] CALIBRATION: {args.offset}", file=log)
     # sleep(0.2)
     ser.write(args.offset.to_bytes(2, byteorder='little'))
 
-    print("[RX] INFERENCE")
+    print("[RX] INFERENCE", file=log)
     # sleep(0.1)
     rx_det = ser.read()
     while len(rx_det) < (DET_SIZE):
         new_det = ser.read()
         rx_det += new_det
 
-    print("[RX] IMAGE")
+    print("[RX] IMAGE", file=log)
     # sleep(0.1)
     rx_img = ser.readline()
     while len(rx_img) < (IMG_SIZE):
@@ -243,10 +246,10 @@ def taker():
     # print("[TX] THRESHOLD")
     # ser.write(THRESHOLD.to_bytes(2, byteorder='little'))
 
-    print("[I] GAP LOW")
+    print("[I] GAP LOW", file=log)
     GPIO.output(SD, GPIO.LOW)
 
-    print("[I] saving binary to image")
+    print("[I] saving binary to image", file=log)
     ir = Image.frombuffer("L", (W, H), rx_img, 'raw', "L", 0, 1)
     ir.save(ir_path)
 
@@ -254,7 +257,7 @@ def taker():
     rgb_img = Image.open(rgb_path)
     rgb_img = rgb_img.rotate(ROTATION)
 
-    print(f"[I] CROP RGB")
+    print(f"[I] CROP RGB", file=log)
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
     h_cut, w_cut = 40, 160
@@ -263,7 +266,7 @@ def taker():
     rgb_img.save(rgb_path)
 
     ## ---------------------------------------------------------------- BG REMOVE
-    print(f"[I] BACKGROUND REMOVE")
+    print(f"[I] BACKGROUND REMOVE", file=log)
     # ir.save(ir_path)
     # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
     # os.system(f"rm -rf BG/{irs[0]}")
@@ -272,7 +275,7 @@ def taker():
     error1 = len(ir_arr[ir_arr > 237])
     error2 = len(ir_arr[ir_arr < 1])
     if error1 > 512 or error2 > 256:
-        print(f"[!] white-{error1}, black-{error2}")
+        print(f"[!] white-{error1}, black-{error2}", file=log)
         fg_img = np.zeros([H, W], dtype=np.uint8)
     else:
         fg_img = bg_remover(ir_arr)
@@ -283,7 +286,7 @@ def taker():
         inferencer(fg_img)
 
     elif args.inference == 0:
-        print("[I] gap inference to txt")
+        print("[I] gap inference to txt", file=log)
         det = ""
         det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
         with open(inf_path, "w") as file:
@@ -301,7 +304,7 @@ def taker():
 
     ## ----------------------------------------------------------------
     end = time.time()-start
-    print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
+    print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
     time.sleep(args.sleep)
 
@@ -309,52 +312,37 @@ def taker():
 def poster():
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"{chr(10)}[START POST] {'-'*20} [{dt}]")
+    print(f"{chr(10)}[START POST] {'-'*20} [{dt}]", file=log)
 
     dtime = DT.strftime("%Y/%m/%d-%H:%M:%S")
-    print(f"[I] posting_time: {dtime}")
 
     # targets = glob(f'data/*')
     # if len(targets) > 0:
     #     for target in targets:
-    try:
-        with open(inf_path, "r") as file:
-            det_data = file.readline().rstrip()
 
-        data = {"device_id": device_id,
-                "predicted": det_data,
-                }
-        files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
-        # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
-                 "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
-                 # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
-                 # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
-                 }
+    with open(inf_path, "r") as file:
+        det_data = file.readline().rstrip()
 
-        r = post(url, data=data, files=files)
-        print(r.headers)
-        print(r.text)
+    data = {"device_id": device_id,
+            "predicted": det_data,
+            "log": log_data,}
+    files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
+    # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
+             "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
+             # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
+             # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
+             }
 
-    except IndexError as I:
-        print(f"[!] {I.args}")
-        pass
-    except FileNotFoundError as FNF:
-        print(f"[!] {FNF.args}")
-        pass
-    else:
-        pass
+    r = post(url, data=data, files=files)
+    # print(r.headers, file=log)
+    print(r.text, file=log)
 
-    # os.system(f"rm -rf {base_dir}/*")
-    # os.system(f"rm -rf {target}")
-    # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
-    # else:
-    #     print("[!] NO data TO SEND")
     end = time.time()-start
-    print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}")
+    print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
 
 def main():
-    global DT, base_dir, inf_path, ir_path, rgb_path, fg_path
+    global DT, base_dir, inf_path, log_data, log, ir_path, rgb_path, fg_path
 
     hS = 3600
     mS = 60
@@ -362,6 +350,9 @@ def main():
     START_SEC = args.begin*hS  ## 9:00:00
     END_SEC = args.end*hS  ## 18:00:00
     TOTAL_SEC = 24*hS  ## 24:00:00
+
+    # trd_taker = threading.Thread(target=taker, args=(1,))
+    # trd_poster = threading.Thread(target=poster, args=(1,))
 
     while 1:
         DT = datetime.now()
@@ -374,6 +365,7 @@ def main():
         dtime = DT.strftime("%Y%m%d-%H%M%S")
         base_dir = f"data/{dtime}/"
         inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
+        log_data = f"{base_dir}{dtime}_{device_id}_LOG.txt"
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
@@ -381,39 +373,49 @@ def main():
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
+        if LOG == 1:  log = open(log_data, 'w')
+        elif LOG == 0:  log = None
+
         D = 0
         if W == 0:  D = TOTAL_SEC
         elif W == 6:  D = TOTAL_SEC*2
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f'NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}')
+        print(f"{'-'*8} [NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
 
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
 
         if START_SEC < D_SEC and D_SEC < END_SEC:
             try:
+                # trd_taker.start()
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
                 message = str(e)+"\n"+str(trace_back)
-                print(f'[!taker!] {message}')
+                print(f'[!taker!] {message}', file=log)
                 pass
 
             try:
+                # trd_poster.start()
                 poster()
             except Exception as e:
                 trace_back = traceback.format_exc()
                 message = str(e)+"\n"+str(trace_back)
-                print(f'[!poster!] {message}')
+                print(f'[!poster!] {message}', file=log)
                 pass
+
             time.sleep(args.interval)
 
         elif D_SEC < START_SEC or END_SEC < D_SEC:
             sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
-            print(f'sleep_time: {sleep_time}{chr(10)}')
+            print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
             os.system(f"sudo rm -rf data/*")
             time.sleep(sleep_time)
 
+        if LOG == 1:  log.close()
+        else:  pass
+
 
 main()
+

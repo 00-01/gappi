@@ -1,0 +1,12 @@
+[Unit]
+Description=mvpc project
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/gappi
+ExecStart=/usr/bin/python3 main_v3.py
+Restart=on-failure
+RestartSec=1s
+
+[Install]
+WantedBy=multi-user.target

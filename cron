@@ -1,7 +1,7 @@
 ## ---------------------------------------------------------------- SET
 @reboot source .zshrc
-@reboot sudo rm -rf data/*
 @reboot sudo chmod 666 /dev/ttyS0
+#@reboot sudo rm -rf data/*
 
 ## ---------------------------------------------------------------- GIT
 @reboot cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && ./command.sh && cd
@@ -12,7 +12,8 @@
 
 ## ---------------------------------------------------------------- v2
 @reboot python3 gappi/main_v3.py >> log/main.log
-0 2 * * 6 rm log/main.log
+#@* 7-23 * * * python3 post.py >> log/post.log
+#0 2 * * 6 rm log/main.log
 
 ## ---------------------------------------------------------------- REBOOT
 0 1 * * * sudo rm -rf data/* && sudo shutdown now -r

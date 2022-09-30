@@ -14,7 +14,6 @@ def poster():
     parser.add_argument("-s1", "--sleep1", default=0, type=int, help="loop sleep")
     parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
     parser.add_argument("-d", "--delete", default=1, type=int, help="delete sent file")
-    # parser.add_argument("-scp", "--scp", default=0, help="save to scp")
     args = parser.parse_args()
 
     print(f"loop is {args.loop}")
@@ -29,28 +28,20 @@ def poster():
     url = 'http://115.68.37.86:8180/api/data'
     # url = 'https://sbrt.mills.co.kr/api/data'
 
-    # host = "192.168.0.5"
-    # username = "z"
-    # password = ""
-    # save_dir = "~/data/gappi"
-
-    def post_data(dir_name, det_data, ir_file, rgb_file):
-        data = {"device_id": device_id,
-                "predicted": det_data,
-                }
-        files = {"ir_image": (ir_file, open(ir_file, 'rb'), 'image/png'),
-                 "rgb_image": (rgb_file, open(rgb_file, 'rb'), 'image/jpeg')
-                 # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
-                 }
-        r = post(url, data=data, files=files)
-
-        # if r.status_code == 200:
-        #     if args.delete:
-        #         system(f"rm -rf {dir_name}")
-        print(r.headers)
-
-        return r.text
-
+    # def post_data(dir_name, det_data, ir_file, rgb_file):
+    #     data = {"device_id": device_id,
+    #             "predicted": det_data,
+    #             }
+    #     files = {"ir_image": (ir_file, open(ir_file, 'rb'), 'image/png'),
+    #              "rgb_image": (rgb_file, open(rgb_file, 'rb'), 'image/jpeg')
+    #              # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
+    #              }
+    #     r = post(url, data=data, files=files)
+    #     # if r.status_code == 200:
+    #     #     if args.delete:
+    #     #         system(f"rm -rf {dir_name}")
+    #     print(r.headers)
+    #     return r.text
 
     LOOP = 1
     while LOOP:
@@ -74,15 +65,30 @@ def poster():
                 print("[I] posting")
                 with open(det, "r") as file:
                     det_data = file.readline().rstrip()
-                ## post
-                result = post_data(target, det_data, ir, rgb)
-                print(result)
-            except IndexError as e:
+
+                # result = post_data(target, det_data, ir, rgb)
+                # print(result)
+
+                data = {"device_id": device_id,
+                        "predicted": det_data,
+                        }
+                files = {"ir_image": (ir, open(ir, 'rb'), 'image/png'),
+                         "rgb_image": (rgb, open(rgbe, 'rb'), 'image/jpeg')
+                         # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
+                         }
+                r = post(url, data=data, files=files)
+
+                # if r.status_code == 200:
+                #     if args.delete:
+                #         system(f"rm -rf {dir_name}")
+                print(r.headers)
+                print(r.text)
+
+            except Exception as e:
                 print(f"[!] {e.args}")
                 pass
             system(f"rm -rf {target}")
 
-        # if args["scp"]:  #     print("uploading to server")  #     os.system(f"sshpass -p {password} scp -r {im_dir}* {username}@{host}:{save_dir}")
-
         LOOP = args.loop
         sleep(args.sleep2)
+
