@@ -392,8 +392,7 @@ def main():
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
-                message = str(e)+"\n"+str(trace_back)
-                print(f'[!taker!] {message}', file=log)
+                print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
 
             try:
@@ -401,8 +400,7 @@ def main():
                 poster()
             except Exception as e:
                 trace_back = traceback.format_exc()
-                message = str(e)+"\n"+str(trace_back)
-                print(f'[!poster!] {message}', file=log)
+                print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
                 pass
 
             time.sleep(args.interval)
