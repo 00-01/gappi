@@ -279,7 +279,7 @@ def taker():
         fg_img = np.zeros([H, W], dtype=np.uint8)
     else:
         fg_img = bg_remover(ir_arr)
-        cv2.imwrite(fg_path, fg_img)
+    cv2.imwrite(fg_path, fg_img)
 
     ## ---------------------------------------------------------------- INFERENCE
     if args.inference == 1:
