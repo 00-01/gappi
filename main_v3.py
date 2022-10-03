@@ -274,7 +274,7 @@ def taker():
     ir_arr = asarray(ir)
     error1 = len(ir_arr[ir_arr > 237])
     error2 = len(ir_arr[ir_arr < 1])
-    if error1 > 512 or error2 > 256:
+    if error1 > 512 or error2 > 512:
         print(f"[!] white-{error1}, black-{error2}", file=log)
         fg_img = np.zeros([H, W], dtype=np.uint8)
     else:
