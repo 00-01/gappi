@@ -3,7 +3,7 @@
 ## 1.check git / 2.change crontab, .zshrc / 3.start autorun
 @reboot sh ~/gappi/scipt/check.sh
 @reboot sudo chmod 666 /dev/ttyS0
-@reboot sleep 16 && sh ~/gappi/scipt/autorun.sh
+@reboot sleep 8 && sh ~/gappi/scipt/autorun.sh
 
 #### ---------------------------------------------------------------- GIT
 

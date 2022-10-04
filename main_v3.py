@@ -64,7 +64,7 @@ url = 'http://115.68.37.86:8180/api/data'
 
 ## ---------------------------------------------------------------- ETC
 LOG = 1
-with open('trash/device_id.txt') as f:
+with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
 
