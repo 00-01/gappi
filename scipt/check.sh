@@ -1,7 +1,6 @@
 #!/bin/zsh
 
 git remote update
-#git remote update
 
 UPSTREAM=${1:-'@{u}'}
 LOCAL=$(git rev-parse @)
@@ -12,8 +11,11 @@ if [ $LOCAL = $REMOTE ]; then
     echo "0: up to date"
 elif [ $LOCAL = $BASE ]; then
     echo "1: need pull"
-elif [ $REMOTE = $BASE ]; then
-    echo "2: need push"
+    cd ~/gappi && git reset --hard && git pull >> ~/log/git.log && echo "$(date)" >> ~/log/git.log && cd
+    rb
+#elif [ $REMOTE = $BASE ]; then
+#    echo "2: need push"
 else
-    echo "3: diverged"
+    echo "2: etc"
+#    echo "3: diverged"
 fi
