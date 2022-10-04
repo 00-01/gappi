@@ -274,12 +274,12 @@ def taker():
     ir_arr = asarray(ir)
     error1 = len(ir_arr[ir_arr > 237])
     error2 = len(ir_arr[ir_arr < 1])
-    if error1 > 512 or error2 > 256:
+    if error1 > 512 or error2 > 512:
         print(f"[!] white-{error1}, black-{error2}", file=log)
         fg_img = np.zeros([H, W], dtype=np.uint8)
     else:
         fg_img = bg_remover(ir_arr)
-        cv2.imwrite(fg_path, fg_img)
+    cv2.imwrite(fg_path, fg_img)
 
     ## ---------------------------------------------------------------- INFERENCE
     if args.inference == 1:
@@ -392,8 +392,7 @@ def main():
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
-                message = str(e)+"\n"+str(trace_back)
-                print(f'[!taker!] {message}', file=log)
+                print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
 
             try:
@@ -401,8 +400,7 @@ def main():
                 poster()
             except Exception as e:
                 trace_back = traceback.format_exc()
-                message = str(e)+"\n"+str(trace_back)
-                print(f'[!poster!] {message}', file=log)
+                print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
                 pass
 
             time.sleep(args.interval)
