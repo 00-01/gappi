@@ -3,10 +3,10 @@
 #@reboot sudo rm -rf data/*
 
 ## ---------------------------------------------------------------- GIT
-@reboot cd gappi && git reset --hard && git pull > ../log/git.log && cd SCIPT &&
+@reboot cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt &&
 sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
-0 10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd SCIPT && \
+0 10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && \
 sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
 ## ---------------------------------------------------------------- v1
@@ -17,7 +17,7 @@ sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh
 
 @reboot source .zshrc
 
-* 7-23 * * * gappi/SCIPT/autorun.sh
+* 7-23 * * * gappi/scipt/autorun.sh
 
 #* * * * * pidof python3 > /dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
