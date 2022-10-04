@@ -1,7 +1,9 @@
-#### ---------------------------------------------------------------- STARTUP
+#### ---------------------------------------------------------------- SETUP
 
 @reboot sudo chmod 666 /dev/ttyS0
-@reboot sudo chmod 777 /gappi/scipt/command.sh && ./gappi/scipt/command.sh
+@reboot sh ~/gappi/scipt/command.sh
+#@reboot sleep 2 && sh ~/gappi/scipt/git.sh
+@reboot sleep 9 && sh ~/gappi/scipt/autorun.sh
 
 #### ---------------------------------------------------------------- GIT
 
@@ -10,19 +12,17 @@
 
 #### ---------------------------------------------------------------- MAIN
 
-* 7-23 * * * gappi/scipt/autorun.sh
+* 7-23 * * * ~/gappi/scipt/autorun.sh
 
 #### ---------------------------------------------------------------- REBOOT
 
-0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
+0 1 * * * sudo rm -rf ~/data/* && sudo shutdown now -r
 
 
 
 #### ---------------------------------------------------------------- NOT USED
 
 #0 7-23/2 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
-
-#@reboot source .zshrc
 
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
 
@@ -35,3 +35,5 @@
 
 #0 0 * * * python3 gappi/main.py -o 39612 >> log/main.log && python3 gappi/poster.py >> log/poster.log
 
+#@reboot source .zshrc
+#@reboot sudo chmod 777 ~/gappi/scipt/command.sh && ~/gappi/scipt/autorun.sh && ~/gappi/scipt/git.sh
