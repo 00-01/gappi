@@ -24,6 +24,7 @@ else
     cd ~/gappi && git reset --hard && echo "\n[PULL] $(date)" >> ~/log/git.log && git pull >> ~/log/git.log && cd
     crontab ~/gappi/script/cron
     cp -f ~/gappi/script/.zshrc ~/.zshrc
+    sh ~/gappi/script/command.sh
     rb
 fi
 
