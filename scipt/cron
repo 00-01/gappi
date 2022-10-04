@@ -1,10 +1,13 @@
-## ---------------------------------------------------------------- SET
+## ---------------------------------------------------------------- REBOOT
 @reboot sudo chmod 666 /dev/ttyS0
 #@reboot sudo rm -rf data/*
 
 ## ---------------------------------------------------------------- GIT
-@reboot cd gappi && git reset --hard && git pull > ../log/git.log && cd SCIPT && sudo chmod u+r+x command.sh autorun.sh && ./command.sh && ./autorun.sh && cd
-0 10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd SCIPT && sudo chmod u+r+x command.sh autorun.sh && ./command.sh && ./autorun.sh && cd
+@reboot cd gappi && git reset --hard && git pull > ../log/git.log && cd SCIPT &&
+sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
+
+0 10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd SCIPT && \
+sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
 ## ---------------------------------------------------------------- v1
 #*/1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log

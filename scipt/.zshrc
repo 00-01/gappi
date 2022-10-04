@@ -2,10 +2,10 @@
 
 ## -------------------------------------------------------------------------------- MVPC
 
-sudo chmod 666 /dev/ttyS0
-cd gappi && git reset --hard && git pull > ../log/git.log
-sudo chmod u+r+x command.sh && ./command.sh
-sudo chmod u+r+x autorun.sh && cd
+# sudo chmod 666 /dev/ttyS0
+# cd gappi && git reset --hard && git pull > ../log/git.log
+# sudo chmod u+r+x command.sh && ./command.sh
+# sudo chmod u+r+x autorun.sh && cd
 
 ## -------------------------------------------------------------------------------- ZSH
 
