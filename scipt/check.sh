@@ -8,14 +8,13 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    echo "0: up to date"
+    echo "0: PASS"
 elif [ $LOCAL = $BASE ]; then
-    echo "1: need pull"
-    cd ~/gappi && git reset --hard && git pull >> ~/log/git.log && echo "$(date)" >> ~/log/git.log && cd
+    echo "1: PULLING"
+    cd ~/gappi && git reset --hard && echo "[PULL] $(date)" >> ~/log/git.log && git pull >> ~/log/git.log && cd
     rb
-#elif [ $REMOTE = $BASE ]; then
-#    echo "2: need push"
+elif [ $REMOTE = $BASE ]; then
+    echo "2: PUSH NEED"
 else
-    echo "2: etc"
-#    echo "3: diverged"
+    echo "3: ETC"
 fi
