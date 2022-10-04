@@ -1,13 +1,12 @@
 #### ---------------------------------------------------------------- STARTUP
 
 @reboot sudo chmod 666 /dev/ttyS0
-@reboot source .zshrc
-@reboot cd gappi && git reset --hard && git pull >> ~/log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
+@reboot sudo chmod 777 /gappi/scipt/command.sh && ./gappi/scipt/command.sh
 
 #### ---------------------------------------------------------------- GIT
 
 ## At minute 0 past every 2nd hour from 3 through 23
-0 7-23/2 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
+0 7-23/2 * * * sudo chmod 777 /gappi/scipt/command.sh && ./gappi/scipt/command.sh
 
 #### ---------------------------------------------------------------- MAIN
 
@@ -18,7 +17,12 @@
 0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
 
 
+
 #### ---------------------------------------------------------------- NOT USED
+
+#0 7-23/2 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
+
+#@reboot source .zshrc
 
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
 
