@@ -21,4 +21,4 @@
 #fi
 
 #cd ~/gappi && git reset --hard && echo "$(date)" >> ~/log/git.log && git pull >> ~/log/git.log && cd
-#cd ~/gappi/scipt && sudo chmod u+r+x command.sh autorun.sh check.sh && ./command.sh ./check.sh && cd
+#cd ~/gappi/script && sudo chmod u+r+x command.sh autorun.sh check.sh && ./command.sh ./check.sh && cd

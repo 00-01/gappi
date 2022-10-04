@@ -21,10 +21,10 @@ if [ $LOCAL = $REMOTE ]; then
 #    echo "2: PUSH NEED"
 else
     echo "1: PULLING"
-    cd ~/gappi && git reset --hard && echo "[PULL] $(date)" >> ~/log/git.log && git pull >> ~/log/git.log && cd
+    cd ~/gappi && git reset --hard && echo "\n[PULL] $(date)" >> ~/log/git.log && git pull >> ~/log/git.log && cd
     crontab ~/gappi/script/cron
     cp -f ~/gappi/script/.zshrc ~/.zshrc
-    sudo reboot now
+    rb
 fi
 
 cd
