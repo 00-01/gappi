@@ -6,7 +6,7 @@
 #### ---------------------------------------------------------------- GIT
 
 ## At minute 0 past every 2nd hour from 3 through 23
-0 7-23/2 * * * sudo chmod 777 /gappi/scipt/command.sh && ./gappi/scipt/command.sh
+0 7-23/2 * * * sudo chmod 777 ~/gappi/scipt/command.sh && ./gappi/scipt/command.sh
 
 #### ---------------------------------------------------------------- MAIN
 

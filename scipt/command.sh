@@ -1,8 +1,6 @@
 ## ---------------------------------------------------------------- GIT
 cd ~/gappi && git reset --hard && echo "$(date)" >> ~/log/git.log && git pull >> ~/log/git.log && cd
 
-cd ~/gappi/scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
-
 ## ---------------------------------------------------------------- CRON
 crontab gappi/script/cron
 
@@ -25,3 +23,4 @@ cp -f gappi/script/.zshrc ~/.zshrc
 #  echo "write actions here removing echo"
 #fi
 
+#cd ~/gappi/scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
