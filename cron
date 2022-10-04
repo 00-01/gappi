@@ -14,7 +14,7 @@
 
 @reboot source .zshrc
 
-* 7-23 * * * autorun.sh
+* 7-23 * * * gappi/autorun.sh
 
 #* * * * * pidof python3 > /dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &

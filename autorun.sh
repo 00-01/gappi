@@ -1,12 +1,13 @@
 #! /bin/zsh
 
 case "$(pidof python3 | wc -w)" in
-0)  echo "Restarting python3: $(date)" >> log/run.log
-    python3 gappi/main_v3.py >> log/main.log
+0)  echo "[RESTART] $(date)" >> ~/log/run.log
+    python3 gappi/main_v3.py >> ~/log/main.log
     ;;
-1)  # all ok
+1)  # pass
     ;;
-*)  echo "Removed double python3: $(date)" >> log/run.log
+*)  echo "[REMOVE]: $(date)" >> ~/log/run.log
     kill $(pidof python3 | awk '{print $1}')
     ;;
 esac
+q
