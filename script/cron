@@ -21,4 +21,4 @@
 #### ---------------------------------------------------------------- NOT USED
 
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
-#@reboot sleep 8 sh ~/gappi/scipt/command.sh
+#@reboot sleep 8 sh ~/gappi/script/command.sh
