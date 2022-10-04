@@ -25,7 +25,7 @@ else
     crontab ~/gappi/script/cron
     cp -f ~/gappi/script/.zshrc ~/.zshrc
     sh ~/gappi/script/command.sh
-    rb
+    sudo reboot now
 fi
 
 cd
