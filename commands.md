@@ -1,6 +1,7 @@
 ## [TIMEZONE]
     sudo cp -p /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
+
 ## [GIT]
     git clone https://github.com/00-01/gappi.git
 
@@ -9,38 +10,6 @@
     sudo touch post-receive
     sudo chmod u+r+x post-receive
 
-## [CRON]
-    @reboot sudo chmod 666 /dev/ttyS0
-    @reboot cd gappi && git reset --hard && git pull > ../log/git.log && sudo chmod u+r+x command.sh && cd
-    
-    @reboot python3 gappi/main_v3.py > log/main.log
-    
-    30 18 * * 1-5 sudo shutdown now -r
-    
-    0 19 * * 1-5 sudo rm -rf data/*
-    @daily sudo rm -rf data/*
-
-### start cron
-    sudo service cron start
-
-## [ZSHRC]
-    alias sz="source ~/.zshrc"
-    alias z="sudo nano ~/.zshrc"
-    
-    alias i="sudo apt install"
-    alias u="sudo apt update && sudo apt upgrade"
-    alias a="sudo apt autoclean && sudo apt autoremove"
-    alias r="sudo dpkg -r"
-    
-    alias rb="sudo reboot now"
-    alias sd="sudo shutdown now"
-    
-    alias t="python3 main.py -l 0 -s 0 && python3 poster.py -l 0 -s 0 -d 1"
-
-    ## custom command
-    sudo chmod 666 /dev/ttyS0
-    cd gappi && git reset --hard && git pull > ../log/git.log
-    sudo chmod u+r+x command.sh && ./command.sh && cd
 
 ## [TENSORFLOW]
 
@@ -67,6 +36,7 @@
     pip3 install -U setuptools pip
     pip3 install pybind11 h5py gdown matplotlib pillow opencv-contrib-python protobuf==3.20.0 tensorflow
 
+
 ## [ETC]
 
 ### scp
@@ -77,6 +47,7 @@
 
 ### change_wifi
     sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
 
 ## [SLEEP]
     ## wake up tomorrow at 08:55
@@ -108,8 +79,4 @@
     sudo macchanger -r <wlan0>
 ### specific
     sudo macchanger -m <00:00:00:00:00:01> <wlan0>
-
-
-
-
 
