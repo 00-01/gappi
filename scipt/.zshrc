@@ -1,34 +1,5 @@
-## v1.1
+## -------------------------------------------------------------------------------- SET
 
-## -------------------------------------------------------------------------------- MVPC
-
-# sudo chmod 666 /dev/ttyS0
-# cd gappi && git reset --hard && git pull > ../log/git.log
-# sudo chmod u+r+x command.sh && ./command.sh
-# sudo chmod u+r+x autorun.sh && cd
-
-## -------------------------------------------------------------------------------- ZSH
-
-export python="python3"
-# Path to oh-my-zsh installation.
-export ZSH="/home/$USER/.oh-my-zsh"
-
-ZSH_THEME="max"
-
-plugins=(git zsh-autosuggestions sudo web-search copypath copyfile zsh-syntax-highlighting)
-
-source $ZSH/oh-my-zsh.sh
-
-## UPDATE
-DISABLE_UPDATE_PROMPT="true"
-export UPDATE_ZSH_DAYS=30
-# DISABLE_AUTO_UPDATE="true"
-
-## COMPLETION
-ENABLE_CORRECTION="true"
-# CASE_SENSITIVE="true"
-# make _ and - same : CASE_SENSITIVE must be off
-# HYPHEN_INSENSITIVE="true"
 
 ## -------------------------------------------------------------------------------- ALIAS
 
@@ -91,6 +62,28 @@ alias ssss="ssr && sse && sst && sss"
 alias read_log="sudo journalctl -u $srvc -b"
 alias del_log="sudo journalctl --rotate --vacuum-time=1s"
 
+## -------------------------------------------------------------------------------- ZSH
+
+export python="python3"
+export ZSH="/home/$USER/.oh-my-zsh"
+
+ZSH_THEME="max"
+
+plugins=(git zsh-autosuggestions sudo web-search copypath copyfile zsh-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+
+## UPDATE
+DISABLE_UPDATE_PROMPT="true"
+export UPDATE_ZSH_DAYS=30
+# DISABLE_AUTO_UPDATE="true"
+
+## COMPLETION
+ENABLE_CORRECTION="true"
+# CASE_SENSITIVE="true"
+# make _ and - same : CASE_SENSITIVE must be off
+# HYPHEN_INSENSITIVE="true"
+
 ## -------------------------------------------------------------------------------- DOWNLOAD ONCE
 
 ## ARGCOMPLETE
@@ -106,3 +99,10 @@ alias del_log="sudo journalctl --rotate --vacuum-time=1s"
 ## zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}$
 
+
+## -------------------------------------------------------------------------------- NOT USED
+
+# sudo chmod 666 /dev/ttyS0
+# cd gappi && git reset --hard && git pull > ../log/git.log
+# sudo chmod u+r+x command.sh && ./command.sh
+# sudo chmod u+r+x autorun.sh && cd
