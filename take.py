@@ -52,12 +52,12 @@ def taker():
     THRESHOLD = 0.5
     ROTATION = 180
 
-    print(f"{chr(10)*2}[I] GAP HIGH")
+    print(f"{chr(10)*2}[I] gap HIGH")
     sleep(1)
     GPIO.output(sd, GPIO.HIGH)
     sleep(1)
 
-    with open('device_id.txt') as f:
+    with open('trash/device_id.txt') as f:
         device_id = f.readline().rstrip()
 
 
@@ -125,7 +125,7 @@ def taker():
         # print("[TX] THRESHOLD")
         # ser.write(THRESHOLD.to_bytes(2, byteorder='little'))
 
-        print("[I] GAP LOW")
+        print("[I] gap LOW")
         GPIO.output(sd, GPIO.LOW)
 
         print("[I] saving binary to image")

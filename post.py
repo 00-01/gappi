@@ -20,7 +20,7 @@ def poster():
     print(f"sleep1 is {args.sleep1} seconds")
     print(f"sleep2 is {args.sleep2} seconds")
 
-    with open('device_id.txt') as f:
+    with open('trash/device_id.txt') as f:
         device_id = f.readline().rstrip()
 
     # with open('web_server_address.txt') as f:

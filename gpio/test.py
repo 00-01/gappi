@@ -1,14 +1,24 @@
+#!/usr/bin/env python3
+from argparse import ArgumentParser
+from time import sleep
+
 import RPi.GPIO as GPIO
 
+
+parser = ArgumentParser()
+parser.add_argument("-s", "--sleep", default=10, type=int, help="loop sleep")
+args = parser.parse_args()
+
+sd = 17
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-GPIOs = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
+while(1):
+    print("IN")
+    GPIO.setup(sd, GPIO.IN)
+    sleep(args.sleep)
 
-for gpio in GPIOs:
-    GPIO.setup(gpio, GPIO.IN)
+    print("OUT")
+    GPIO.setup(sd, GPIO.OUT)
+    sleep(args.sleep)
 
-for gpio in GPIOs:
-    print(f"{str(gpio)} : {str(GPIO.input(gpio))}")
-
-# only use to change gpio state
-# GPIO.cleanup()

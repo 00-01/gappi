@@ -64,7 +64,7 @@ url = 'http://115.68.37.86:8180/api/data'
 
 ## ---------------------------------------------------------------- ETC
 LOG = 1
-with open('device_id.txt') as f:
+with open('trash/device_id.txt') as f:
     device_id = f.readline().rstrip()
 
 
@@ -325,7 +325,7 @@ def poster():
 
     data = {"device_id": device_id,
             "predicted": det_data,
-            "log": log_data,}
+            "log": log_data}
     files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
     # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
              "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),

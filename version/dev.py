@@ -46,7 +46,7 @@ threshold = 40
 rotate_device_list = ["02"]
 rotation = 270
 
-print("[I] GAP HIGH")
+print("[I] gap HIGH")
 sleep(1)
 GPIO.output(sd, GPIO.HIGH)
 sleep(3)
@@ -108,7 +108,7 @@ while LOOP:
     print("[TX] THRESHOLD")
     ser.write(threshold.to_bytes(4, byteorder='little'))
 
-    print("[I] GAP LOW")
+    print("[I] gap LOW")
     GPIO.output(sd, GPIO.LOW)
 
     print("[S] saving detection to txt")
