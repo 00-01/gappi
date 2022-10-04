@@ -4,7 +4,9 @@ crontab cron
 ## ---------------------------------------------------------------- ZSHRC
 cp -f .zshrc ~/.zshrc
 
-## ----------------------------------------------------------------
+## ---------------------------------------------------------------- PIP
+
+## ---------------------------------------------------------------- NOT USED
 #pip3 install opencv-contrib-python
 #pip3 install -U pip
 #sudo apt install gfortran libopenblas-dev liblapack-dev libhdf5-dev

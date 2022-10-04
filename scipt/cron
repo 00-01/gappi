@@ -7,7 +7,7 @@
 #### ---------------------------------------------------------------- GIT
 
 ## At minute 0 past every 2nd hour from 3 through 23
-0 3-23/2 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
+0 7-23/2 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh ./update.sh && cd
 
 #### ---------------------------------------------------------------- MAIN
 
