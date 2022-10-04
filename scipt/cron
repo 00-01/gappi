@@ -1,33 +1,32 @@
-## ---------------------------------------------------------------- REBOOT
+## ---------------------------------------------------------------- STARTUP
 @reboot sudo chmod 666 /dev/ttyS0
-#@reboot sudo rm -rf data/*
+@reboot source .zshrc
+@reboot cd gappi && git reset --hard && git pull >> ~/log/git.log && cd scipt &&
+sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
 ## ---------------------------------------------------------------- GIT
-@reboot cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt &&
+0 6,10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && \
 sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
-0 10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && \
-sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
-
-## ---------------------------------------------------------------- v1
-#*/1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
-
-## ---------------------------------------------------------------- v2
-@reboot python3 gappi/main_v3.py >> log/main.log
-
-@reboot source .zshrc
-
+## ---------------------------------------------------------------- MAIN
 * 7-23 * * * gappi/scipt/autorun.sh
 
-#* * * * * pidof python3 > /dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
+## ---------------------------------------------------------------- REBOOT
+0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
+
+
+
+## ---------------------------------------------------------------- NOT USED
+## ----------------------------------------------------------------
+
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
 
 #@* 7-23 * * * python3 post.py >> log/post.log
 #0 2 * * 6 rm log/main.log
 
-## ---------------------------------------------------------------- REBOOT
-0 1 * * * sudo rm -rf data/* && sudo shutdown now -r
+#*/1 6-22 * * * python3 gappi/main.py > log/main.log && python3 gappi/poster.py > log/poster.log
 
-## ---------------------------------------------------------------- NOT USED
+#@reboot sudo rm -rf data/*
+
 #0 0 * * * python3 gappi/main.py -o 39612 >> log/main.log && python3 gappi/poster.py >> log/poster.log
 
