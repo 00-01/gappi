@@ -1,12 +1,10 @@
 ## ---------------------------------------------------------------- STARTUP
 @reboot sudo chmod 666 /dev/ttyS0
 @reboot source .zshrc
-@reboot cd gappi && git reset --hard && git pull >> ~/log/git.log && cd scipt &&
-sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
+@reboot cd gappi && git reset --hard && git pull >> ~/log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
 ## ---------------------------------------------------------------- GIT
-0 6,10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && \
-sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
+0 6,10,12,14 * * * cd gappi && git reset --hard && git pull > ../log/git.log && cd scipt && sudo chmod u+r+x command.sh autorun.sh update.sh && ./command.sh && ./autorun.sh && cd
 
 ## ---------------------------------------------------------------- MAIN
 * 7-23 * * * gappi/scipt/autorun.sh
