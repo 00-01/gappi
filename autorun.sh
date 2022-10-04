@@ -6,8 +6,7 @@ case "$(pidof python3 | wc -w)" in
     ;;
 1)  # pass
     ;;
-*)  echo "[REMOVE]: $(date)" >> ~/log/run.log
+*)  echo "[REMOVE] $(date)" >> ~/log/run.log
     kill $(pidof python3 | awk '{print $1}')
     ;;
 esac
-q
