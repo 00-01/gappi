@@ -1,18 +1,17 @@
 #### ---------------------------------------------------------------- SETUP
 
-## 1.check git / 2.change crontab, .zshrc / 3.start autorun
-@reboot sh ~/gappi/scipt/check.sh
+@reboot sh ~/gappi/script/check.sh
 @reboot sudo chmod 666 /dev/ttyS0
-@reboot sleep 8 && sh ~/gappi/scipt/autorun.sh
+@reboot sleep 8 && sh ~/gappi/script/autorun.sh
 
 #### ---------------------------------------------------------------- GIT
 
 ## At minute 0 past every 2nd hour from 3 through 23
-0 7-23/2 * * * sh ~/gappi/scipt/check.sh
+0 7-23/2 * * * sh ~/gappi/script/check.sh
 
 #### ---------------------------------------------------------------- MAIN
 
-* 7-23 * * * ~/gappi/scipt/autorun.sh
+* 7-23 * * * ~/gappi/script/autorun.sh
 
 #### ---------------------------------------------------------------- REBOOT
 
