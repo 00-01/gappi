@@ -49,23 +49,23 @@ alias p="pip3 install"
 srvc=mvpc.service
 s_path="/etc/systemd/system/$srvc"
 
-alias ss="sudo systemctl"
+alias sd="sudo systemctl"
 
-alias sse="ss enable $srvc"
-alias ssd="ss disable $srvc"
+alias sde="ss enable $srvc"
+alias sdd="ss disable $srvc"
 
-alias sst="ss start $srvc"
-alias ssp="ss stop $srvc"
+alias sdt="ss start $srvc"
+alias sdp="ss stop $srvc"
 
-alias ssr="ss daemon-reload"
-alias sss="ss status $srvc"
+alias sdr="ss daemon-reload"
+alias sds="ss status $srvc"
 
-alias ssss="ssr && sse && sst && sss"
+alias sdss="sdr && sde && sdt"
 
-alias ns="sudo nano $s_path"
+alias nsd="sudo nano $s_path"
 
-alias read_log="sudo journalctl -u $srvc -b"
-alias del_log="sudo journalctl --rotate --vacuum-time=1s"
+alias sdl="sudo journalctl -u $srvc -b"
+alias sdl_d="sudo journalctl --rotate --vacuum-time=1s"
 
 ## -------------------------------------------------------------------------------- ZSH
 

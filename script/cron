@@ -1,13 +1,13 @@
 #### ---------------------------------------------------------------- SETUP
 
-@reboot sh ~/gappi/script/check.sh
+@reboot source ~/gappi/script/check.sh
 @reboot sudo chmod 666 /dev/ttyS0
-@reboot ssss
+@reboot sdss
 
 #### ---------------------------------------------------------------- GIT
 
 ## 2nd hour from 3 through 23
-0 7-23/2 * * * sh ~/gappi/script/check.sh
+0 7-23/2 * * * source ~/gappi/script/check.sh
 
 #### ---------------------------------------------------------------- MAIN
 
