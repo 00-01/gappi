@@ -348,7 +348,7 @@ def main():
     mS = 60
 
     START_SEC = args.begin*hS  ## 9:00:00
-    END_SEC = args.end*hS  ## 18:00:00
+    END_SEC = args.end*hS  ## 23:00:00
     TOTAL_SEC = 24*hS  ## 24:00:00
 
     # trd_taker = threading.Thread(target=taker, args=(1,))
