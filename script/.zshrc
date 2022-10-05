@@ -28,12 +28,7 @@ alias re="sudo dpkg --configure -a"
 
 ## SYS
 alias sz="source ~/.zshrc"
-alias zz="sudo gedit ~/.oh-my-zsh/themes/max.zsh-theme "
-
-alias n="nano"
-alias sn="sudo nano"
-alias g="gedit"
-alias sg="sudo gedit"
+alias zz="sudo nano ~/.oh-my-zsh/themes/max.zsh-theme "
 
 alias rb="sudo reboot now"
 alias sd="sudo shutdown now"
@@ -42,7 +37,7 @@ alias sd="sudo shutdown now"
 alias p="pip3 install"
 
 ## SYSTEMD
-# svc=mvpc.service
+srvc=mvpc.service
 alias ss="sudo systemctl"
 
 alias sse="ss enable $srvc"
@@ -55,6 +50,8 @@ alias sst="ss start $srvc"
 alias ssp="ss stop $srvc"
 
 alias ssss="ssr && sse && sst && sss"
+
+alias ns="sudo nano /etc/systemd/system/$srvc"
 
 alias read_log="sudo journalctl -u $srvc -b"
 alias del_log="sudo journalctl --rotate --vacuum-time=1s"
