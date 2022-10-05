@@ -1,34 +1,30 @@
 ## -------------------------------------------------------------------------------- ALIAS
 
-## ALIAS
+## ZSH
 
 alias sz="source ~/.zshrc"
 alias z="nano ~/.zshrc"
-alias zz="sudo nano ~/.oh-my-zsh/themes/max.zsh-theme "
+alias zz="sudo nano ~/.oh-my-zsh/themes/max.zsh-theme"
 
 
 ## APT
 
-alias i="sudo apt install"
-alias iy="sudo apt install -y"
+alias at="sudo apt"
+alias i="at install"
+alias iy="i -y"
 
-alias ua="sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove"
-alias u="sudo apt update && sudo apt upgrade"
-alias uy="sudo apt update && sudo apt upgrade -y && sudo snap refresh"
-alias ud="sudo apt dist-upgrade"
-alias uf="sudo apt --fix-broken install"
+alias u="at update && at upgrade"
+alias a="at autoclean && at autoremove"
+alias ua="u && a"
+alias uy="u -y && sudo snap refresh"
+alias ud="at dist-upgrade"
+alias uf="at --fix-broken install"
 
-alias a="sudo apt autoclean && sudo apt autoremove"
 alias r="sudo dpkg -r"
 alias re="sudo dpkg --configure -a"
 
 
 ## SYS
-
-alias i="sudo apt install"
-alias u="sudo apt update && sudo apt upgrade"
-alias a="sudo apt autoclean && sudo apt autoremove"
-alias r="sudo dpkg -r"
 
 alias reb="sudo reboot now"
 alias shd="sudo shutdown now"
@@ -90,13 +86,11 @@ ENABLE_CORRECTION="true"
 # autoload -U bashcompinit
 # bashcompinit
 
-## MANUAL
 ## zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins$
 
 ## zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}$
-
 
 ## -------------------------------------------------------------------------------- NOT USED
 

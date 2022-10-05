@@ -30,7 +30,7 @@ else
     sudo cp -f ~/gappi/script/$srvc $s_path
     sdss
     sleep 4
-    sudo reboot now
+    reb
 fi
 
 cd
