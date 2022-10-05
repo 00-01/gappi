@@ -40,10 +40,10 @@
 ## [ETC]
 
 ### scp
-    scp -r data/*/*_BG.png z@192.168.0.5:~/data
+    scp -r data/* z@192.168.0.5:~/data
 
 ### scp with pw
-    sudo sshpass -p 1234qwer scp ~/data/* z@192.168.0.16:/media/z/0/DATA/gappi
+    sshpass -p PWPWPW scp -r data/* z@192.168.0.5:~/data
 
 ### change_wifi
     sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
