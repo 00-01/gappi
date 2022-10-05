@@ -4,14 +4,7 @@
 
 alias sz="source ~/.zshrc"
 alias z="nano ~/.zshrc"
-
-alias i="sudo apt install"
-alias u="sudo apt update && sudo apt upgrade"
-alias a="sudo apt autoclean && sudo apt autoremove"
-alias r="sudo dpkg -r"
-
-alias rb="sudo reboot now"
-alias sd="sudo shutdown now"
+alias zz="sudo nano ~/.oh-my-zsh/themes/max.zsh-theme "
 
 
 ## APT
@@ -32,11 +25,13 @@ alias re="sudo dpkg --configure -a"
 
 ## SYS
 
-alias sz="source ~/.zshrc"
-alias zz="sudo nano ~/.oh-my-zsh/themes/max.zsh-theme "
+alias i="sudo apt install"
+alias u="sudo apt update && sudo apt upgrade"
+alias a="sudo apt autoclean && sudo apt autoremove"
+alias r="sudo dpkg -r"
 
-alias rb="sudo reboot now"
-alias sd="sudo shutdown now"
+alias reb="sudo reboot now"
+alias shd="sudo shutdown now"
 
 
 ## PIP
