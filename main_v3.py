@@ -40,7 +40,7 @@ BG_LIST = []
 BG_LENGTH = 32
 
 ## ---------------------------------------------------------------- INFERENCE
-MODEL = "model/v1.1.tflite"
+MODEL = f"{os.path.expanduser('~')}/gappi/model/v1.1.tflite"
 THRESHOLD = 0.5
 
 MIN, MAX = 0, 255
@@ -65,7 +65,7 @@ url = 'http://115.68.37.86:8180/api/data'
 
 ## ---------------------------------------------------------------- ETC
 LOG = args.log
-with open('../device_id.txt') as f:
+with open(f"{os.path.expanduser('~')}/device_id.txt") as f:
     device_id = f.readline().rstrip()
 
 
