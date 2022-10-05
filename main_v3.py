@@ -167,12 +167,16 @@ def inferencer(input, ):
                         break
                 if flag == 0: output.append(output_data4[i])
                 flag = 0
+    li = []
+    for i in output:
+        if i[0] != 0 and i[3] != 0:
+            li.append(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+    li.insert(0, str(len(output)))
 
     with open(inf_path, 'w') as w:
-        w.write(str(len(output)))
-        for i in output:
-            if i[0] != 0 and i[3] != 0:
-                w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+        for i in li:
+            w.write(i)
+
 
 
 @timeout(40)
