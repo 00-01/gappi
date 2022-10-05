@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 from argparse import ArgumentParser
 from datetime import datetime
 import errno
@@ -39,7 +40,7 @@ BG_LIST = []
 BG_LENGTH = 32
 
 ## ---------------------------------------------------------------- INFERENCE
-MODEL = "~/gappi/model/v1.1.tflite"
+MODEL = "./model/v1.1.tflite"
 THRESHOLD = 0.5
 
 MIN, MAX = 0, 255

@@ -1,6 +1,6 @@
 #! /bin/zsh
 
-NOW=$(date +"%Y-%m-%d-%T")
+NOW=$(date +"%Y %m %d %T")
 
 case "$(pidof python3 | wc -w)" in
 0)  echo "[RESTART] $NOW" >> ~/log/run.log

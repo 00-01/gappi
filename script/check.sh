@@ -4,7 +4,7 @@ cd ~/gappi
 
 git remote update
 
-NOW=$(date +"%Y-%m-%d-%T")
+NOW=$(date +"%Y %m %d %T")
 
 UPSTREAM=${1:-'@{u}'}
 LOCAL=$(git rev-parse @)
