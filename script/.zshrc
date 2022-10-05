@@ -48,12 +48,12 @@ alias nsd="sudo nano $s_path"
 
 alias sd="sudo systemctl"
 
-alias sdr="ss daemon-reload"
-alias sde="ss enable $srvc"
-alias sdd="ss disable $srvc"
-alias sdt="ss start $srvc"
-alias sdp="ss stop $srvc"
-alias sds="ss status $srvc"
+alias sdr="sd daemon-reload"
+alias sde="sd enable $srvc"
+alias sdd="sd disable $srvc"
+alias sdt="sd start $srvc"
+alias sdp="sd stop $srvc"
+alias sds="sd status $srvc"
 
 alias sdss="sdr && sde && sdt"
 
