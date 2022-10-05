@@ -1,47 +1,36 @@
 ## -------------------------------------------------------------------------------- ALIAS
 
 ## ZSH
-
 alias sz="source ~/.zshrc"
 alias z="nano ~/.zshrc"
 alias zz="sudo nano ~/.oh-my-zsh/themes/max.zsh-theme"
 
-
 ## APT
-
 alias at="sudo apt"
+
 alias i="at install"
 alias iy="i -y"
-
 alias u="at update && at upgrade"
 alias a="at autoclean && at autoremove"
 alias ua="u && a"
 alias uy="u -y && sudo snap refresh"
 alias ud="at dist-upgrade"
 alias uf="at --fix-broken install"
-
 alias r="sudo dpkg -r"
 alias re="sudo dpkg --configure -a"
 
-
 ## SYS
-
 alias reb="sudo reboot now"
 alias shd="sudo shutdown now"
 
 
 ## PIP
-
 alias p="pip3 install"
 
-
 ## SYSTEMD
-
 srvc=mvpc.service
 s_path="/etc/systemd/system/$srvc"
-
 alias nsd="sudo nano $s_path"
-
 alias sd="sudo systemctl"
 
 alias sdr="sd daemon-reload"
@@ -50,9 +39,7 @@ alias sdd="sd disable $srvc"
 alias sdt="sd start $srvc"
 alias sdp="sd stop $srvc"
 alias sds="sd status $srvc"
-
 alias sdss="sdr && sde && sdt"
-
 alias sdl="sudo journalctl -u $srvc -b"
 alias sdl_d="sudo journalctl --rotate --vacuum-time=1s"
 

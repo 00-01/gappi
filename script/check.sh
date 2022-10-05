@@ -29,7 +29,7 @@ else
     sh ~/gappi/script/command.sh
     sudo cp -f ~/gappi/script/$srvc $s_path
     sdss
-    sleep 4
+    sleep 2
     reb
 fi
 

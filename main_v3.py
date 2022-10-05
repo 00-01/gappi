@@ -171,7 +171,8 @@ def inferencer(input, ):
     with open(inf_path, 'w') as w:
         w.write(str(len(output)))
         for i in output:
-            w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+            if i[0] != 0 and i[3] != 0:
+                w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
 
 @timeout(40)
