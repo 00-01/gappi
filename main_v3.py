@@ -171,7 +171,7 @@ def inferencer(input, ):
     for i in output:
         if i[0] != 0 and i[3] != 0:
             li.append(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
-    li.insert(0, str(len(output)))
+    li.insert(0, str(len(li)))
 
     with open(inf_path, 'w') as w:
         for i in li:
