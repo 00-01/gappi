@@ -27,7 +27,7 @@ else
     crontab ~/gappi/script/cron
     sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
     sh ~/gappi/script/command.sh
-    sudo cp -f ~/gappi/script/mvpc.service $s_path
+    sudo cp -f ~/gappi/script/mvpc.service s_path
     ssss
     sleep 4
     sudo reboot now
