@@ -1,0 +1,14 @@
+[Unit]
+Description=mvpc system
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/home/pi
+ExecStart=/usr/bin/env python3 gappi/main_v3.py
+Environment=
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

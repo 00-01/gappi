@@ -25,8 +25,11 @@ else
     echo "1: PULLING"
     cd ~/gappi && git reset --hard && echo "\n[PULL] $NOW" >> ~/log/git.log && git pull >> ~/log/git.log && cd
     crontab ~/gappi/script/cron
-    cp -f ~/gappi/script/.zshrc ~/.zshrc
+    sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
     sh ~/gappi/script/command.sh
+    sudo cp -f ~/gappi/script/mvpc.service $s_path
+    ssss
+    sleep 4
     sudo reboot now
 fi
 
