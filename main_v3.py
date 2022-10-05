@@ -40,7 +40,7 @@ BG_LIST = []
 BG_LENGTH = 32
 
 ## ---------------------------------------------------------------- INFERENCE
-MODEL = "./model/v1.1.tflite"
+MODEL = "model/v1.1.tflite"
 THRESHOLD = 0.5
 
 MIN, MAX = 0, 255
@@ -64,7 +64,7 @@ ROTATION = 180
 url = 'http://115.68.37.86:8180/api/data'
 
 ## ---------------------------------------------------------------- ETC
-LOG = 1
+LOG = args.log
 with open('device_id.txt') as f:
     device_id = f.readline().rstrip()
 
@@ -313,7 +313,7 @@ def taker():
 def poster():
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"{chr(10)}[START POST] {'-'*20} [{dt}]", file=log)
+    print(f"[START POST] {'-'*20} [{dt}]", file=log)
 
     dtime = DT.strftime("%Y/%m/%d-%H:%M:%S")
 
@@ -382,7 +382,7 @@ def main():
         elif W == 6:  D = TOTAL_SEC*2
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f"{'-'*8} [NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
+        print(f"{chr(10)} {'-'*8} [NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
 
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
