@@ -44,20 +44,18 @@ alias p="pip3 install"
 srvc=mvpc.service
 s_path="/etc/systemd/system/$srvc"
 
+alias nsd="sudo nano $s_path"
+
 alias sd="sudo systemctl"
 
+alias sdr="ss daemon-reload"
 alias sde="ss enable $srvc"
 alias sdd="ss disable $srvc"
-
 alias sdt="ss start $srvc"
 alias sdp="ss stop $srvc"
-
-alias sdr="ss daemon-reload"
 alias sds="ss status $srvc"
 
 alias sdss="sdr && sde && sdt"
-
-alias nsd="sudo nano $s_path"
 
 alias sdl="sudo journalctl -u $srvc -b"
 alias sdl_d="sudo journalctl --rotate --vacuum-time=1s"
