@@ -178,9 +178,7 @@ def inferencer(input, ):
     # li.insert(0, str(len(li)))
 
     with open(inf_path, 'w') as w:
-        for i in output:
-            w.write(i)
-
+        for i in output:  w.write(i)
 
 
 @timeout(40)
