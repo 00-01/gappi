@@ -165,16 +165,20 @@ def inferencer(input, ):
                     if corner < 0 or corner > H:
                         flag = 1
                         break
-                if flag == 0: output.append(output_data4[i])
+                if flag == 0:
+                    if 0 not in output_data4[i]:
+                        # output.append(output_data4[i])
+                        output.append(f',{output_data4[i,1]}x{output_data4[i,0]}x{output_data4[i,3]}x{output_data4[i,2]}')
                 flag = 0
-    li = []
-    for i in output:
-        if i[0] != 0 and i[3] != 0:
-            li.append(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
-    li.insert(0, str(len(li)))
+    output.insert(0, str(len(output)))
+    # li = []
+    # for i in output:
+        # if 0 not in i:
+        # li.append(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+    # li.insert(0, str(len(li)))
 
     with open(inf_path, 'w') as w:
-        for i in li:
+        for i in output:
             w.write(i)
 
 
