@@ -351,12 +351,13 @@ def poster():
 
     data = {"device_id": device_id,
             "predicted": det_data,
-            "log": log_data}
+            # "log": log_data,
+            }
     files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
     # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
              "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
              # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
-             # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
+             "log": (log_data, open(log_data, 'rb'), 'text/plain'),
              }
 
     r = post(url, data=data, files=files)
