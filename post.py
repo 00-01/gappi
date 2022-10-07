@@ -2,7 +2,7 @@
 from argparse import ArgumentParser
 from datetime import datetime
 from glob import glob
-from os import system
+import os
 from time import sleep
 
 from requests import post
@@ -65,7 +65,7 @@ def poster():
 
                 if r.status_code == 200:
                     if args.delete:
-                        system(f"rm -rf {target}")
+                        os.system(f"rm -rf {target}")
 
                 print(r.headers)
                 print(r.text)

@@ -218,7 +218,7 @@ def taker():
 
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"{chr(10)}[START INFERENCE] {'-'*20} [{dt}]", file=log)
+    print(f"[START INFERENCE] {'-'*20} [{dt}]", file=log)
 
     print(f"[I] inference: {args.inference}, sleep: {args.sleep} sec", file=log)
 
