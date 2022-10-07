@@ -364,13 +364,13 @@ def poster():
              # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
              "log": open(log_path, 'rb'),
              }
-    log = open(log_path, 'w')
+#     log = open(log_path, 'w')
     r = post(url, data=data, files=files)
     # print(r.headers, file=log)
-    print(r.text, file=log)
+#     print(r.text, file=log)
 
     end = time.time()-start
-    print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
+#     print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
 
 def main():
