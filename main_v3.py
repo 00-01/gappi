@@ -337,7 +337,7 @@ def taker():
     time.sleep(args.sleep)
 
 
-def poster():
+def poster(log):
     global r
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
@@ -430,7 +430,7 @@ def main():
 
             try:
                 # trd_poster.start()
-                poster()
+                poster(log)
             except Exception as e:
                 trace_back = traceback.format_exc()
                 print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
