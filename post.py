@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
+import os
+import traceback
 from argparse import ArgumentParser
 from datetime import datetime
 from glob import glob
-import os
 from time import sleep
 
 from requests import post
@@ -46,9 +47,10 @@ def poster():
             ir = glob(f"{target}/*_IR.png")
             fg = glob(f"{target}/*_FG.png")
             rgb = glob(f"{target}/*_RGB.jpg")
+            print(det, log, ir, fg, rgb)
 
             try:
-                det, ir, rgb = det[0], ir[0], rgb[0]
+                det, log, ir, fg, rgb = det[0], log[0], ir[0], fg[0], rgb[0]
                 print("[I] posting")
                 with open(det, "r") as file:
                     det_data = file.readline().rstrip()
@@ -71,7 +73,8 @@ def poster():
                 print(r.text)
 
             except Exception as e:
-                print(f"[!] {e.args}")
+                trace_back = traceback.format_exc()
+                print(f'[!!!] {e}{chr(10)}{trace_back}')
                 pass
             # system(f"rm -rf {target}")
 
