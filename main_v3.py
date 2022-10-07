@@ -361,10 +361,10 @@ def poster():
     # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
              "rgb_image": open(rgb_path, 'rb'),
              # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
-             "log": open(log, 'rb'),
+             "log": open(log_path, 'rb'),
              }
     log.close()
-    log
+    log = open(log_path, 'w')
     r = post(url, data=data, files=files)
     # print(r.headers, file=log)
     print(r.text, file=log)
