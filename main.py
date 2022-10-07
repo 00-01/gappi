@@ -29,10 +29,11 @@ parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
-parser.add_argument("-b", "--begin", default=0, type=int, help="begin time")
-parser.add_argument("-e", "--end", default=24, type=int, help="end time")
+parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
+parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 parser.add_argument("-l", "--log", default=1, type=int, help="log_destination")
+parser.add_argument("-d", "--debug", default=0, type=int, help="debugging mode")
 args = parser.parse_args()
 
 ## ---------------------------------------------------------------- BG
@@ -414,29 +415,37 @@ def main():
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
 
-        if START_SEC < D_SEC and D_SEC < END_SEC:
+        if args.debug == 0:
+            if START_SEC < D_SEC and D_SEC < END_SEC:
+                try:
+                    # trd_taker.start()
+                    taker()
+                except Exception as e:
+                    trace_back = traceback.format_exc()
+                    print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
+                    pass
+                # try:
+                #     # trd_poster.start()
+                #     poster()
+                # except Exception as e:
+                #     trace_back = traceback.format_exc()
+                #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
+                #     pass
+                time.sleep(args.interval)
+
+            elif D_SEC < START_SEC or END_SEC < D_SEC:
+                sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
+                print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
+                os.system(f"sudo rm -rf data/*")
+                time.sleep(sleep_time)
+        else:
             try:
-                # trd_taker.start()
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
                 print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
-            # try:
-            #     # trd_poster.start()
-            #     poster()
-            # except Exception as e:
-            #     trace_back = traceback.format_exc()
-            #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
-            #     pass
             time.sleep(args.interval)
-
-        elif D_SEC < START_SEC or END_SEC < D_SEC:
-            sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
-            print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
-            os.system(f"sudo rm -rf data/*")
-            time.sleep(sleep_time)
-
         if LOG == 1:  log.close()
         else:  pass
 
