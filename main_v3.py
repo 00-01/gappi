@@ -338,6 +338,7 @@ def taker():
 
 
 def poster():
+    global r
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
     print(f"[START POST] {'-'*20} [{dt}]", file=log)
@@ -363,8 +364,7 @@ def poster():
              # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
              "log": open(log_path, 'rb'),
              }
-    log.close()
-    log = open(log_path, 'w')
+#     log = open(log_path, 'w')
     r = post(url, data=data, files=files)
     # print(r.headers, file=log)
     print(r.text, file=log)
@@ -407,6 +407,8 @@ def main():
 
         if LOG == 1:  log = open(log_path, 'w')
         elif LOG == 0:  log = None
+            
+        print(f"{r}", file=log)
 
         D = 0
         if W == 0:  D = TOTAL_SEC
