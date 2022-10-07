@@ -407,7 +407,7 @@ def main():
 
         if LOG == 1:  log = open(log_path, 'w')
         elif LOG == 0:  log = None
-        print(f"{r.text}", file=log)
+#         print(f"{r.text}", file=log)
 
         D = 0
         if W == 0:  D = TOTAL_SEC
