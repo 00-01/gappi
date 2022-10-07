@@ -1,18 +1,13 @@
 #### ---------------------------------------------------------------- SETUP
 
-@reboot source ~/gappi/script/check.sh
+@reboot source ~/gappi/script/autorun.sh
 @reboot sudo chmod 666 /dev/ttyS0
 @reboot sdss
-
-#### ---------------------------------------------------------------- GIT
-
-## 2nd H from 7~23
-*/3 7-23 * * * source ~/gappi/script/check.sh
 
 #### ---------------------------------------------------------------- MAIN
 
 ## 10th M from 0~59M at 7~23H
-0/10 7-23 * * * ~/gappi/script/autorun.sh
+0/2 7-23 * * * ~/gappi/script/autorun.sh
 
 #### ---------------------------------------------------------------- REBOOT
 
@@ -28,3 +23,6 @@
 #* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
 #@reboot sleep 8 sh ~/gappi/script/command.sh
 #@reboot sleep 32 && sh ~/gappi/script/autorun.sh
+## 2nd H from 7~23
+#0/3 7-23 * * * source ~/gappi/script/check.sh
+#### ---------------------------------------------------------------- GIT

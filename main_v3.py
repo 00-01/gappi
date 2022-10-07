@@ -337,7 +337,7 @@ def taker():
     time.sleep(args.sleep)
 
 
-def poster(log):
+def poster():
     global r
     start = time.time()
     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
@@ -349,28 +349,24 @@ def poster(log):
     # if len(targets) > 0:
     #     for target in targets:
 
+    log.close()
     with open(inf_path, "r") as file:
         det_data = file.readline().rstrip()
-    # with open(log_path, "r") as file:
-    #     log_data = file.readline().rstrip()
-    log.close()
     data = {"device_id": device_id,
             "predicted": det_data,
-            # "log": log,
             }
     files = {"ir_image": open(fg_path, 'rb'),
-    # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
+             "raw_image": open(ir_path, 'rb'),
              "rgb_image": open(rgb_path, 'rb'),
-             # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
              "log": open(log_path, 'rb'),
+             "predicted": open(det_data, 'rb'),
              }
-#     log = open(log_path, 'w')
     r = post(url, data=data, files=files)
     # print(r.headers, file=log)
-#     print(r.text, file=log)
+    # print(r.text, file=log)
 
     end = time.time()-start
-#     print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
+    # print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
 
 def main():
@@ -430,7 +426,7 @@ def main():
 
             try:
                 # trd_poster.start()
-                poster(log)
+                poster()
             except Exception as e:
                 trace_back = traceback.format_exc()
                 print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
