@@ -4,15 +4,14 @@ NOW=$(date +"%Y %m %d %T")
 
 case "$(pidof python3 | wc -w)" in
 0)  echo "[RESTART] $NOW" >> ~/log/run.log
-    cd ~/gappi
 
+    cd ~/gappi
     git remote update
 
     UPSTREAM=${1:-'@{u}'}
     LOCAL=$(git rev-parse @)
     REMOTE=$(git rev-parse "$UPSTREAM")
     BASE=$(git merge-base @ "$UPSTREAM")
-
     if [ $LOCAL = $REMOTE ]; then
         sdrs
         echo "0: PASS"
@@ -35,12 +34,12 @@ case "$(pidof python3 | wc -w)" in
         sleep 2
         reb
     fi
-
     cd
     ;;
 1)  # pass
     ;;
 *)  echo "[REMOVE] $NOW" >> ~/log/run.log
+
     kill $(pidof python3 | awk '{print $1}')
     ;;
 esac

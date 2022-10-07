@@ -359,7 +359,7 @@ def poster():
              "raw_image": open(ir_path, 'rb'),
              "rgb_image": open(rgb_path, 'rb'),
              "log": open(log_path, 'rb'),
-             "predicted": open(det_data, 'rb'),
+             # "predicted": open(det_data, 'rb'),
              }
     r = post(url, data=data, files=files)
     # print(r.headers, file=log)
