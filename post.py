@@ -15,33 +15,18 @@ def poster():
     parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
     parser.add_argument("-d", "--delete", default=1, type=int, help="delete sent file")
     args = parser.parse_args()
-
     print(f"loop is {args.loop}")
     print(f"sleep1 is {args.sleep1} seconds")
     print(f"sleep2 is {args.sleep2} seconds")
 
-    with open('trash/device_id.txt') as f:
+    HOME = os.path.expanduser('~')
+
+    with open(f"{HOME}/device_id.txt") as f:
         device_id = f.readline().rstrip()
 
-    # with open('web_server_address.txt') as f:
-    #     url = f.readline().rstrip()
-    url = 'http://115.68.37.86:8180/api/data'
-    # url = 'https://sbrt.mills.co.kr/api/data'
-
-    # def post_data(dir_name, det_data, ir_file, rgb_file):
-    #     data = {"device_id": device_id,
-    #             "predicted": det_data,
-    #             }
-    #     files = {"ir_image": (ir_file, open(ir_file, 'rb'), 'image/png'),
-    #              "rgb_image": (rgb_file, open(rgb_file, 'rb'), 'image/jpeg')
-    #              # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
-    #              }
-    #     r = post(url, data=data, files=files)
-    #     # if r.status_code == 200:
-    #     #     if args.delete:
-    #     #         system(f"rm -rf {dir_name}")
-    #     print(r.headers)
-    #     return r.text
+    server_address = f"{HOME}/gappi/network/server_address.txt"
+    with open(server_address) as f:
+        url = f.readline().rstrip()
 
     LOOP = 1
     while LOOP:
@@ -57,7 +42,9 @@ def poster():
 
         for target in targets:
             det = glob(f"{target}/*_DET.txt")
+            log = glob(f"{target}/*_LOG.txt")
             ir = glob(f"{target}/*_IR.png")
+            fg = glob(f"{target}/*_FG.png")
             rgb = glob(f"{target}/*_RGB.jpg")
 
             try:
@@ -65,30 +52,30 @@ def poster():
                 print("[I] posting")
                 with open(det, "r") as file:
                     det_data = file.readline().rstrip()
-
-                # result = post_data(target, det_data, ir, rgb)
-                # print(result)
-
                 data = {"device_id": device_id,
                         "predicted": det_data,
                         }
-                files = {"ir_image": (ir, open(ir, 'rb'), 'image/png'),
-                         "rgb_image": (rgb, open(rgbe, 'rb'), 'image/jpeg')
-                         # "predicted": (det_file, open(det_file, 'rb'), 'text/plain'),
+                files = {"ir_image": open(fg, 'rb'),
+                         "raw_image": open(ir, 'rb'),
+                         "rgb_image": open(rgb, 'rb'),
+                         "log": open(log, 'rb'),
+                         # "predicted": open(det_data, 'rb'),
                          }
                 r = post(url, data=data, files=files)
 
-                # if r.status_code == 200:
-                #     if args.delete:
-                #         system(f"rm -rf {dir_name}")
+                if r.status_code == 200:
+                    if args.delete:
+                        system(f"rm -rf {target}")
+
                 print(r.headers)
                 print(r.text)
 
             except Exception as e:
                 print(f"[!] {e.args}")
                 pass
-            system(f"rm -rf {target}")
+            # system(f"rm -rf {target}")
 
         LOOP = args.loop
         sleep(args.sleep2)
 
+poster()

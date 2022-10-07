@@ -59,10 +59,9 @@ DET_SIZE = 3+(30*12)
 ROTATION = 180
 
 ## ---------------------------------------------------------------- POST
-# with open('web_server_address.txt') as f:
-#     url = f.readline().rstrip()
-# url = 'https://sbrt.mills.co.kr/api/data'
-url = 'http://115.68.37.86:8180/api/data'
+server_address = f"{HOME}/gappi/network/server_address.txt"
+with open(server_address) as f:
+    url = f.readline().rstrip()
 
 ## ---------------------------------------------------------------- ETC
 LOG = args.log
@@ -423,15 +422,13 @@ def main():
                 trace_back = traceback.format_exc()
                 print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
-
-            try:
-                # trd_poster.start()
-                poster()
-            except Exception as e:
-                trace_back = traceback.format_exc()
-                print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
-                pass
-
+            # try:
+            #     # trd_poster.start()
+            #     poster()
+            # except Exception as e:
+            #     trace_back = traceback.format_exc()
+            #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
+            #     pass
             time.sleep(args.interval)
 
         elif D_SEC < START_SEC or END_SEC < D_SEC:
