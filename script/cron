@@ -1,7 +1,7 @@
 #### ---------------------------------------------------------------- DEBUG
 
-0/2 * * * * ~/gappi/script/autorun.sh
-0/1 * * * * ~/gappi/poster.py >> ~/log/poster.log
+*/2 * * * * ~/gappi/script/autorun.sh
+*/1 * * * * ~/gappi/poster.py >> ~/log/poster.log
 
 #### ---------------------------------------------------------------- SETUP
 
@@ -11,8 +11,8 @@
 
 #### ---------------------------------------------------------------- MAIN
 
-#0/2 7-23 * * * ~/gappi/script/autorun.sh
-#0/1 7-23 * * * ~/gappi/poster.py >> ~/log/poster.log
+#*/2 7-23 * * * ~/gappi/script/autorun.sh
+#*/1 7-23 * * * ~/gappi/poster.py >> ~/log/poster.log
 
 #### ---------------------------------------------------------------- REBOOT
 
