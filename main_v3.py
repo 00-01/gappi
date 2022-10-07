@@ -174,19 +174,19 @@ def inferencer(input, ):
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
 ## ---------------------------------------------------------------- FIXXXXXX
-    # for outs in output_data:
-        # for i, out in enumerate(outs):
-            # if out > THRESHOLD:
-                # for corner in output_data4[i]:
-                    # if corner < 0 or corner > H:
-                        # flag = 1
-                        # break
-                # if flag == 0:
-                    # if 0 not in output_data4[i]:
-                        output.append(output_data4[i])
-                        # output.append(f',{output_data4[i,1]}x{output_data4[i,0]}x{output_data4[i,3]}x{output_data4[i,2]}')
-                # flag = 0
-    # output.insert(0, str(len(output)))
+#     for outs in output_data:
+#         for i, out in enumerate(outs):
+#             if out > THRESHOLD:
+#                 for corner in output_data4[i]:
+#                     if corner < 0 or corner > H:
+#                         flag = 1
+#                         break
+#                 if flag == 0:
+#                     if 0 not in output_data4[i]:
+#                         output.append(output_data4[i])
+#                         output.append(f',{output_data4[i,1]}x{output_data4[i,0]}x{output_data4[i,3]}x{output_data4[i,2]}')
+#                 flag = 0
+#     output.insert(0, str(len(output)))
 ## ---------------------------------------------------------------- FIXXXXXX
     # li = []
     # for i in output:
