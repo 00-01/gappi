@@ -348,16 +348,18 @@ def poster():
 
     with open(inf_path, "r") as file:
         det_data = file.readline().rstrip()
+    with open(log_path, "r") as file:
+        log_data = file.readline().rstrip()
 
     data = {"device_id": device_id,
             "predicted": det_data,
-            # "log": log_data,
+            "log": log_data,
             }
     files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
     # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
              "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
              # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
-             "log": (log_data, open(log_data, 'rb'), 'text/plain'),
+             # "log": (log_data, open(log_data, 'rb'), 'text/plain'),
              }
 
     r = post(url, data=data, files=files)
@@ -369,7 +371,7 @@ def poster():
 
 
 def main():
-    global DT, base_dir, inf_path, log_data, log, ir_path, rgb_path, fg_path
+    global DT, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
 
     hS = 3600
     mS = 60
@@ -392,7 +394,7 @@ def main():
         dtime = DT.strftime("%Y%m%d-%H%M%S")
         base_dir = f"data/{dtime}/"
         inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
-        log_data = f"{base_dir}{dtime}_{device_id}_LOG.txt"
+        log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
@@ -400,7 +402,7 @@ def main():
         if not os.path.exists(base_dir):
             os.makedirs(base_dir)
 
-        if LOG == 1:  log = open(log_data, 'w')
+        if LOG == 1:  log = open(log_path, 'w')
         elif LOG == 0:  log = None
 
         D = 0
