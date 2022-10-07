@@ -8,7 +8,7 @@ import tensorflow as tf
 
 
 def inferencing(input_path, output_path, threshold):
-    model_path = "model/v1.1.tflite"
+    model_path = "../model/v1.1.tflite"
 
     h, w = 80, 80
     min, max = 0, 255
@@ -77,7 +77,7 @@ def inferencing(input_path, output_path, threshold):
     if key == 27:
         cv2.destroyAllWindows()
 
-input_path = f"data/000.png"
+input_path = f"../data/000.png"
 output_path = f"data/000.txt"
 threshold = 0.5
 inferencing(input_path, output_path, threshold)

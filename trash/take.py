@@ -57,7 +57,7 @@ def taker():
     GPIO.output(sd, GPIO.HIGH)
     sleep(1)
 
-    with open('trash/device_id.txt') as f:
+    with open('../helper/device_id.txt') as f:
         device_id = f.readline().rstrip()
 
 

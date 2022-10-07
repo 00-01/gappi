@@ -13,7 +13,7 @@ image size change from: 1650402076466~1650438017970(index:1100~1715)
 
 
 # def main():
-with open('../trash/device_id.txt') as f:
+with open('../helper/device_id.txt') as f:
     device_id = f.readline().rstrip()
 
 op = ["01", "02", "03", "04", "05", "06", "07", "100"]

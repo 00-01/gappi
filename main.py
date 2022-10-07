@@ -29,7 +29,7 @@ parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
-parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
+parser.add_argument("-b", "--begin", default=1, type=int, help="begin time")
 parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 parser.add_argument("-l", "--log", default=1, type=int, help="log_destination")
@@ -65,6 +65,17 @@ with open(server_address) as f:
     url = f.readline().rstrip()
 
 ## ---------------------------------------------------------------- ETC
+
+hS = 3600
+mS = 60
+
+START_SEC = args.begin*hS  ## 9:00:00
+END_SEC = args.end*hS  ## 23:00:00
+TOTAL_SEC = 24*hS  ## 24:00:00
+
+# trd_taker = threading.Thread(target=taker, args=(1,))
+# trd_poster = threading.Thread(target=poster, args=(1,))
+
 LOG = args.log
 with open(f"{HOME}/device_id.txt") as f:
     device_id = f.readline().rstrip()
@@ -369,86 +380,70 @@ def taker():
 #     # print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
 
-def main():
-    global DT, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
+while 1:
+    DT = datetime.now()
+    H = int(DT.strftime("%H"))
+    M = int(DT.strftime("%M"))
+    S = int(DT.strftime("%S"))
+    W = int(DT.strftime("%w"))
+    # H, M, S, W = 23, 59, 59, 6
 
-    hS = 3600
-    mS = 60
+    dtime = DT.strftime("%Y%m%d-%H%M%S")
+    base_dir = f"data/{dtime}/"
+    inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
+    log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
+    ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
+    rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
+    fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
 
-    START_SEC = args.begin*hS  ## 9:00:00
-    END_SEC = args.end*hS  ## 23:00:00
-    TOTAL_SEC = 24*hS  ## 24:00:00
+    if not os.path.exists(base_dir):
+        os.makedirs(base_dir)
 
-    # trd_taker = threading.Thread(target=taker, args=(1,))
-    # trd_poster = threading.Thread(target=poster, args=(1,))
-
-    while 1:
-        DT = datetime.now()
-        H = int(DT.strftime("%H"))
-        M = int(DT.strftime("%M"))
-        S = int(DT.strftime("%S"))
-        W = int(DT.strftime("%w"))
-        # H, M, S, W = 23, 59, 59, 6
-
-        dtime = DT.strftime("%Y%m%d-%H%M%S")
-        base_dir = f"data/{dtime}/"
-        inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
-        log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
-        ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
-        rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
-        fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
-
-        if not os.path.exists(base_dir):
-            os.makedirs(base_dir)
-
-        if LOG == 1:  log = open(log_path, 'w')
-        elif LOG == 0:  log = None
+    if LOG == 1:  log = open(log_path, 'w')
+    elif LOG == 0:  log = None
 #         print(f"{r.text}", file=log)
 
-        D = 0
-        if W == 0:  D = TOTAL_SEC
-        elif W == 6:  D = TOTAL_SEC*2
+    D = 0
+    if W == 0:  D = TOTAL_SEC
+    elif W == 6:  D = TOTAL_SEC*2
 
-        NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f"{chr(10)} {'-'*8} [NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
+    NOW_SEC = (H*hS)+(M*mS)+(S)
+    print(f"{chr(10)} {'-'*8} [NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
 
-        D_SEC = NOW_SEC+D
-        # print(f'D_SEC: {D_SEC}')
+    D_SEC = NOW_SEC+D
+    # print(f'D_SEC: {D_SEC}')
 
-        if args.debug == 0:
-            if START_SEC < D_SEC and D_SEC < END_SEC:
-                try:
-                    # trd_taker.start()
-                    taker()
-                except Exception as e:
-                    trace_back = traceback.format_exc()
-                    print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
-                    pass
-                # try:
-                #     # trd_poster.start()
-                #     poster()
-                # except Exception as e:
-                #     trace_back = traceback.format_exc()
-                #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
-                #     pass
-                time.sleep(args.interval)
-
-            elif D_SEC < START_SEC or END_SEC < D_SEC:
-                sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
-                print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
-                os.system(f"sudo rm -rf data/*")
-                time.sleep(sleep_time)
-        else:
+    if args.debug == 0:
+        if START_SEC < D_SEC and D_SEC < END_SEC:
             try:
+                # trd_taker.start()
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
                 print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
+            # try:
+            #     # trd_poster.start()
+            #     poster()
+            # except Exception as e:
+            #     trace_back = traceback.format_exc()
+            #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
+            #     pass
             time.sleep(args.interval)
-        if LOG == 1:  log.close()
-        else:  pass
 
-
-main()
+        elif D_SEC < START_SEC or END_SEC < D_SEC:
+            sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
+            print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
+            os.system(f"sudo rm -rf data/*")
+            time.sleep(sleep_time)
+    else:
+        try:
+            taker()
+        except Exception as e:
+            trace_back = traceback.format_exc()
+            print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
+            pass
+        time.sleep(args.interval)
+    if LOG == 1:  log.close()
+    else:  pass
 
