@@ -67,7 +67,6 @@ while LOOP:
             if r.status_code == 200:
                 if args.delete:
                     os.system(f"rm -rf {target}")
-
             # print(r.headers)
             print(r.text)
 
