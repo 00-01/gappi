@@ -30,7 +30,7 @@ case "$(pidof python3 | wc -w)" in
     cd
     ;;
 
-1)  cd ~/gappi
+*)  cd ~/gappi
     git remote update
 
     UPSTREAM=${1:-'@{u}'}
@@ -52,10 +52,5 @@ case "$(pidof python3 | wc -w)" in
         reb
     fi
     cd
-    ;;
-
-*)  echo "[REMOVE] $NOW" >> ~/log/run.log
-
-    kill $(pidof python3 | awk '{print $1}')
     ;;
 esac
