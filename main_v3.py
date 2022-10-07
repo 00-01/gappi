@@ -350,18 +350,18 @@ def poster():
 
     with open(inf_path, "r") as file:
         det_data = file.readline().rstrip()
-    with open(log_path, "r") as file:
-        log_data = file.readline().rstrip()
+    # with open(log_path, "r") as file:
+    #     log_data = file.readline().rstrip()
 
     data = {"device_id": device_id,
             "predicted": det_data,
-            "log": log_data,
+            # "log": log_data,
             }
-    files = {"ir_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
+    files = {"ir_image": open(fg_path, 'rb'),
     # files = {"ir_image": (ir_path, open(ir_path, 'rb'), 'image/png'),
-             "rgb_image": (rgb_path, open(rgb_path, 'rb'), 'image/jpeg'),
+             "rgb_image": open(rgb_path, 'rb'),
              # "fg_image": (fg_path, open(fg_path, 'rb'), 'image/png'),
-             # "log": (log_data, open(log_data, 'rb'), 'text/plain'),
+             "log": open(log_path, 'rb'),
              }
 
     r = post(url, data=data, files=files)
