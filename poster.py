@@ -68,7 +68,7 @@ while LOOP:
                 if args.delete:
                     os.system(f"rm -rf {target}")
 
-            print(r.headers)
+            # print(r.headers)
             print(r.text)
 
         except Exception as e:
