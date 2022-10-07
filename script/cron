@@ -8,7 +8,7 @@
 
 ## 10th M from 0~59M at 7~23H
 0/2 7-23 * * * ~/gappi/script/autorun.sh
-0/1 7-23 * * * ~/gappi/post.py
+0/1 7-23 * * * ~/gappi/post.py >> log/poster.log
 
 #### ---------------------------------------------------------------- REBOOT
 

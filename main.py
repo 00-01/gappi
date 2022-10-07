@@ -336,36 +336,36 @@ def taker():
     time.sleep(args.sleep)
 
 
-def poster():
-    global r
-    start = time.time()
-    dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"[START POST] {'-'*20} [{dt}]", file=log)
-
-    dtime = DT.strftime("%Y/%m/%d-%H:%M:%S")
-
-    # targets = glob(f'data/*')
-    # if len(targets) > 0:
-    #     for target in targets:
-
-    log.close()
-    with open(inf_path, "r") as file:
-        det_data = file.readline().rstrip()
-    data = {"device_id": device_id,
-            "predicted": det_data,
-            }
-    files = {"ir_image": open(fg_path, 'rb'),
-             "raw_image": open(ir_path, 'rb'),
-             "rgb_image": open(rgb_path, 'rb'),
-             "log": open(log_path, 'rb'),
-             # "predicted": open(det_data, 'rb'),
-             }
-    r = post(url, data=data, files=files)
-    # print(r.headers, file=log)
-    # print(r.text, file=log)
-
-    end = time.time()-start
-    # print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
+# def poster():
+#     global r
+#     start = time.time()
+#     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
+#     print(f"[START POST] {'-'*20} [{dt}]", file=log)
+#
+#     dtime = DT.strftime("%Y/%m/%d-%H:%M:%S")
+#
+#     # targets = glob(f'data/*')
+#     # if len(targets) > 0:
+#     #     for target in targets:
+#
+#     log.close()
+#     with open(inf_path, "r") as file:
+#         det_data = file.readline().rstrip()
+#     data = {"device_id": device_id,
+#             "predicted": det_data,
+#             }
+#     files = {"ir_image": open(fg_path, 'rb'),
+#              "raw_image": open(ir_path, 'rb'),
+#              "rgb_image": open(rgb_path, 'rb'),
+#              "log": open(log_path, 'rb'),
+#              # "predicted": open(det_data, 'rb'),
+#              }
+#     r = post(url, data=data, files=files)
+#     # print(r.headers, file=log)
+#     # print(r.text, file=log)
+#
+#     end = time.time()-start
+#     # print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
 
 def main():
