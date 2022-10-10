@@ -1,6 +1,6 @@
 #### ---------------------------------------------------------------- DEBUG
-#*/2 * * * * source ~/gappi/script/autorun.sh
-#*/1 * * * * python3 ~/gappi/poster.py >> ~/log/poster.log
+*/2 * * * * source ~/gappi/script/autorun.sh
+*/1 * * * * python3 ~/gappi/poster.py >> ~/log/poster.log
 
 #### ---------------------------------------------------------------- SETUP
 @reboot source ~/gappi/script/autorun.sh
