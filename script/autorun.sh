@@ -31,6 +31,8 @@ case "$(pidof python3 | wc -w)" in
     ;;
 1)  #pass
     ;;
+2)  #pass
+    ;;
 *)  echo "[REMOVE] $NOW" >> ~/log/run.log
     kill $(pidof python3 | awk '{print $1}')
     ;;
