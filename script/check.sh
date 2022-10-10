@@ -26,7 +26,7 @@ else
     cd ~/gappi && git reset --hard && echo "\n[PULL] $NOW" >> ~/log/git.log && git pull >> ~/log/git.log && cd
     crontab ~/gappi/script/cron
     sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
-    sh ~/gappi/script/command.sh
+    source ~/gappi/script/command.sh
     sudo cp -f ~/gappi/script/$srvc $s_path
     sdss
     sleep 2
