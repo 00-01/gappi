@@ -23,7 +23,7 @@ import tensorflow as tf
 
 
 parser = ArgumentParser()
-parser.add_argument("-i", "--inference", default=1, type=int, help="inference location")
+parser.add_argument("-i", "--inference", default=0, type=int, help="inference location")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
