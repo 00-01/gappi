@@ -1,5 +1,5 @@
 ## ---------------------------------------------------------------- PIP
-
+sudo cp -f ~/gappi/network/interfaces /etc/network/interfaces
 
 ## ---------------------------------------------------------------- NOT USED
 #pip3 install -U pip
