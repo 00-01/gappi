@@ -34,7 +34,7 @@ alias nsd="sudo nano $s_path"
 alias sd="sudo systemctl"
 
 alias sdrl="sd daemon-reload"
-alias sdrs="sd reset-failed"
+alias sdrf="sd reset-failed"
 alias sde="sd enable $srvc"
 alias sdd="sd disable $srvc"
 alias sdt="sd start $srvc"
