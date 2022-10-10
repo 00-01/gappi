@@ -47,8 +47,6 @@ case "$(pidof python3 | wc -w)" in
         sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
         source ~/gappi/script/command.sh
         sudo cp -f ~/gappi/script/$srvc $s_path
-        sdss
-        sleep 2
         reb
     fi
     cd
