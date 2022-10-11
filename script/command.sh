@@ -9,6 +9,8 @@ sudo cp -f ~/gappi/network/interfaces /etc/network/interfaces
 #pip3 install opencv-contrib-python
 #pip3 install matplotlib
 
+#sudo cp -r ~/gappi/log/* ~/log/*
+
 #id='02'
 #file='device_id.txt'
 #if grep -q "$id" "$file"; then

@@ -1,0 +1,16 @@
+# pip3 install -U pip
+sudo apt install libhdf5-dev libhdf5-serial-dev libhdf5-103 libqtgui4\
+ python3-pyqt5 libatlas-base-dev libjasper-dev gfortran libc-ares-dev\
+ libeigen3-dev libopenblas-dev libblas-dev liblapack-dev cython protobuf-compiler python3-dev libpq-dev curl zsh
+
+python3 -m pip install -U pip3
+pip3 install -U setuptools pip
+pip3 install pybind11 h5py gdown pillow protobuf==3.20.0
+sudo pip3 install setuptools wheel h5py
+pip3 install opencv-contrib-python
+pip3 install matplotlib
+pip3 install tensorflow
+
+#### ---------------------------------------------------------------- NOT FOUND
+# ibqtwebkit4
+# libqt4-test
