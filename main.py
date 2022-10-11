@@ -22,6 +22,8 @@ import serial
 import tensorflow as tf
 
 
+VERSION = 1.0
+
 parser = ArgumentParser()
 parser.add_argument("-i", "--inference", default=0, type=int, help="inference location")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
@@ -411,7 +413,7 @@ def main():
         elif W == 6:  D = TOTAL_SEC*2
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f"{chr(10)} {'-'*8} [NOW_TIME: {H}:{M}:{S}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
+        print(f"{chr(10)} {'-'*8} [VERSION: {VERSION}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
 
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
