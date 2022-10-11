@@ -27,12 +27,10 @@ cd
 
 case "$(pidof python3 | wc -w)" in
 0)  echo "[RESTART] $NOW" >> ~/log/run.log
-    sdrs
+    sdrf
     ;;
-1)  #pass
-    ;;
-2)  #pass
-    ;;
+1)  ;;
+2)  ;;
 *)  echo "[REMOVE] $NOW" >> ~/log/run.log
     kill $(pidof python3 | awk '{print $1}')
     ;;

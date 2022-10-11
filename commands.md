@@ -79,3 +79,16 @@
     sudo macchanger -r <wlan0>
 ### specific
     sudo macchanger -m <00:00:00:00:00:01> <wlan0>
+
+## [NETWORK]
+
+### arp scan
+    sudo arp -a
+
+### nmap scan
+    sudo nmap -sP 192.168.0.0/24
+    
+    sudo nmap -sT -O 192.168.0.0/24
+    
+    sudo nmap -sn 192.168.0.0/24
+    
