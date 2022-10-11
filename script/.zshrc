@@ -23,29 +23,33 @@ alias re="sudo dpkg --configure -a"
 alias reb="sudo reboot now"
 alias shd="sudo shutdown now"
 
-
 ## PIP
 alias p="pip3 install"
 
 ## SYSTEMD
 srvc=mvpc.service
 s_path="/etc/systemd/system/$srvc"
-alias nsd="sudo nano $s_path"
 alias sd="sudo systemctl"
 
 alias sdrl="sd daemon-reload"
 alias sdrf="sd reset-failed"
+
 alias sde="sd enable $srvc"
 alias sdd="sd disable $srvc"
 alias sdt="sd start $srvc"
 alias sdp="sd stop $srvc"
 alias sds="sd status $srvc"
+
 alias sdss="sdrl && sde && sdt"
+
 alias sdl="sudo journalctl -u $srvc -b"
 alias sdl_d="sudo journalctl --rotate --vacuum-time=1s"
 
+alias nsd="sudo nano $s_path"
+
 ## -------------------------------------------------------------------------------- ZSH
 
+export PATH="$HOME/.local/bin:$PATH"
 export python="python3"
 export ZSH="/home/$USER/.oh-my-zsh"
 

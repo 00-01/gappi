@@ -19,12 +19,11 @@
 
 ### stop swap service && open config file
     sudo /etc/init.d/dphys-swapfile stop
-    sudo nano /etc/dphys-swapfile
-    
-    ## change size
-    # CONF_SWAPSIZE=2048
 
-### start swap service
+    sudo nano /etc/dphys-swapfile 
+change size
+CONF_SWAPSIZE=2048
+ 
     sudo /etc/init.d/dphys-swapfile start
 
 ### INSTALL
