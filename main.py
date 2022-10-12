@@ -384,6 +384,7 @@ def taker():
 
 def main():
     global DT, base_dir, inf_path, log_data, log, ir_path, rgb_path, fg_path
+    os.system(f"sudo chmod 666 /dev/ttyS0")
 
     while 1:
         DT = datetime.now()
@@ -439,7 +440,6 @@ def main():
             elif D_SEC < START_SEC or END_SEC < D_SEC:
                 sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
                 print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
-                os.system(f"sudo rm -rf data/*")
                 time.sleep(sleep_time)
         else:
             try:
