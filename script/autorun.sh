@@ -11,7 +11,7 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    #pass
+    :
 else
     echo "1: PULLING"
     cd ~/gappi && echo "\n[PULL] $NOW" >> ~/log/git.log && git pull >> ~/log/git.log && cd
