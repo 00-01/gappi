@@ -74,7 +74,7 @@ while LOOP:
             trace_back = traceback.format_exc()
             print(f'[!!!] {e}{chr(10)}{trace_back}')
             pass
-        # system(f"rm -rf {target}")
+        os.system(f"rm -rf {target}")
 
     LOOP = args.loop
     sleep(args.sleep2)
