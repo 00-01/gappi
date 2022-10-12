@@ -41,17 +41,18 @@ alias sds="sd status"
 alias sdl="sudo journalctl -u"
 alias sdl_d="sudo journalctl --rotate --vacuum-time=1s"
 
-export srvc=mvpc.service
-export srvc2=update.service
-export s_path="/etc/systemd/system/$srvc"
-alias sdes="sd enable $srvc"
-alias sdds="sd disable $srvc"
-alias sdts="sd start $srvc"
-alias sdps="sd stop $srvc"
-alias sdss="sd status $srvc"
-alias sdls="sudo journalctl -u $srvc -b"
+export svc1=mvpc.service
+export svc2=update.service
+export s_path="/etc/systemd/system/$svc1"
+alias sde1="sd enable $svc1"
+alias sdd1="sd disable $svc1"
+alias sdt1="sd start $svc1"
+alias sdp1="sd stop $svc1"
+alias sds1="sd status $svc1"
+alias sdl1="sudo journalctl -u $srvc -b"
 
-alias sdsss="sdrl && sdes && sdts"
+alias sdss1="sdrl && sde $svc1 && sdt $svc1"
+alias sdss2="sdrl && sde $svc2 && sdt $svc2"
 
 alias nsd="sudo nano $s_path"
 
