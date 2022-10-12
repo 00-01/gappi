@@ -51,11 +51,11 @@ alias nsd="sudo nano $s_path"
 
 export PATH="$HOME/.local/bin:$PATH"
 export python="python3"
-export ZSH="/home/$USER/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="max"
 
-plugins=(git zsh-autosuggestions sudo web-search copypath copyfile zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting sudo web-search copypath copyfile)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -70,19 +70,15 @@ ENABLE_CORRECTION="true"
 # make _ and - same : CASE_SENSITIVE must be off
 # HYPHEN_INSENSITIVE="true"
 
-## -------------------------------------------------------------------------------- DOWNLOAD ONCE
+## -------------------------------------------------------------------------------- PLUGINS
 
-## ARGCOMPLETE
+# git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 # pip3 install argcomplete
 # activate-global-python-argcomplete
 # autoload -U bashcompinit
 # bashcompinit
-
-## zsh-autosuggestions
-# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins$
-
-## zsh-syntax-highlighting
-# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}$
 
 ## -------------------------------------------------------------------------------- NOT USED
 

@@ -1,21 +1,15 @@
 #### ---------------------------------------------------------------- APT
-sudo apt update && sudo apt upgrade
-sudo apt install git curl zsh
-sudo apt install build-essential cmake pkg-config cython protobuf-compiler python3-dev
-sudo apt install libhdf5-dev libhdf5-serial-dev libhdf5-103 libqtgui4 python3-pyqt5 libatlas-base-dev libjasper-dev libjpeg-dev libtiff5-dev libpng12-dev gfortran libc-ares-dev libeigen3-dev libopenblas-dev libblas-dev liblapack-dev libpq-dev
-sudo apt install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git curl zsh cmake net-tools nmap
+sudo apt install -y build-essential cmake pkg-config protobuf-compiler python3-dev
+sudo apt install -y libhdf5-dev libhdf5-serial-dev libhdf5-103 libqtgui4 python3-pyqt5 libatlas-base-dev libjasper-dev libjpeg-dev libtiff5-dev libpng12-dev gfortran libc-ares-dev libeigen3-dev libopenblas-dev libblas-dev liblapack-dev libpq-dev
+sudo apt install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libgtk2.0-dev
 
 #### ---------------------------------------------------------------- PIP
-pip3 install -U pip
 python3 -m pip install -U pip3
-pip3 install -U setuptools pip
-pip3 install pybind11 h5py gdown pillow protobuf==3.20.0
-sudo pip3 install setuptools wheel h5py
-pip3 install matplotlib
-pip3 install opencv-contrib-python
-pip3 install tensorflow
+
+pip3 install -U pip3\
+ setuptools wheel cython pybind11 h5py gdown pillow setuptools matplotlib opencv-python\
+ tensorflow numpy
 
 #### ---------------------------------------------------------------- NOT FOUND
-# ibqtwebkit4
-# libqt4-test
-# pip3 install numpy
