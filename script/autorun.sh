@@ -22,10 +22,10 @@ do
         source ~/gappi/script/command.sh
         sudo cp -f ~/gappi/script/$svc1 $s_path
         sudo cp -f ~/gappi/script/$svc2 /etc/systemd/system/$svc2
-        sdss1
-        sdss2
+        sudo systemctl daemon-reload && sudo systemctl enable $svc1 && sudo systemctl start $svc1
+        sudo systemctl daemon-reload && sudo systemctl enable $svc2 && sudo systemctl start $svc2
         sleep 20
-        reb
+        sudo reboot now
     fi
     cd
 
