@@ -3,7 +3,7 @@ mkdir data log
 cp -rf ~/gappi/os/log/* ~/log
 cp -f ~/gappi/os/device_id.txt ~/device_id.txt
 cp -f ~/gappi/os/max.zsh-theme ~/.oh-my-zsh/themes/max.zsh-theme
-cp -f ~/gappi/network/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
+sudo cp -f ~/gappi/network/wpa_supplicant.conf /etc/wpa_supplicant/wpa_supplicant.conf
 
 crontab ~/gappi/script/cron
 
