@@ -11,10 +11,10 @@ REMOTE=$(git rev-parse "$UPSTREAM")
 BASE=$(git merge-base @ "$UPSTREAM")
 
 if [ $LOCAL = $REMOTE ]; then
-    echo "0: PASS"
+    #pass
 else
     echo "1: PULLING"
-    cd ~/gappi && git reset --hard && echo "\n[PULL] $NOW" >> ~/log/git.log && git pull >> ~/log/git.log && cd
+    cd ~/gappi && echo "\n[PULL] $NOW" >> ~/log/git.log && git pull >> ~/log/git.log && cd
     crontab ~/gappi/script/cron
     sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
     source ~/gappi/script/command.sh
