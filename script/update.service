@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=pi
 WorkingDirectory=/home/pi
-ExecStart=/bin/zsh gappi/script/autorun.sh
+ExecStart=/bin/zsh gappi/script/autorun_loop.sh
 Environment=
 Restart=on-failure
 RestartSec=120
