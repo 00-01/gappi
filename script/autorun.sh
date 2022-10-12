@@ -19,6 +19,7 @@ else
     sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
     source ~/gappi/script/command.sh
     sudo cp -f ~/gappi/script/$srvc $s_path
+    sudo cp -f ~/gappi/script/$srvc2 /etc/systemd/system/$srvc2
     sdss
     sleep 2
     reb
@@ -35,3 +36,5 @@ case "$(pidof python3 | wc -w)" in
     kill $(pidof python3 | awk '{print $1}')
     ;;
 esac
+
+sleep 30

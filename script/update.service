@@ -1,14 +1,14 @@
 [Unit]
-Description=mvpc system
+Description=update system
 After=network.target
 
 [Service]
 User=pi
 WorkingDirectory=/home/pi
-ExecStart=/usr/bin/env python3 gappi/main.py
+ExecStart=source gappi/script/autorun.sh >> ~/log/run.log
 Environment=
 Restart=on-failure
-RestartSec=5
+RestartSec=120
 
 [Install]
 WantedBy=multi-user.target

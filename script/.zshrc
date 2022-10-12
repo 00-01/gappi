@@ -28,6 +28,7 @@ alias p="pip3 install"
 
 ## SYSTEMD
 export srvc=mvpc.service
+export srvc2=update.service
 export s_path="/etc/systemd/system/$srvc"
 alias sd="sudo systemctl"
 
