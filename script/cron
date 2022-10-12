@@ -5,7 +5,7 @@
 #### ---------------------------------------------------------------- SETUP
 @reboot source ~/gappi/script/autorun.sh >> ~/log/run.log
 @reboot sudo chmod 666 /dev/ttyS0
-@reboot sdss
+@reboot sdsss
 
 #### ---------------------------------------------------------------- MAIN
 # every day 7-23 every 2 minutes 

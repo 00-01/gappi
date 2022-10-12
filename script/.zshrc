@@ -27,24 +27,31 @@ alias shd="sudo shutdown now"
 alias p="pip3 install"
 
 ## SYSTEMD
-export srvc=mvpc.service
-export srvc2=update.service
-export s_path="/etc/systemd/system/$srvc"
 alias sd="sudo systemctl"
 
 alias sdrl="sd daemon-reload"
 alias sdrf="sd reset-failed"
 
-alias sde="sd enable $srvc"
-alias sdd="sd disable $srvc"
-alias sdt="sd start $srvc"
-alias sdp="sd stop $srvc"
-alias sds="sd status $srvc"
+alias sde="sd enable"
+alias sdd="sd disable"
+alias sdt="sd start"
+alias sdp="sd stop"
+alias sds="sd status"
 
-alias sdss="sdrl && sde && sdt"
-
-alias sdl="sudo journalctl -u $srvc -b"
+alias sdl="sudo journalctl -u"
 alias sdl_d="sudo journalctl --rotate --vacuum-time=1s"
+
+export srvc=mvpc.service
+export srvc2=update.service
+export s_path="/etc/systemd/system/$srvc"
+alias sdes="sd enable $srvc"
+alias sdds="sd disable $srvc"
+alias sdts="sd start $srvc"
+alias sdps="sd stop $srvc"
+alias sdss="sd status $srvc"
+alias sdls="sudo journalctl -u $srvc -b"
+
+alias sdsss="sdrl && sdes && sdts"
 
 alias nsd="sudo nano $s_path"
 

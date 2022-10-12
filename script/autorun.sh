@@ -20,7 +20,7 @@ else
     source ~/gappi/script/command.sh
     sudo cp -f ~/gappi/script/$srvc $s_path
     sudo cp -f ~/gappi/script/$srvc2 /etc/systemd/system/$srvc2
-    sdss
+    sdsss
     sleep 2
     reb
 fi
