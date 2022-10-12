@@ -27,8 +27,8 @@ alias shd="sudo shutdown now"
 alias p="pip3 install"
 
 ## SYSTEMD
-srvc=mvpc.service
-s_path="/etc/systemd/system/$srvc"
+export srvc=mvpc.service
+export s_path="/etc/systemd/system/$srvc"
 alias sd="sudo systemctl"
 
 alias sdrl="sd daemon-reload"
