@@ -22,7 +22,7 @@ import serial
 import tensorflow as tf
 
 
-VERSION = 1.0
+VERSION = 0.1
 
 parser = ArgumentParser()
 parser.add_argument("-i", "--inference", default=0, type=int, help="inference location")
