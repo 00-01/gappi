@@ -1,4 +1,4 @@
-#### ---------------------------------------------------------------- PIP
+#### ---------------------------------------------------------------- INSTALL
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y git curl zsh cmake net-tools nmap
 sudo apt install -y build-essential cmake pkg-config protobuf-compiler python3-dev
@@ -23,10 +23,17 @@ activate-global-python-argcomplete
 autoload -U bashcompinit
 bashcompinit
 
-#### ----------------------------------------------------------------
+#### ---------------------------------------------------------------- SYSTEM
 
-rm -rf *
 mkdir data log
 cp -r ~/gappi/os/log/* ~/log
 cp -f ~/gappi/os/device_id.txt ~/device_id.txt
+cp -f ~/gappi/os/max.zsh-theme ~/.oh-my-zsh/themes/max.zsh-theme
+
+crontab ~/gappi/script/cron
+sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
 source .zshrc
+
+source ~/gappi/script/command.sh
+sudo cp -f ~/gappi/script/$srvc $s_path
+sdss

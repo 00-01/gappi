@@ -1,5 +1,5 @@
 ## [NEW OS]
-
+    rm -rf Bookshelf  Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
     git clone https://github.com/00-01/gappi.git
     source $HOME/gappi/os/fresh_os.sh
 
