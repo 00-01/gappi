@@ -1,7 +1,7 @@
 #### ---------------------------------------------------------------- DEBUG
-*/2 * * * * /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
+*/1 * * * * /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
 */1 * * * * python3 ~/gappi/poster.py >> ~/log/poster.log
-@reboot python3 ~/gappi/main.py -d 1
+@reboot sleep 20 && python3 ~/gappi/main.py -d 1
 
 #### ---------------------------------------------------------------- SETUP
 @reboot /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
@@ -9,8 +9,8 @@
 @reboot sdsss
 
 #### ---------------------------------------------------------------- MAIN
-# every day 7-23 H every 2 minutes
-*/2 7-23 * * * /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
+# every day 7-23 H every 1 minutes
+*/30 7-23 * * * /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
 */1 7-23 * * * python3 ~/gappi/poster.py >> ~/log/poster.log
 
 #### ---------------------------------------------------------------- REBOOT
