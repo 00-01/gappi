@@ -1,7 +1,6 @@
 #! /bin/zsh
 
-LOOP=1
-while [LOOP == 1];
+while :
 do
     NOW=$(date +"%Y %m %d %T")
 
