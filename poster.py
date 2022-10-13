@@ -36,8 +36,8 @@ while LOOP:
 
     targets = glob(f'data/*')
     if len(targets) < 1:
-        print("[!] NO data TO SEND")
         os.system(f'echo "$(($(cat /tmp/connection)+1))" > /tmp/connection')
+        print("[!] NO DATA connection += 1")
         sleep(args.sleep1)
         pass
 
@@ -51,7 +51,6 @@ while LOOP:
 
         try:
             det, log, ir, fg, rgb = det[0], log[0], ir[0], fg[0], rgb[0]
-            print("[I] posting")
             with open(det, "r") as file:
                 det_data = file.readline().rstrip()
             data = {"device_id": device_id,

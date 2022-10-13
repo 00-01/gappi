@@ -302,7 +302,7 @@ def taker():
     rgb_img = Image.open(rgb_path)
     rgb_img = rgb_img.rotate(ROTATION)
 
-    print(f"[I] CROP RGB", file=log)
+    ## ---------------------------------------------------------------- CROP RGB
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
     h_cut, w_cut = 40, 160
@@ -311,7 +311,6 @@ def taker():
     rgb_img.save(rgb_path)
 
     ## ---------------------------------------------------------------- BG REMOVE
-    print(f"[I] BACKGROUND REMOVE", file=log)
     # ir.save(ir_path)
     # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
     # os.system(f"rm -rf BG/{irs[0]}")
@@ -331,7 +330,6 @@ def taker():
         inferencer(fg_img)
 
     elif args.inference == 0:
-        print("[I] gap inference to txt", file=log)
         det = ""
         det_str = rx_det.decode(encoding='UTF-8', errors='ignore')
         with open(inf_path, "w") as file:
