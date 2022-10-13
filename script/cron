@@ -5,11 +5,12 @@
 
 #### ---------------------------------------------------------------- START
 @reboot sudo chmod 666 /dev/ttyS0
+@reboot echo 0 > /tmp/connection
 @reboot sleep 10 && /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
 
 #### ---------------------------------------------------------------- MAIN
 # every day 7-23 H every 1 minutes
-*/30 7-23 * * * /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
+*/5 7-23 * * * /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
 */1 7-23 * * * python3 ~/gappi/poster.py >> ~/log/poster.log
 */10 7-23 * * * /bin/zsh ~/gappi/script/check_connection.sh
 
