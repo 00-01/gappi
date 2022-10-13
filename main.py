@@ -137,7 +137,7 @@ def bg_remover(target):
     return fg_img
 
 
-def inferencer(input, ):
+def inferencer(input, inf_path, log):
     print(f"[I] PI INFERENCING", file=log)
 
     interpreter = tf.lite.Interpreter(model_path=MODEL)
@@ -215,7 +215,7 @@ def inferencer(input, ):
 
 
 @timeout(40)
-def taker():
+def taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 
@@ -325,7 +325,7 @@ def taker():
 
     ## ---------------------------------------------------------------- INFERENCE
     if args.inference == 1:
-        inferencer(fg_img)
+        inferencer(fg_img, inf_path, log)
 
     elif args.inference == 0:
         det = ""
@@ -350,7 +350,7 @@ def taker():
     time.sleep(args.sleep)
 
 
-# def poster():
+# def poster(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
 #     global r
 #     start = time.time()
 #     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
@@ -387,8 +387,6 @@ def main():
 
     LOOP = 1
     while LOOP:
-        global dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
-
         DT = datetime.now()
         H = int(DT.strftime("%H"))
         M = int(DT.strftime("%M"))
@@ -423,14 +421,14 @@ def main():
             if START_SEC < D_SEC and D_SEC < END_SEC:
                 try:
                     # trd_taker.start()
-                    taker()
+                    taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path)
                 except Exception as e:
                     trace_back = traceback.format_exc()
                     print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                     pass
                 # try:
                 #     # trd_poster.start()
-                #     poster()
+                #     poster(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path)
                 # except Exception as e:
                 #     trace_back = traceback.format_exc()
                 #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
