@@ -232,8 +232,7 @@ def taker():
                         timeout=5, )
 
     start = time.time()
-    dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
-    print(f"[START INFERENCE] {'-'*20} [{dt}]", file=log)
+    print(f"[START INFERENCE] {'-'*20} [{dtime}]", file=log)
 
     print(f"[I] inference: {args.inference}, sleep: {args.sleep} sec", file=log)
 
@@ -298,11 +297,10 @@ def taker():
     ir = Image.frombuffer("L", (W, H), rx_img, 'raw', "L", 0, 1)
     ir.save(ir_path)
 
-    # print(f"[I] rotating device: {device_id}")
+    ## ---------------------------------------------------------------- RGB ROT+CROP
     rgb_img = Image.open(rgb_path)
     rgb_img = rgb_img.rotate(ROTATION)
 
-    ## ---------------------------------------------------------------- CROP RGB
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
     h_cut, w_cut = 40, 160
@@ -385,7 +383,6 @@ def taker():
 
 
 def main():
-    global DT, base_dir, inf_path, log_data, log, ir_path, rgb_path, fg_path
     os.system(f"sudo chmod 666 /dev/ttyS0")
 
     LOOP = 1
@@ -404,6 +401,8 @@ def main():
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
+
+        global dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
 
         if not os.path.exists(base_dir):  os.makedirs(base_dir)
 
