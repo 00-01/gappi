@@ -215,7 +215,7 @@ def inferencer(input, ):
 
 
 @timeout(40)
-def taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
+def taker():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 
@@ -402,7 +402,7 @@ def main():
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
 
-        # global dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
+        global dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
 
         if not os.path.exists(base_dir):  os.makedirs(base_dir)
 
@@ -423,7 +423,7 @@ def main():
             if START_SEC < D_SEC and D_SEC < END_SEC:
                 try:
                     # trd_taker.start()
-                    taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path)
+                    taker()
                 except Exception as e:
                     trace_back = traceback.format_exc()
                     print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
