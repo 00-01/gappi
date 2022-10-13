@@ -73,6 +73,7 @@ while LOOP:
 
         except Exception as e:
             trace_back = traceback.format_exc()
+            # os.system(f'echo "$(($(cat /tmp/connection)+1))" > /tmp/connection')
             print(f'[!!!] {e} {trace_back}')
             pass
         os.system(f"rm -rf {target}")

@@ -78,8 +78,8 @@ TOTAL_SEC = 24*hS  ## 24:00:00
 # trd_taker = threading.Thread(target=taker, args=(1,))
 # trd_poster = threading.Thread(target=poster, args=(1,))
 
-if args.debug == 1:  LOG = 1
-else: LOG = 0
+if args.debug == 1:  LOG = 0
+else: LOG = 1
 with open(f"{HOME}/device_id.txt") as f:
     device_id = f.readline().rstrip()
 
