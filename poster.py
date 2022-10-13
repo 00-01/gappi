@@ -37,6 +37,7 @@ while LOOP:
     targets = glob(f'data/*')
     if len(targets) < 1:
         print("[!] NO data TO SEND")
+        os.system(f'echo "$(($(cat /tmp/connection)+1))" > /tmp/connection')
         sleep(args.sleep1)
         pass
 
@@ -65,6 +66,7 @@ while LOOP:
             r = post(url, data=data, files=files)
 
             if r.status_code == 200:
+                os.system(f"echo 0 > /tmp/connection")
                 if args.delete:
                     os.system(f"rm -rf {target}")
             # print(r.headers)
