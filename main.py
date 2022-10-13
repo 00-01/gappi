@@ -137,7 +137,7 @@ def bg_remover(target):
     return fg_img
 
 
-def inferencer(input, inf_path, log):
+def inferencer(input):
     print(f"[I] PI INFERENCING", file=log)
 
     interpreter = tf.lite.Interpreter(model_path=MODEL)
@@ -215,7 +215,7 @@ def inferencer(input, inf_path, log):
 
 
 @timeout(40)
-def taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
+def taker():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 
@@ -325,7 +325,7 @@ def taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
 
     ## ---------------------------------------------------------------- INFERENCE
     if args.inference == 1:
-        inferencer(fg_img, inf_path, log)
+        inferencer(fg_img)
 
     elif args.inference == 0:
         det = ""
@@ -350,7 +350,7 @@ def taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
     time.sleep(args.sleep)
 
 
-# def poster(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
+# def poster():
 #     global r
 #     start = time.time()
 #     dt = DT.strftime("%Y/%m/%d__%H:%M:%S")
@@ -382,75 +382,72 @@ def taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path):
 #     # print(f"[STOP POST] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
 
 
-def main():
-    os.system(f"sudo chmod 666 /dev/ttyS0")
+os.system(f"sudo chmod 666 /dev/ttyS0")
 
-    LOOP = 1
-    while LOOP:
-        DT = datetime.now()
-        H = int(DT.strftime("%H"))
-        M = int(DT.strftime("%M"))
-        S = int(DT.strftime("%S"))
-        W = int(DT.strftime("%w"))
-        # H, M, S, W = 23, 59, 59, 6
+LOOP = 1
+while LOOP:
+    DT = datetime.now()
+    H = int(DT.strftime("%H"))
+    M = int(DT.strftime("%M"))
+    S = int(DT.strftime("%S"))
+    W = int(DT.strftime("%w"))
+    # H, M, S, W = 23, 59, 59, 6
 
-        dtime = DT.strftime("%Y%m%d-%H%M%S")
-        base_dir = f"data/{dtime}/"
-        inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
-        log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
-        ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
-        rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
-        fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
+    dtime = DT.strftime("%Y%m%d-%H%M%S")
+    base_dir = f"data/{dtime}/"
+    inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
+    log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
+    ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
+    rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
+    fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
 
-        if not os.path.exists(base_dir):  os.makedirs(base_dir)
+    if not os.path.exists(base_dir):  os.makedirs(base_dir)
 
-        if LOG == 1:  log = open(log_path, 'w')
-        elif LOG == 0:  log = None
+    if LOG == 1:  log = open(log_path, 'w')
+    elif LOG == 0:  log = None
 
-        D = 0
-        if W == 0:  D = TOTAL_SEC
-        elif W == 6:  D = TOTAL_SEC*2
+    D = 0
+    if W == 0:  D = TOTAL_SEC
+    elif W == 6:  D = TOTAL_SEC*2
 
-        NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f"{chr(10)} {'-'*8} [VERSION: {VERSION}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
+    NOW_SEC = (H*hS)+(M*mS)+(S)
+    print(f"{chr(10)} {'-'*8} [VERSION: {VERSION}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
 
-        D_SEC = NOW_SEC+D
-        # print(f'D_SEC: {D_SEC}')
+    D_SEC = NOW_SEC+D
+    # print(f'D_SEC: {D_SEC}')
 
-        if args.debug == 0:
-            if START_SEC < D_SEC and D_SEC < END_SEC:
-                try:
-                    # trd_taker.start()
-                    taker(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path)
-                except Exception as e:
-                    trace_back = traceback.format_exc()
-                    print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
-                    pass
-                # try:
-                #     # trd_poster.start()
-                #     poster(dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path)
-                # except Exception as e:
-                #     trace_back = traceback.format_exc()
-                #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
-                #     pass
-                time.sleep(args.interval)
-
-            elif D_SEC < START_SEC or END_SEC < D_SEC:
-                sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
-                print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
-                time.sleep(sleep_time)
-        else:
+    if args.debug == 0:
+        if START_SEC < D_SEC and D_SEC < END_SEC:
             try:
+                # trd_taker.start()
                 taker()
             except Exception as e:
                 trace_back = traceback.format_exc()
                 print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
+            # try:
+            #     # trd_poster.start()
+            #     poster()
+            # except Exception as e:
+            #     trace_back = traceback.format_exc()
+            #     print(f'[!poster!] {e}{chr(10)}{trace_back}', file=log)
+            #     pass
             time.sleep(args.interval)
-        if LOG == 1:  log.close()
-        else:  pass
 
-        LOOP = args.loop
+        elif D_SEC < START_SEC or END_SEC < D_SEC:
+            sleep_time = TOTAL_SEC-NOW_SEC+START_SEC+D
+            print(f'sleep_time: {sleep_time}{chr(10)}', file=log)
+            time.sleep(sleep_time)
+    else:
+        try:
+            taker()
+        except Exception as e:
+            trace_back = traceback.format_exc()
+            print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
+            pass
+        time.sleep(args.interval)
+    if LOG == 1:  log.close()
+    else:  pass
 
+    LOOP = args.loop
 
-main()
