@@ -34,6 +34,7 @@ parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
 parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
 parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
+parser.add_argument("-lo", "--loop", default=1, type=int, help="loop")
 parser.add_argument("-l", "--log", default=1, type=int, help="log_destination")
 parser.add_argument("-d", "--debug", default=0, type=int, help="debugging mode")
 args = parser.parse_args()
@@ -246,14 +247,17 @@ def taker():
     time.sleep(0.1)
     GPIO.setup(TR, GPIO.IN)
 
-    camera = PiCamera()
-    camera.start_preview()
-
-    print("[S] CAPTURING RGB", file=log)
-    camera.capture(rgb_path)
-    camera.stop_preview()
-    camera.close()
-    # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
+    try:
+        print("[S] CAPTURING RGB", file=log)
+        camera = PiCamera()
+        # camera.start_preview()
+        camera.capture(rgb_path)
+        # camera.stop_preview()
+        camera.close()
+        # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
+    except Exception as E:
+        print(f'[!camera!] FAILED!', file=log)
+        pass
 
     ser.flush()
     ser.reset_input_buffer()
@@ -386,7 +390,8 @@ def main():
     global DT, base_dir, inf_path, log_data, log, ir_path, rgb_path, fg_path
     os.system(f"sudo chmod 666 /dev/ttyS0")
 
-    while 1:
+    LOOP = 1
+    while LOOP:
         DT = datetime.now()
         H = int(DT.strftime("%H"))
         M = int(DT.strftime("%M"))
@@ -451,6 +456,8 @@ def main():
             time.sleep(args.interval)
         if LOG == 1:  log.close()
         else:  pass
+
+        LOOP = args.loop
 
 
 main()

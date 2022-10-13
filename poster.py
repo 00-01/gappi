@@ -15,9 +15,9 @@ parser.add_argument("-s1", "--sleep1", default=0, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-d", "--delete", default=1, type=int, help="delete sent file")
 args = parser.parse_args()
-print(f"loop is {args.loop}")
-print(f"sleep1 is {args.sleep1} seconds")
-print(f"sleep2 is {args.sleep2} seconds")
+# print(f"loop is {args.loop}")
+# print(f"sleep1 is {args.sleep1} seconds")
+# print(f"sleep2 is {args.sleep2} seconds")
 
 HOME = os.path.expanduser('~')
 
@@ -32,7 +32,7 @@ LOOP = 1
 while LOOP:
     now = datetime.now()
     dtime = now.strftime("%Y/%m/%d-%H:%M:%S")
-    print(f"posting_time: {dtime}")
+    print(f"{chr(10)}posting_time: {dtime}")
 
     targets = glob(f'data/*')
     if len(targets) < 1:
@@ -72,7 +72,7 @@ while LOOP:
 
         except Exception as e:
             trace_back = traceback.format_exc()
-            print(f'[!!!] {e}{chr(10)}{trace_back}')
+            print(f'[!!!] {e} {trace_back}')
             pass
         os.system(f"rm -rf {target}")
 

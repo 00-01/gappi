@@ -1,14 +1,9 @@
-#!/bin/bash
+#!/bin/zsh
 
-#This should be taken from info.txt in home
 #NODE_NAME=$(cat ~/info.txt)
 NODE_NAME=$1
 DATE=$2
 LOC_DIR=images
-
-#FTP_ADDR='115.68.41.211'
-#FTP_USER='gappocb'
-#FTP_PASS='gappocb!'
 
 #DATE_PATH=$(date+"%Y%m%d")
 FILE_NAME=$DATE\_$NODE_NAME\_RGB.jpg
