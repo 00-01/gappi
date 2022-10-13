@@ -387,6 +387,8 @@ def main():
 
     LOOP = 1
     while LOOP:
+        global dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
+
         DT = datetime.now()
         H = int(DT.strftime("%H"))
         M = int(DT.strftime("%M"))
@@ -401,8 +403,6 @@ def main():
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
-
-        global dtime, base_dir, inf_path, log_path, log, ir_path, rgb_path, fg_path
 
         if not os.path.exists(base_dir):  os.makedirs(base_dir)
 
