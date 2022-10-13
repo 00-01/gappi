@@ -92,4 +92,3 @@ CONF_SWAPSIZE=2048
 
 ### switch to local time
     sudo timedatectl set-local-rtc 1
-
