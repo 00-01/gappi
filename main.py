@@ -35,7 +35,6 @@ parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
 parser.add_argument("-e", "--end", default=23, type=int, help="end time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 parser.add_argument("-lo", "--loop", default=1, type=int, help="loop")
-parser.add_argument("-l", "--log", default=1, type=int, help="log_destination")
 parser.add_argument("-d", "--debug", default=0, type=int, help="debugging mode")
 args = parser.parse_args()
 
@@ -79,7 +78,8 @@ TOTAL_SEC = 24*hS  ## 24:00:00
 # trd_taker = threading.Thread(target=taker, args=(1,))
 # trd_poster = threading.Thread(target=poster, args=(1,))
 
-LOG = args.log
+if args.debug == 1:  LOG = 1
+else: LOG = 0
 with open(f"{HOME}/device_id.txt") as f:
     device_id = f.readline().rstrip()
 
@@ -405,12 +405,10 @@ def main():
         rgb_path = f"{base_dir}{dtime}_{device_id}_RGB.jpg"
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
 
-        if not os.path.exists(base_dir):
-            os.makedirs(base_dir)
+        if not os.path.exists(base_dir):  os.makedirs(base_dir)
 
         if LOG == 1:  log = open(log_path, 'w')
         elif LOG == 0:  log = None
-    #         print(f"{r.text}", file=log)
 
         D = 0
         if W == 0:  D = TOTAL_SEC

@@ -37,7 +37,7 @@ while LOOP:
     targets = glob(f'data/*')
     if len(targets) < 1:
         os.system(f'echo "$(($(cat /tmp/connection)+1))" > /tmp/connection')
-        print("[!] NO DATA connection += 1")
+        print("[!] NO DATA. Connection += 1")
         sleep(args.sleep1)
         pass
 
