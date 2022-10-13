@@ -3,12 +3,13 @@
 TMP_FILE=/tmp/connection
 
 restart() {
-    sudo shutdown -r now 'No internet.'
+    #sudo shutdown -r +1 'No internet.'
 }
 
-if cat $TMP_FILE` == 10; then
+if (($(cat /tmp/tmp) == 1)) then
     echo 0 > $TMP_FILE && restart
 fi
+
 
 #if ping -c5 google.com; then
 #    echo 1 > $TMP_FILE
