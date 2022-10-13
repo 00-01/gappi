@@ -3,11 +3,13 @@
 TMP_FILE=/tmp/connection
 
 restart() {
-    #sudo shutdown -r +1 'No internet.'
+    sudo shutdown -r +1 'NO CONNECTION'
 }
 
-if (($(cat /tmp/tmp) == 1)) then
+if (($(cat /tmp/connection) == 10)) then
     echo 0 > $TMP_FILE && restart
+else
+    :
 fi
 
 
