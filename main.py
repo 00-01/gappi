@@ -25,7 +25,7 @@ import tensorflow as tf
 VERSION = 1.1
 
 parser = ArgumentParser()
-parser.add_argument("-i", "--inference", default=0, type=int, help="inference location")
+parser.add_argument("-i", "--inference", default=1, type=int, help="inference location")
 parser.add_argument("-s", "--sleep", default=0, type=int, help="loop sleep")
 parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
@@ -138,8 +138,6 @@ def bg_remover(target):
 
 
 def inferencer(input, ):
-    print(f"[I] PI INFERENCING", file=log)
-
     interpreter = tf.lite.Interpreter(model_path=MODEL)
     interpreter.allocate_tensors()
 
@@ -325,7 +323,10 @@ def taker():
 
     ## ---------------------------------------------------------------- INFERENCE
     if args.inference == 1:
+        inf_start = time.time()
         inferencer(fg_img)
+        inf_stop = time.time()-inf_start
+        print(f"[INFERENCE runtime: {round(inf_stop, 2)} sec] {chr(10)}", file=log)
 
     elif args.inference == 0:
         det = ""
@@ -344,8 +345,8 @@ def taker():
                 else: break
 
     ## ----------------------------------------------------------------
-    end = time.time()-start
-    print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(end, 2)} sec] {chr(10)}", file=log)
+    stop = time.time()-start
+    print(f"[STOP INFERENCE] {'-'*20} [runtime: {round(stop, 2)} sec] {chr(10)}", file=log)
 
     time.sleep(args.sleep)
 
