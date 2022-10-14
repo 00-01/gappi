@@ -3,7 +3,7 @@
 TMP_FILE=/tmp/connection
 
 restart() {
-    sudo shutdown -r +1 'NO CONNECTION'
+    sudo shutdown -r +5 'NO CONNECTION'
 }
 
 if (($(cat $TMP_FILE) >= 10)) then
