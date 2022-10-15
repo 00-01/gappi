@@ -170,7 +170,6 @@ def inferencer(input, ):
 
     flag = 0
     output = []
-
 ## ---------------------------------------------------------------- FIXXXXXX
     for outs in output_data:
         for i, out in enumerate(outs):
@@ -181,11 +180,17 @@ def inferencer(input, ):
                         break
                 if flag == 0: output.append(output_data4[i])
                 flag = 0
-
+    li = []
+    for i in output:
+        if 0 not in i:
+            li.append(i)
     with open(inf_path, 'w') as w:
         w.write(str(len(output)))
-        for i in output:
+        for i in li:
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+        # for i in output:
+        #     if 0 not in i:
+        #         w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
 ## ---------------------------------------------------------------- FIXXXXXX
     # for outs in output_data:
@@ -411,8 +416,9 @@ def main():
         elif LOG == 0:  log = None
 
         D = 0
-        if W == 0:  D = TOTAL_SEC
-        elif W == 6:  D = TOTAL_SEC*2
+        # if W == 0:  D = TOTAL_SEC
+        # elif W == 6:  D = TOTAL_SEC*2
+        # else: D = 0
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
         print(f"{chr(10)} {'-'*8} [VERSION: {str(VERSION)}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)

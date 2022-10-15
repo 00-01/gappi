@@ -49,17 +49,18 @@ while LOOP:
         rgb = glob(f"{target}/*_RGB.jpg")
         print(det, log, ir, fg, rgb)
 
+        d, l, i, f, r = len(det), len(log), len(ir), len(fg), len(rgb)
+
         try:
-            det, log, ir, fg, rgb = det[0], log[0], ir[0], fg[0], rgb[0]
-            with open(det, "r") as file:
+            with open(det[0], "r") as file:
                 det_data = file.readline().rstrip()
             data = {"device_id": device_id,
                     "predicted": det_data,
                     }
-            files = {"ir_image": open(fg, 'rb'),
-                     "raw_image": open(ir, 'rb'),
-                     "rgb_image": open(rgb, 'rb'),
-                     "log": open(log, 'rb'),
+            files = {"ir_image": open(fg[0], 'rb'),
+                     "raw_image": open(ir[0], 'rb'),
+                     "rgb_image": open(rgb[0], 'rb'),
+                     "log": open(log[0], 'rb'),
                      # "predicted": open(det_data, 'rb'),
                      }
             r = post(url, data=data, files=files)

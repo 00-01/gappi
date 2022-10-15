@@ -6,7 +6,7 @@ restart() {
     sudo shutdown -r +5 'NO CONNECTION'
 }
 
-if (($(cat $TMP_FILE) >= 10)) then
+if (($(cat $TMP_FILE) >= 9)) then
     echo 0 > $TMP_FILE && restart
 else
     cat $TMP_FILE
