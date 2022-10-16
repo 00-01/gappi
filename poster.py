@@ -60,12 +60,9 @@ while LOOP:
             files = {"ir_image": open(fg[0], 'rb'),
                      "raw_image": open(ir[0], 'rb'),
                      "rgb_image": open(rgb[0], 'rb'),
-                     # "log": open(log[0], 'rb'),
+                     "log": open(log[0], 'rb'),
                      # "predicted": open(det_data, 'rb'),
                      }
-            log_file = {"log": open(log[0], 'rb'),
-                        }
-            log_r = post(url, data=data, files=log_file)
             r = post(url, data=data, files=files)
 
             if r.status_code == 200:
