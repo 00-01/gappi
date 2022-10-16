@@ -65,7 +65,7 @@ while LOOP:
                      }
             log_file = {"log": open(log[0], 'rb'),
                         }
-            log_r = post(url, files=log_file)
+            log_r = post(url, data=data, files=log_file)
             r = post(url, data=data, files=files)
 
             if r.status_code == 200:
