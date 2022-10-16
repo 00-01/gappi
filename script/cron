@@ -16,19 +16,20 @@
 
 #### ---------------------------------------------------------------- REBOOT
 # every day 2am
-0 6 * * * sudo shutdown now -r
-0 2 * * * sudo shutdown now -r
+# 0 7-23/2 * * * sudo shutdown +1 -r
+0 6 * * * sudo shutdown +1 -r
+0 2 * * * sudo shutdown +1 -r
 
 #### ---------------------------------------------------------------- REMOVE
 # every month 2am
 0 2 1 * * truncate -s 0 log/*
 
 #### ---------------------------------------------------------------- NOT USED
-#* 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
-#0 2 1 * * sudo rm -rf ~/data/*
-#@reboot sleep 10 && sdss1
-#*/1 7-23 * * * python3 ~/gappi/main.py >> ~/log/main.log
-#*/1 7-23 * * * sleep 30 && python3 ~/gappi/main.py >> ~/log/main.log
+# * 7-23 * * 1-5 pidof python3 >/dev/null ; [[ $? -ne 0 ]] && echo "Restarting python3: $(date)" >> log/run.log && python3 gappi/main_v3.py &
+# 0 2 1 * * sudo rm -rf ~/data/*
+# @reboot sleep 10 && sdss1
+# */1 7-23 * * * python3 ~/gappi/main.py >> ~/log/main.log
+# */1 7-23 * * * sleep 30 && python3 ~/gappi/main.py >> ~/log/main.log
 
 * * * * *
 - - - - -

@@ -18,8 +18,8 @@ else
     crontab ~/gappi/script/cron
     sudo cp -f ~/gappi/script/.zshrc ~/.zshrc
     source ~/gappi/script/command.sh
-    sudo cp -f ~/gappi/script/$svc1 $s_path
-    sudo systemctl daemon-reload && sudo systemctl enable $svc1 && sudo systemctl start $svc1
+#    sudo cp -f ~/gappi/script/$svc1 $s_path
+#    sudo systemctl daemon-reload && sudo systemctl enable $svc1 && sudo systemctl start $svc1
 #    sudo cp -f ~/gappi/script/$svc2 /etc/systemd/system/$svc2
 #    sudo systemctl daemon-reload && sudo systemctl enable $svc2 && sudo systemctl start $svc2
     sleep 5
