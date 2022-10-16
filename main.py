@@ -31,8 +31,9 @@ parser.add_argument("-s1", "--sleep1", default=1, type=int, help="loop sleep")
 parser.add_argument("-s2", "--sleep2", default=0, type=int, help="loop sleep")
 parser.add_argument("-o", "--offset", default=0, type=int, help="offset")
 parser.add_argument("-bb", "--bbox", default=0, type=int, help="draw bbox")
-parser.add_argument("-b", "--begin", default=7, type=int, help="begin time")
-parser.add_argument("-e", "--end", default=23, type=int, help="end time")
+parser.add_argument("-st", "--start", default=7, type=int, help="start time")
+parser.add_argument("-sp", "--stop", default=23, type=int, help="stop time")
+parser.add_argument("-w", "--week", default=0, type=int, help="week time")
 parser.add_argument("-in", "--interval", default=20, type=int, help="interval time")
 parser.add_argument("-lo", "--loop", default=1, type=int, help="loop")
 parser.add_argument("-d", "--debug", default=0, type=int, help="debugging mode")
@@ -66,14 +67,16 @@ server_address = f"{HOME}/gappi/network/server_address.txt"
 with open(server_address) as f:
     url = f.readline().rstrip()
 
-## ---------------------------------------------------------------- ETC
+## ---------------------------------------------------------------- TIME
 
 hS = 3600
 mS = 60
 
-START_SEC = args.begin*hS  ## 9:00:00
-END_SEC = args.end*hS  ## 23:00:00
+START_SEC = args.start*hS  ## 9:00:00
+END_SEC = args.stop*hS  ## 23:00:00
 TOTAL_SEC = 24*hS  ## 24:00:00
+
+## ---------------------------------------------------------------- ETC
 
 # trd_taker = threading.Thread(target=taker, args=(1,))
 # trd_poster = threading.Thread(target=poster, args=(1,))
@@ -402,6 +405,13 @@ def main():
         W = int(DT.strftime("%w"))
         # H, M, S, W = 23, 59, 59, 6
 
+        if args.week == 0:
+            D = 0
+        else:
+            if W == 0:  D = TOTAL_SEC
+            elif W == 6:  D = TOTAL_SEC*2
+            else:  D = 0
+
         dtime = DT.strftime("%Y%m%d-%H%M%S")
         base_dir = f"data/{dtime}/"
         inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
@@ -414,11 +424,6 @@ def main():
 
         if LOG == 1:  log = open(log_path, 'w')
         elif LOG == 0:  log = None
-
-        D = 0
-        # if W == 0:  D = TOTAL_SEC
-        # elif W == 6:  D = TOTAL_SEC*2
-        # else: D = 0
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
         print(f"{chr(10)} {'-'*8} [VERSION: {str(VERSION)}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
