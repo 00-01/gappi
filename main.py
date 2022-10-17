@@ -305,10 +305,12 @@ def taker():
     ir = Image.frombuffer("L", (W, H), rx_img, 'raw', "L", 0, 1)
     ir.save(ir_path)
 
-    ## ---------------------------------------------------------------- RGB ROT+CROP
+    ## ---------------------------------------------------------------- RGB ROTATE + CROP
+    print("[S] RGB ROTATE", file=log)
     rgb_img = Image.open(rgb_path)
     rgb_img = rgb_img.rotate(ROTATION)
 
+    print("[S] RGB CROP", file=log)
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
     h_cut, w_cut = 40, 160
