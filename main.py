@@ -188,7 +188,7 @@ def inferencer(input, ):
         if 0 not in i:
             li.append(i)
     with open(inf_path, 'w') as w:
-        w.write(str(len(output)))
+        w.write(str(len(li)))
         for i in li:
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
         # for i in output:
@@ -222,6 +222,9 @@ def inferencer(input, ):
 
 @timeout(40)
 def taker():
+    # camera = PiCamera()
+    # camera.start_preview()
+
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 
@@ -254,11 +257,10 @@ def taker():
 
     try:
         print("[S] CAPTURING RGB", file=log)
-        camera = PiCamera()
-        # camera.start_preview()
-        camera.capture(rgb_path)
+        os.system(f"raspistill -o {rgb_path}")
+        # camera.capture(rgb_path)
         # camera.stop_preview()
-        camera.close()
+        # camera.close()
         # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
     except Exception as E:
         print(f'[!camera!] FAILED!', file=log)

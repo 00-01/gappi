@@ -2,6 +2,8 @@
 
 
 ## ---------------------------------------------------------------- NOT USED
+#sudo rpi-update
+
 #sudo cp -f ~/gappi/network/interfaces /etc/network/interfaces
 #pip3 install -U pip
 #sudo apt install gfortran libopenblas-dev liblapack-dev libhdf5-dev

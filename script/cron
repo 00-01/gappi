@@ -4,9 +4,9 @@
 #@reboot sleep 20 && python3 ~/gappi/main.py -d 1
 
 #### ---------------------------------------------------------------- START
-@reboot sudo chmod 666 /dev/ttyS0
-@reboot echo 0 > /tmp/connection
-@reboot sleep 10 && /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
+@reboot sleep 10 && sudo chmod 666 /dev/ttyS0
+@reboot sleep 10 && echo 0 > /tmp/connection
+@reboot sleep 20 && /bin/zsh ~/gappi/script/autorun.sh >> ~/log/run.log
 
 #### ---------------------------------------------------------------- MAIN
 # every day 7-23 H every 1 minutes

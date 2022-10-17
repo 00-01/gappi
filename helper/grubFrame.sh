@@ -9,6 +9,7 @@ LOC_DIR=images
 FILE_NAME=$DATE\_$NODE_NAME\_RGB.jpg
 echo $FILE_NAME
 #fswebcam -F 30 -r 640x480 --no-banner $LOC_DIR/$FILE_NAME
+
 # configure input 1 for CSI -> MEM (raw image capture)
 v4l2-ctl --device /dev/video0 --set-input=0
 # configure format

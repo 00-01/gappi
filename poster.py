@@ -67,7 +67,7 @@ while LOOP:
 
             if r.status_code == 200:
                 os.system(f"echo 0 > /tmp/connection")
-                os.system(f"shutdown -c")
+                os.system(f"sudo shutdown -c")
                 if args.delete:
                     os.system(f"rm -rf {target}")
             # print(r.headers)
