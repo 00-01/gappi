@@ -257,7 +257,7 @@ def taker():
 
     try:
         print("[S] CAPTURING RGB", file=log)
-        os.system(f"raspistill -o {rgb_path}")
+        os.system(f"raspistill -o {rgb_path} -w 400 -h 400 -vf -t 2000")
         # camera.capture(rgb_path)
         # camera.stop_preview()
         # camera.close()
@@ -305,19 +305,6 @@ def taker():
     ir = Image.frombuffer("L", (W, H), rx_img, 'raw', "L", 0, 1)
     ir.save(ir_path)
 
-    ## ---------------------------------------------------------------- RGB ROTATE + CROP
-    print("[S] RGB ROTATE", file=log)
-    rgb_img = Image.open(rgb_path)
-    rgb_img = rgb_img.rotate(ROTATION)
-
-    print("[S] RGB CROP", file=log)
-    rgb_arr = asarray(rgb_img, dtype='uint8')
-    h_rgb, w_rgb, c = rgb_arr.shape
-    h_cut, w_cut = 40, 160
-    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
-    rgb_img = Image.fromarray(rgb_arr)
-    rgb_img.save(rgb_path)
-
     ## ---------------------------------------------------------------- BG REMOVE
     # ir.save(ir_path)
     # irs = sorted(glob(f'gappi/BG/*.png', recursive=False))
@@ -338,7 +325,7 @@ def taker():
         inf_start = time.time()
         inferencer(fg_img)
         inf_stop = time.time()-inf_start
-        print(f"[INFERENCE runtime: {round(inf_stop, 2)} sec] {chr(10)}", file=log)
+        print(f"[INFERENCE runtime: {round(inf_stop, 2)} sec]", file=log)
 
     elif args.inference == 0:
         det = ""
@@ -355,6 +342,20 @@ def taker():
                     det += i
                     st = 1
                 else: break
+
+    # ## ---------------------------------------------------------------- RGB ROTATE + CROP
+    # print("[S] RGB ROTATE", file=log)
+    # rgb_img = Image.open(rgb_path)
+    # rgb_img = rgb_img.rotate(ROTATION)
+    #
+    # print("[S] RGB CROP", file=log)
+    # rgb_arr = asarray(rgb_img, dtype='uint8')
+    # h_rgb, w_rgb, c = rgb_arr.shape
+    # print(f"[S] image size: {h_rgb}, {w_rgb}, {c}", file=log)  # 2592, 1944
+    # h_cut, w_cut = 772, 1096
+    # rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    # rgb_img = Image.fromarray(rgb_arr)
+    # rgb_img.save(rgb_path)
 
     ## ----------------------------------------------------------------
     stop = time.time()-start
@@ -417,7 +418,7 @@ def main():
             else:  D = 0
 
         dtime = DT.strftime("%Y%m%d-%H%M%S")
-        base_dir = f"data/{dtime}/"
+        base_dir = f"~/data/{dtime}/"
         inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
         log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
