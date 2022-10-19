@@ -257,7 +257,7 @@ def taker():
 
     try:
         print("[S] CAPTURING RGB", file=log)
-        os.system(f"raspistill -o {rgb_path} -w 400 -h 400 -vf -t 2000")
+        os.system(f"raspistill -o {rgb_path} -w 400 -h 400 -vf")
         # camera.capture(rgb_path)
         # camera.stop_preview()
         # camera.close()
