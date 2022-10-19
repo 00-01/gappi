@@ -226,8 +226,9 @@ def taker():
     # camera.start_preview()
     try:
         print("[S] CAPTURING RGB", file=log)
-        # os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o {rgb_path}")
-        os.system(f"raspistill -o {rgb_path}")
+        # os.system(f"img_path={rgb_path}")
+        os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o {rgb_path}")
+        # os.system(f"raspistill -o {rgb_path}")
         # camera.capture(rgb_path)
         # camera.stop_preview()
         # camera.close()
@@ -418,7 +419,7 @@ def main():
             else:  D = 0
 
         dtime = DT.strftime("%Y%m%d-%H%M%S")
-        base_dir = f"~/data/{dtime}/"
+        base_dir = f"data/{dtime}/"
         inf_path = f"{base_dir}{dtime}_{device_id}_DET.txt"
         log_path = f"{base_dir}{dtime}_{device_id}_LOG.txt"
         ir_path = f"{base_dir}{dtime}_{device_id}_IR.png"
