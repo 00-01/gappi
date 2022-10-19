@@ -224,6 +224,17 @@ def inferencer(input, ):
 def taker():
     # camera = PiCamera()
     # camera.start_preview()
+    try:
+        print("[S] CAPTURING RGB", file=log)
+        # os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o {rgb_path}")
+        os.system(f"raspistill -o {rgb_path}")
+        # camera.capture(rgb_path)
+        # camera.stop_preview()
+        # camera.close()
+        # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
+    except Exception as E:
+        print(f'[!camera!] FAILED!', file=log)
+        pass
 
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
@@ -254,17 +265,6 @@ def taker():
     GPIO.setup(TR, GPIO.OUT)
     time.sleep(0.1)
     GPIO.setup(TR, GPIO.IN)
-
-    try:
-        print("[S] CAPTURING RGB", file=log)
-        os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o {rgb_path}")
-        # camera.capture(rgb_path)
-        # camera.stop_preview()
-        # camera.close()
-        # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
-    except Exception as E:
-        print(f'[!camera!] FAILED!', file=log)
-        pass
 
     ser.flush()
     ser.reset_input_buffer()
