@@ -74,11 +74,11 @@ while LOOP:
             print(r.text)
 
         except Exception as e:
+            os.system(f"mv -rf {HOME}/data_backup/{target}")
             trace_back = traceback.format_exc()
             # os.system(f'echo "$(($(cat /tmp/connection)+1))" > /tmp/connection')
             print(f'[!!!] {e} {trace_back}')
             pass
-        os.system(f"rm -rf {target}")
 
     LOOP = args.loop
     sleep(args.sleep2)
