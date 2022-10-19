@@ -70,11 +70,14 @@ while LOOP:
                 os.system(f"sudo shutdown -c")
                 if args.delete:
                     os.system(f"rm -rf {target}")
+            # else: pass
             # print(r.headers)
             print(r.text)
 
         except Exception as e:
-            os.system(f"mv -rf {HOME}/data_backup/{target}")
+            # base_dir = f"{HOME}/data/{dtime}/"
+            # if not os.path.exists(base_dir):  os.makedirs(base_dir)
+            os.system(f"mv -f {target} {HOME}/data_backup/")
             trace_back = traceback.format_exc()
             # os.system(f'echo "$(($(cat /tmp/connection)+1))" > /tmp/connection')
             print(f'[!!!] {e} {trace_back}')

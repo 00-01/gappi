@@ -428,7 +428,7 @@ def main():
         fg_path = f"{base_dir}{dtime}_{device_id}_FG.png"
 
         if not os.path.exists(base_dir):  os.makedirs(base_dir)
-        if not os.path.exists(base_dir):  os.makedirs(f"{HOME}/data_backup/")
+        # if not os.path.exists(base_dir):  os.makedirs(f"{HOME}/data_backup")
 
         if LOG == 1:  log = open(log_path, 'w')
         elif LOG == 0:  log = None
