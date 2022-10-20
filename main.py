@@ -222,22 +222,7 @@ def inferencer(input, ):
 
 @timeout(40)
 def taker():
-    # camera = PiCamera()
-    # camera.start_preview()
-    try:
-        print("[S] CAPTURING RGB", file=log)
-        # os.system(f"rgb_path={rgb_path}")
-        os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o {rgb_path}")
-        # os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o $rgb_path")
-        # os.system(f"raspistill -o {rgb_path}")
-        # camera.capture(rgb_path)
-        # camera.stop_preview()
-        # camera.close()
-        # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
-    except Exception as E:
-        print(f'[!camera!] FAILED!', file=log)
-        pass
-
+    ## ---------------------------------------------------------------- GPIO
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
 
@@ -254,7 +239,6 @@ def taker():
                         timeout=5, )
 
     start = time.time()
-    print(f"[START INFERENCE] {'-'*20} [{dtime}]", file=log)
 
     print(f"[I] inference: {args.inference}, sleep: {args.sleep} sec", file=log)
 
@@ -267,6 +251,24 @@ def taker():
     GPIO.setup(TR, GPIO.OUT)
     time.sleep(0.1)
     GPIO.setup(TR, GPIO.IN)
+
+    ## ---------------------------------------------------------------- RGB SENSOR
+    print("[S] CAPTURING RGB", file=log)
+    cam_start = time.time()
+    try:
+        os.system(f"raspistill -w 400 -h 400 -vf -t 2000 -n -o {rgb_path}")
+        # camera = PiCamera()
+        # camera.start_preview()
+        # camera.capture(rgb_path)
+        # camera.stop_preview()
+        # camera.close()
+        # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
+
+    except Exception as E:
+        print(f'[!camera!] FAILED!', file=log)
+        pass
+    cam_stop = time.time()-cam_start
+    print(f"[CAM runtime: {round(cam_stop, 2)} sec]", file=log)
 
     ser.flush()
     ser.reset_input_buffer()
@@ -345,7 +347,7 @@ def taker():
                     st = 1
                 else: break
 
-    # ## ---------------------------------------------------------------- RGB ROTATE + CROP
+    ## ---------------------------------------------------------------- RGB ROTATE + CROP
     # print("[S] RGB ROTATE", file=log)
     # rgb_img = Image.open(rgb_path)
     # rgb_img = rgb_img.rotate(ROTATION)
@@ -434,12 +436,12 @@ def main():
         elif LOG == 0:  log = None
 
         NOW_SEC = (H*hS)+(M*mS)+(S)
-        print(f"{chr(10)} {'-'*8} [VERSION: {str(VERSION)}, NOW_SEC: {NOW_SEC}] {'-'*8}", file=log)
 
         D_SEC = NOW_SEC+D
         # print(f'D_SEC: {D_SEC}')
 
         if START_SEC < D_SEC and D_SEC < END_SEC or args.debug == 1:
+            print(f"{chr(10)}[VERSION: {str(VERSION)}, NOW_SEC: {NOW_SEC}] {'-'*20} [{dtime}]", file=log)
             try:
                 taker()
             except Exception as e:
