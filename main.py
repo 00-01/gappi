@@ -241,13 +241,13 @@ def taker():
     try:
         os.system(f"raspistill -w 800 -h 800 -vf -hf -t 2000 -n -o {rgb_path}")
         # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
-
     except Exception as E:
-        print(f'[!camera!] FAILED!', file=log)
+        print(f'[!camera!] {E}!', file=log)
         pass
     cam_stop = time.time()-cam_start
     print(f"[CAM runtime: {round(cam_stop, 2)} sec]", file=log)
 
+    ## ----------------------------------------------------------------
     ser.flush()
     ser.reset_input_buffer()
     ser.reset_output_buffer()
@@ -324,6 +324,7 @@ def taker():
                     det += i
                     st = 1
                 else: break
+
     ## ---------------------------------------------------------------- RGB ROTATE + CROP
     print("[S] RGB ROTATE", file=log)
     rgb_img = Image.open(rgb_path)
@@ -333,9 +334,9 @@ def taker():
     rgb_arr = asarray(rgb_img, dtype='uint8')
     h_rgb, w_rgb, c = rgb_arr.shape
     print(f"[S] image size: {h_rgb}, {w_rgb}, {c}", file=log)  # 2592, 1944
-    # h_cut, w_cut = 772, 1096
-    h_cut, w_cut = 100, 140
-    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    h_cut, w_cut = 120, 140
+    h_off, w_off = 0, 10
+    rgb_arr = rgb_arr[h_cut+h_off:h_rgb-h_cut+h_off, w_cut+w_off:w_rgb-w_cut+w_off, :]
     rgb_img = Image.fromarray(rgb_arr)
     rgb_img.save(rgb_path)
 
