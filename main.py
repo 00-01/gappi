@@ -335,7 +335,7 @@ def taker():
     h_rgb, w_rgb, c = rgb_arr.shape
     print(f"[S] image size: {h_rgb}, {w_rgb}, {c}", file=log)  # 2592, 1944
     h_cut, w_cut = 120, 140
-    h_off, w_off = 0, 10
+    h_off, w_off = 0, 14
     rgb_arr = rgb_arr[h_cut+h_off:h_rgb-h_cut+h_off, w_cut+w_off:w_rgb-w_cut+w_off, :]
     rgb_img = Image.fromarray(rgb_arr)
     rgb_img.save(rgb_path)
