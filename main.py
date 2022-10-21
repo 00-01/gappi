@@ -191,24 +191,7 @@ def inferencer(input, ):
         w.write(str(len(li)))
         for i in li:
             w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
-        # for i in output:
-        #     if 0 not in i:
-        #         w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
-## ---------------------------------------------------------------- FIXXXXXX
-    # for outs in output_data:
-    #     for i, out in enumerate(outs):
-    #         if out > THRESHOLD:
-    #             for corner in output_data4[i]:
-    #                 if corner < 0 or corner > H:
-    #                     flag = 1
-    #                     break
-    #             if flag == 0:
-    #                 if 0 not in output_data4[i]:
-    #                     output.append(output_data4[i])
-    #                     output.append(f',{output_data4[i,1]}x{output_data4[i,0]}x{output_data4[i,3]}x{output_data4[i,2]}')
-    #             flag = 0
-    # output.insert(0, str(len(output)))
 ## ---------------------------------------------------------------- FIXXXXXX
     # li = []
     # for i in output:
@@ -256,12 +239,7 @@ def taker():
     print("[S] CAPTURING RGB", file=log)
     cam_start = time.time()
     try:
-        os.system(f"raspistill -w 160 -h 160 -vf -hf -t 2000 -n -o {rgb_path}")
-        # camera = PiCamera()
-        # camera.start_preview()
-        # camera.capture(rgb_path)
-        # camera.stop_preview()
-        # camera.close()
+        os.system(f"raspistill -w 800 -h 800 -vf -hf -t 2000 -n -o {rgb_path}")
         # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
 
     except Exception as E:
@@ -346,20 +324,20 @@ def taker():
                     det += i
                     st = 1
                 else: break
-
     ## ---------------------------------------------------------------- RGB ROTATE + CROP
-    # print("[S] RGB ROTATE", file=log)
-    # rgb_img = Image.open(rgb_path)
+    print("[S] RGB ROTATE", file=log)
+    rgb_img = Image.open(rgb_path)
     # rgb_img = rgb_img.rotate(ROTATION)
-    #
-    # print("[S] RGB CROP", file=log)
-    # rgb_arr = asarray(rgb_img, dtype='uint8')
-    # h_rgb, w_rgb, c = rgb_arr.shape
-    # print(f"[S] image size: {h_rgb}, {w_rgb}, {c}", file=log)  # 2592, 1944
+
+    print("[S] RGB CROP", file=log)
+    rgb_arr = asarray(rgb_img, dtype='uint8')
+    h_rgb, w_rgb, c = rgb_arr.shape
+    print(f"[S] image size: {h_rgb}, {w_rgb}, {c}", file=log)  # 2592, 1944
     # h_cut, w_cut = 772, 1096
-    # rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
-    # rgb_img = Image.fromarray(rgb_arr)
-    # rgb_img.save(rgb_path)
+    h_cut, w_cut = 100, 140
+    rgb_arr = rgb_arr[h_cut:h_rgb-h_cut, w_cut:w_rgb-w_cut, :]
+    rgb_img = Image.fromarray(rgb_arr)
+    rgb_img.save(rgb_path)
 
     ## ----------------------------------------------------------------
     stop = time.time()-start
@@ -438,7 +416,6 @@ def main():
         NOW_SEC = (H*hS)+(M*mS)+(S)
 
         D_SEC = NOW_SEC+D
-        # print(f'D_SEC: {D_SEC}')
 
         if START_SEC < D_SEC and D_SEC < END_SEC or args.debug == 1:
             print(f"{chr(10)}[VERSION: {str(VERSION)}, NOW_SEC: {NOW_SEC}] {'-'*20} [{dtime}]", file=log)
