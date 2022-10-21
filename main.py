@@ -256,7 +256,7 @@ def taker():
     print("[S] CAPTURING RGB", file=log)
     cam_start = time.time()
     try:
-        os.system(f"raspistill -w 320 -h 320 -vf -hf -t 2000 -n -o {rgb_path}")
+        os.system(f"raspistill -w 160 -h 160 -vf -hf -t 2000 -n -o {rgb_path}")
         # camera = PiCamera()
         # camera.start_preview()
         # camera.capture(rgb_path)
