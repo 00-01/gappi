@@ -41,7 +41,7 @@ args = parser.parse_args()
 
 ## ---------------------------------------------------------------- BG
 BG_LIST = []
-BG_LENGTH = 32
+BG_LENGTH = 40
 
 ## ---------------------------------------------------------------- INFERENCE
 HOME = os.path.expanduser('~')
@@ -107,14 +107,15 @@ def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
 
 
 def bg_remover(target):
-    BG_LIST.insert(0, target)
-    if len(BG_LIST) > BG_LENGTH:  BG_LIST.pop(-1)
+    BG_LIST.append(target)
+    if len(BG_LIST) > BG_LENGTH:  BG_LIST.pop(0)
     else:  pass
 
     bg = np.zeros([H, W], dtype=int)
-    for i in BG_LIST:
+    BG_8 = BG_LIST[8:]
+    for i in BG_8:
         bg += i
-    bg //= len(BG_LIST)
+    bg //= len(BG_8)
 
     img = target-bg
 
