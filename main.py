@@ -143,8 +143,12 @@ def bg_remover(target):
 
 
 def inferencer(input, ):
-    if device_id == "00":  MODEL = MODEL1
-    else:  MODEL = MODEL0
+    if device_id == "00":
+        MODEL = MODEL1
+        print(f"MODEL_1", file=log)
+    else:
+        MODEL = MODEL0
+        print(f"MODEL_0", file=log)
 
     interpreter = tf.lite.Interpreter(model_path=MODEL)
     interpreter.allocate_tensors()
