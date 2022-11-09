@@ -45,7 +45,8 @@ BG_LENGTH = 40
 
 ## ---------------------------------------------------------------- INFERENCE
 HOME = os.path.expanduser('~')
-MODEL = f"{HOME}/gappi/model/v1.1.tflite"
+MODEL0 = f"{HOME}/gappi/model/v1.1.tflite"
+MODEL1 = f"{HOME}/gappi/model/v2.1.tflite"
 THRESHOLD = 0.5
 
 MIN, MAX = 0, 255
@@ -142,6 +143,9 @@ def bg_remover(target):
 
 
 def inferencer(input, ):
+    if device_id == 00:  MODEL = MODEL1
+    else:  MODEL = MODEL0
+
     interpreter = tf.lite.Interpreter(model_path=MODEL)
     interpreter.allocate_tensors()
 
