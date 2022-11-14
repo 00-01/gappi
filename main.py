@@ -39,19 +39,37 @@ parser.add_argument("-lo", "--loop", default=1, type=int, help="loop")
 parser.add_argument("-d", "--debug", default=0, type=int, help="debugging mode")
 args = parser.parse_args()
 
+## ---------------------------------------------------------------- INIT
+HOME = os.path.expanduser('~')
+
+# trd_taker = threading.Thread(target=taker, args=(1,))
+# trd_poster = threading.Thread(target=poster, args=(1,))
+
+if args.debug == 1:  LOG = 0
+else: LOG = 1
+with open(f"{HOME}/device_id.txt") as f:
+    device_id = f.readline().rstrip()
+
 ## ---------------------------------------------------------------- BG
 BG_LIST = []
 BG_LENGTH = 40
 
 ## ---------------------------------------------------------------- INFERENCE
-HOME = os.path.expanduser('~')
-MODEL0 = f"{HOME}/gappi/model/v1.1.tflite"
-MODEL1 = f"{HOME}/gappi/model/v2.1.tflite"
 THRESHOLD = 0.5
-
 MIN, MAX = 0, 255
 NORM_MIN, NORM_MAX = 0, 1
 NORM = MAX/2
+
+M_0 = f"{HOME}/gappi/model/v1.1.tflite"
+M_1 = f"{HOME}/gappi/model/v2.1.tflite"
+if device_id == "00":  MODEL = M_1
+else:  MODEL = M_0
+
+interpreter = tf.lite.Interpreter(model_path=MODEL)
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
 
 ## ---------------------------------------------------------------- TAKE
 SD = 27  # gap power
@@ -63,13 +81,7 @@ IMG_SIZE = W*H*SIZE
 DET_SIZE = 3+(30*12)
 ROTATION = 180
 
-## ---------------------------------------------------------------- POST
-server_address = f"{HOME}/gappi/network/server_address.txt"
-with open(server_address) as f:
-    url = f.readline().rstrip()
-
 ## ---------------------------------------------------------------- TIME
-
 hS = 3600
 mS = 60
 
@@ -77,16 +89,7 @@ START_SEC = args.start*hS  ## 9:00:00
 END_SEC = args.stop*hS  ## 23:00:00
 TOTAL_SEC = 24*hS  ## 24:00:00
 
-## ---------------------------------------------------------------- ETC
-
-# trd_taker = threading.Thread(target=taker, args=(1,))
-# trd_poster = threading.Thread(target=poster, args=(1,))
-
-if args.debug == 1:  LOG = 0
-else: LOG = 1
-with open(f"{HOME}/device_id.txt") as f:
-    device_id = f.readline().rstrip()
-
+## ---------------------------------------------------------------- FUNCTION
 
 class TimeoutError(Exception):
     pass
@@ -112,12 +115,18 @@ def bg_remover(target):
     if len(BG_LIST) > BG_LENGTH:  BG_LIST.pop(0)
     else:  pass
 
+    # bg = np.ones([H, W], dtype=int)
     bg = np.zeros([H, W], dtype=int)
     BG_8 = BG_LIST[8:]
     for i in BG_8:
         bg += i
-    bg //= len(BG_8)
-
+    if len(BG_8) > 0:
+        try:
+            bg //= len(BG_8)
+        except Exception as E:
+            pass
+    else:
+        bg = np.ones([H, W], dtype=int)
     img = target-bg
 
     # LOW-CUT FILTER
@@ -143,76 +152,87 @@ def bg_remover(target):
 
 
 def inferencer(input, ):
-    if device_id == "00":
-        MODEL = MODEL1
-        print(f"MODEL_1", file=log)
-    else:
-        MODEL = MODEL0
-        print(f"MODEL_0", file=log)
+    # if device_id == "00":
+    #     MODEL = M_1
+    #     print(f"[I] MODEL_v2.1", file=log)
+    # else:
+    #     MODEL = M_0
+    #     print(f"[I] MODEL_v1.1", file=log)
 
-    interpreter = tf.lite.Interpreter(model_path=MODEL)
-    interpreter.allocate_tensors()
-
-    input_details = interpreter.get_input_details()
-    output_details = interpreter.get_output_details()
+    # interpreter = tf.lite.Interpreter(model_path=MODEL)
+    # interpreter.allocate_tensors()
+    #
+    # input_details = interpreter.get_input_details()
+    # output_details = interpreter.get_output_details()
 
     # img = Image.open(input_path).convert('l')  # .resize((80,80))
     # img_arr = np.array(img)
     # img_arr = imread(input, IMREAD_GRAYSCALE)
-    input_data = input.reshape(1, input.shape[0], input.shape[1], 1)
     # input_data = img.reshape(1, img.shape[0], img.shape[1], 1)
+    if device_id == "00":
+        input0 = input.astype(np.float32)/255
+        input1 = input0.reshape(1, input0.shape[0], input0.shape[1], 1)
+        # input_data = img_arr.reshape(1, img_arr.shape[0], img_arr.shape[1], 1)
+        interpreter.set_tensor(input_details[0]['index'], input1)
+        interpreter.invoke()
+        output_data = interpreter.get_tensor(output_details[0]['index'])
+        output = str(round(output_data[0, 0, 0, 0]))
+        with open(inf_path, 'w') as w:
+            w.write(output)
+    else:
+        input_data = input.reshape(1, input.shape[0], input.shape[1], 1)
 
-    ## uint8 to float32 + normalize(-1 to 1)
-    if input_data.dtype != 'float32':
-        input_data = (np.float32(input_data)-NORM)/NORM  # norm -1 to 1
-        # input_data = np.float32(input_data)/MAX # norm 0 to 1
+        ## uint8 to float32 + normalize(-1 to 1)
+        if input_data.dtype != 'float32':
+            input_data = (np.float32(input_data)-NORM)/NORM  # norm -1 to 1
+            # input_data = np.float32(input_data)/MAX # norm 0 to 1
 
-    interpreter.set_tensor(input_details[0]['index'], input_data)
+        interpreter.set_tensor(input_details[0]['index'], input_data)
 
-    interpreter.invoke()
+        interpreter.invoke()
 
-    # function `get_tensor()` returns copy of tensor data. Use `tensor()`  to get pointer to tensor
-    output_data = interpreter.get_tensor(output_details[0]['index'])  # accuacy
-    output_data1 = interpreter.get_tensor(output_details[1]['index'])  # location
+        # function `get_tensor()` returns copy of tensor data. Use `tensor()`  to get pointer to tensor
+        output_data = interpreter.get_tensor(output_details[0]['index'])  # accuacy
+        output_data1 = interpreter.get_tensor(output_details[1]['index'])  # location
 
-    ## change output from float32 to uint8
-    output_data4 = output_data1*79
-    output_data4 = np.around(output_data4, decimals=0).astype(int).tolist()
-    output_data4 = output_data4[0]
+        ## change output from float32 to uint8
+        output_data4 = output_data1*79
+        output_data4 = np.around(output_data4, decimals=0).astype(int).tolist()
+        output_data4 = output_data4[0]
 
-    flag = 0
-    output = []
-## ---------------------------------------------------------------- FIXXXXXX
-    for outs in output_data:
-        for i, out in enumerate(outs):
-            if out > THRESHOLD:
-                for corner in output_data4[i]:
-                    if corner < 0 or corner > H:
-                        flag = 1
-                        break
-                if flag == 0: output.append(output_data4[i])
-                flag = 0
-    li = []
-    for i in output:
-        if 0 not in i:
-            li.append(i)
-    with open(inf_path, 'w') as w:
-        w.write(str(len(li)))
-        for i in li:
-            w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+        flag = 0
+        output = []
+    ## ---------------------------------------------------------------- FIXXXXXX
+        for outs in output_data:
+            for i, out in enumerate(outs):
+                if out > THRESHOLD:
+                    for corner in output_data4[i]:
+                        if corner < 0 or corner > H:
+                            flag = 1
+                            break
+                    if flag == 0: output.append(output_data4[i])
+                    flag = 0
+        li = []
+        for i in output:
+            if 0 not in i:
+                li.append(i)
+        with open(inf_path, 'w') as w:
+            w.write(str(len(li)))
+            for i in li:
+                w.write(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
 
-## ---------------------------------------------------------------- FIXXXXXX
-    # li = []
-    # for i in output:
-        # if 0 not in i:
-        # li.append(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
-    # li.insert(0, str(len(li)))
+    ## ---------------------------------------------------------------- FIXXXXXX
+        # li = []
+        # for i in output:
+            # if 0 not in i:
+            # li.append(f',{i[1]}x{i[0]}x{i[3]}x{i[2]}')
+        # li.insert(0, str(len(li)))
 
-    # with open(inf_path, 'w') as w:
-    #     for i in output:  w.write(i)
+        # with open(inf_path, 'w') as w:
+        #     for i in output:  w.write(i)
 
 
-@timeout(40)
+@timeout(50)
 def taker():
     ## ---------------------------------------------------------------- GPIO
     GPIO.setwarnings(False)
@@ -248,7 +268,7 @@ def taker():
     print("[S] CAPTURING RGB", file=log)
     cam_start = time.time()
     try:
-        os.system(f"raspistill -w 800 -h 800 -vf -hf -t 2000 -n -o {rgb_path}")
+        os.system(f"raspistill -w 800 -h 800 -vf -hf -t 1000 -n -o {rgb_path}")
         # os.system(f"/bin/bash grubFrame.sh {device_id} {dtime}")
     except Exception as E:
         print(f'[!camera!] {E}!', file=log)
@@ -436,6 +456,9 @@ def main():
                 print(f'[!taker!] {e}{chr(10)}{trace_back}', file=log)
                 pass
             # try:
+            #     server_address = f"{HOME}/gappi/network/server_address.txt"
+            #     with open(server_address) as f:
+            #         url = f.readline().rstrip()
             #     # trd_poster.start()
             #     poster()
             # except Exception as e:
