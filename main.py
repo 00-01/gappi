@@ -118,10 +118,10 @@ def bg_remover(target):
     # bg = np.ones([H, W], dtype=int)
     bg = np.zeros([H, W], dtype=int)
     BG_8 = BG_LIST[8:]
-    for i in BG_8:
-        bg += i
     if len(BG_8) > 0:
         try:
+            for i in BG_8:
+                bg += i
             bg //= len(BG_8)
         except Exception as E:
             pass
